@@ -1,0 +1,62 @@
+.offcanvas {
+  background: #FEE4B2;
+}
+
+#post {
+  padding-top: 25px;
+}
+
+.header-row {
+  padding-top: 100px;
+  padding-bottom: 25px;
+}
+
+.createPost {
+  color: black;
+}
+
+.createPost:hover {
+  color: #FEE4B2;
+}
+
+.main-hero {
+  position: relative;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  text-align: right;
+}
+
+#landingPageTitle {
+  color: white;
+  font-size: 85px;
+  text-shadow: 2px 2px 8px #000000;
+  text-align: center;
+
+}
+
+footer {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer {
+  padding-top: 200px;
+}
+
+h6 {
+  font-size: 16px;
+  color: lightslategray;
+}
