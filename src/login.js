@@ -15,7 +15,7 @@ const LogIn = () => {
             <div className="row d-flex justify-content-center">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
-                    <p>Placeholder for login form</p>
+                    <p>Hi, Ceci!</p>
                 </div>
                 <div className="col-md-3"></div>
             </div>
