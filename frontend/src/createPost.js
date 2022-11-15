@@ -1,5 +1,6 @@
 import React from 'react';
 import PageTemplate from "./pages/PageTemplate.js"
+import PostForm from "./components/PostForm.js"
 
 const CreatePost = () => {
     return (
@@ -15,7 +16,7 @@ const CreatePost = () => {
             <div className="row d-flex">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
-                    <p>Placeholder for create post</p>
+                    <PostForm></PostForm>
                 </div>
                 <div className="col-md-3"></div>
             </div>
