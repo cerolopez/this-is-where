@@ -6,4 +6,10 @@ let router = express.Router();
 //   res.render('index', { title: 'Express' });
 // });
 
+router.post('/create-post', (req, res, next) => {
+  // call db
+
+  postsDB.getPosts(postInfo);
+})
+
 export default router;
