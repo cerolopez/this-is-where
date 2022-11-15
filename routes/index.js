@@ -6,10 +6,15 @@ let router = express.Router();
 //   res.render('index', { title: 'Express' });
 // });
 
-router.post('/create-post', (req, res, next) => {
-  // call db
+router.post('/newPost', async (req, res) => {
+  const postInfo = req.body;
+  const newPost = await postsDB.getPosts(postInfo);
 
-  postsDB.getPosts(postInfo);
+  if (newPost) {
+    return res.json({postCreated: true, err: null});
+  } else {
+    res.json({postCreated: false, err: 'error creating new post'});
+  }
 })
 
 export default router;
