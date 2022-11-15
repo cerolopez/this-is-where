@@ -35,6 +35,7 @@ function postsDB () {
         }
     }
 
+    // executes when a user clicks on a post card
     postsDB.getPost = async function (postID = {}) {
         let client;
 
@@ -56,7 +57,7 @@ function postsDB () {
         }
     }
 
-    postsDB.editPost = async function (postID = {}) {
+    postsDB.editPost = async function (postID = {}, postEdits) {
         let client;
 
         try {
@@ -64,20 +65,20 @@ function postsDB () {
             await client.connect();
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
-            const res = await postsCollection.updateOne({
+            await postsCollection.updateOne({
                 _id: ObjectId(`${postID}`)
             }, {
-                city: postInfo.city,
-                location: postInfo.location,
-                body: postInfo.body,
-                date: postInfo.date,
-                type: postInfo.type,
-                isHidden: postInfo.isHidden
+                city: postEdits.city,
+                location: postEdits.location,
+                body: postEdits.body,
+                date: postEdits.date,
+                type: postEdits.type,
+                isHidden: postEdits.isHidden
             });
 
-            console.log('edited post: ', res);
+            console.log('edited post');
 
-            return res;
+            return true;
         } finally {
             console.log('editPost: closing DB connection');
             client.close;
