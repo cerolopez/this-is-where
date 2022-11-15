@@ -3,9 +3,9 @@ import { MongoClient, ObjectId } from 'mongodb';
 function postsDB () {
     const postsDB = {};
 
-    const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+    const uri = process.env.DB_URI || 'mongodb://localhost:27017';
     // TODO: get DB name
-    const DB_NAME = '';
+    const DB_NAME = 'this-is-where-db';
     const POSTS_COLLECTION = 'posts';
 
     postsDB.createPost = async function (postInfo) {
