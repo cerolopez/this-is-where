@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PostComponent from "./PostComponent.js";
 
-function postsFeedComponent() {
+function PostsFeedComponent() {
     const [posts, setPosts] = useState([]);
 
     async function reloadData() {
@@ -31,4 +31,4 @@ function postsFeedComponent() {
     )
 }
 
-export default postsFeedComponent;
+export default PostsFeedComponent;
