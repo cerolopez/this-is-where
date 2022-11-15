@@ -60,3 +60,9 @@ h6 {
   font-size: 16px;
   color: lightslategray;
 }
+
+.userSetting {
+  border-color: blueviolet;
+  margin-bottom: 7px;
+  margin-top: 7px;
+}
