@@ -61,6 +61,11 @@ h6 {
   color: lightslategray;
 }
 
+h5#post-subtitle {
+  font-size: 10px;
+  color: lightslategray;
+}
+
 .userSetting {
   border-color: blueviolet;
   margin-bottom: 7px;

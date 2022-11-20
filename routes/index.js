@@ -1,4 +1,5 @@
 import express from 'express';
+import postsDB from '../db/postsDB.js';
 let router = express.Router();
 
 /* GET home page. */
@@ -7,19 +8,29 @@ let router = express.Router();
 // });
 
 router.post('/newPost', async (req, res) => {
+  console.log("I'm in the /newPost route");
   const postInfo = req.body;
-  const newPost = await postsDB.createPost(postInfo);
+  let newPost = await postsDB.createPost(postInfo);
+  res.json(newPost);
 
-  if (newPost) {
-    return res.json({postCreated: true, err: null});
-  } else {
-    res.json({postCreated: false, err: 'error creating new post'});
-  }
+  // if (newPost) {
+  //   return res.json({postCreated: true, err: null});
+  // } else {
+  //   res.json({postCreated: false, err: 'error creating new post'});
+  // }
+})
+
+router.get('/getPosts', async (req, res) => {
+  console.log("I'm in the /getPosts route");
+  const listOfPosts = await postsDB.getPosts();
+  res.json(listOfPosts);
 })
 
 // URL will have postID in URL as query
-router.get('/findPost', async (req, res) => {
-  const postID = req.query.id;
+router.get('/findPost/:id', async (req, res) => {
+  console.log("I'm in /findPost")
+  const postID = req.params.id;
+  console.log("postID: ", postID);
   const foundPost = await postsDB.getPost(postID);
 
   if (foundPost) {

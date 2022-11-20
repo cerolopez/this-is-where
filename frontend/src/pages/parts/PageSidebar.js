@@ -8,7 +8,7 @@ function PageSidebar() {
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                     <div className="offcanvas-header justify-content-end">
                         <button type="button" className="btn-close btn-close-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
@@ -25,7 +25,7 @@ function PageSidebar() {
                             </li>
                         </ul>
                     </div>
-                    <input className="btn btn-light" type="logout" value="Log Out"></input>
+                    <input className="btn btn-light" type="logout" value="Log Out" readOnly></input>
                 </div>
 
             </div>

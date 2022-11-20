@@ -7,18 +7,18 @@ function postsDB () {
     const DB_NAME = 'ThisIsWhereDatabase';
     const POSTS_COLLECTION = 'Posts';
 
-    postsDB.createPost = async function (postInfo) {
+    postsDB.createPost = async function (postInfo = {}) {
+        console.log("I'm in the postsDB function")
         let client;
 
         try {
             client = new MongoClient(uri);
             await client.connect();
-            const db = client.db(DB_NAME);
-            const postsCollection = db.collection(POSTS_COLLECTION);
+            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
             const newPost = {
                 city: postInfo.city,
                 location: postInfo.location,
-                body: postInfo.body,
+                body: postInfo.msg,
                 date: postInfo.date,
                 type: postInfo.type,
                 isHidden: false,
@@ -31,19 +31,37 @@ function postsDB () {
             return res;
         } finally {
             console.log('createPosts: closing DB connection');
-            client.close;
+            client.close();
         }
     }
 
-    // executes when a user clicks on a post card
-    postsDB.getPost = async function (postID = {}) {
+    postsDB.getPosts = async function () {
+        console.log("I'm in the getPosts function")
         let client;
 
         try {
             client = new MongoClient(uri);
             await client.connect();
-            const db = client.db(DB_NAME);
-            const postsCollection = db.collection(POSTS_COLLECTION);
+            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            console.log("Attempting to get all posts");
+            const res = await postsCollection.find().toArray();
+            console.log("Found: ", res);
+            return res;
+        } finally {
+            console.log('getPosts: closing DB connection');
+            client.close();
+        }
+    }
+
+    // executes when a user clicks on a post card
+    postsDB.getPost = async function (postID = {}) {
+        console.log("I'm in the getPost db function")
+        let client;
+
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
             const res = await postsCollection.find({
                 _id: ObjectId(`${postID}`)
             }).toArray();
@@ -53,7 +71,7 @@ function postsDB () {
             return res;
         } finally {
             console.log('getPost: closing DB connection');
-            client.close;
+            client.close();
         }
     }
 
@@ -81,7 +99,7 @@ function postsDB () {
             return true;
         } finally {
             console.log('editPost: closing DB connection');
-            client.close;
+            client.close();
         }
     }
 
@@ -101,7 +119,7 @@ function postsDB () {
             return true;
         } finally {
             console.log('deletePost: closing DB connection');
-            client.close;
+            client.close();
         }
     }
 
@@ -123,7 +141,7 @@ function postsDB () {
             return true;
         } finally {
             console.log('flagPost: closing DB connection');
-            client.close;
+            client.close();
         }
     }
 
@@ -145,7 +163,7 @@ function postsDB () {
             return true;
         } finally {
             console.log('likePost: closing DB connection');
-            client.close;
+            client.close();
         }
     }
 
@@ -167,9 +185,11 @@ function postsDB () {
             return true;
         } finally {
             console.log('unlikePost: closing DB connection');
-            client.close;
+            client.close();
         }
     }
+
+    return postsDB;
 }
 
 export default postsDB();

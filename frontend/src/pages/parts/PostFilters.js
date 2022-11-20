@@ -1,5 +1,4 @@
 import React from "react";
-import PostComponent from "../../components/PostComponent.js"
 
 function PostFilters() {
 
@@ -61,7 +60,6 @@ function PostFilters() {
                     </div>
                 </div>
                 <div className="col-md-3"></div>
-                {<PostComponent></PostComponent>}
             </div>
         </div>
     )
