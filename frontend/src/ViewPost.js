@@ -1,19 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PageTemplate from "./pages/PageTemplate.js"
 import FullPostComponent from "./components/FullPostComponent.js"
 
-function ViewPost(object) {
+function ViewPost() {
+    const [post, setPost] = useState({});
 
-    console.log(object);
+    async function reloadData() {
+        let data;
 
-    const postInfo = {
-        location: "Near the snake statue at Cesar Chavez Park", 
-        city: "San Jose, CA", 
-        type: "Memory",
-        date: "October 31, 2022",
-        username: "eloniusmusk",
-        likeCount: "<3 14"
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        console.log("here's the ID in the URL: ", id);
+
+        try {
+            const res = await fetch(`/getPost?id=${id}`, {
+                method: 'GET'
+            });
+            data = await res.json();
+            console.log("here's the data: ", data);
+        } catch (e) {
+            console("error downloading data: ", e);
+            return false;
+        }
+
+        setPost(data.at(0));
+
     }
+
+    useEffect(
+        () => {
+            reloadData();
+        }, []
+    );
 
     return (
         <div>
@@ -22,13 +41,14 @@ function ViewPost(object) {
             <div className="col-md-3"></div>
             <div className="col-md-6">
                 <h1>View Post</h1>
+                <a href="/dashboard">Back</a>
             </div>
             <div className="col-md-3"></div>
             </div>
             <div className="row d-flex">
                 <div className="col-md-3"></div>
                 <div className="col-md-12">
-                    <FullPostComponent {...postInfo} />
+                    <FullPostComponent {...post} />
                 </div>
                 <div className="col-md-3"></div>
             </div>

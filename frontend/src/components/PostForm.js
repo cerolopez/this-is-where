@@ -29,7 +29,9 @@ function PostForm() {
 
         const data = await res.json();
         console.log("post created: ", data);
-        //window.location.replace("dashboard");
+        setTimeout(() => {
+            window.location.replace("dashboard");
+        }, 2000);
     }
 
     return (
@@ -48,11 +50,11 @@ function PostForm() {
                     onChange={(evt) => setType(evt.target.value)}
                     placeholder="Choose post type">
                         <option defaultValue>--Please choose an option--</option>
-                        <option value="memory" id="memory">Memory</option>
-                        <option value="missed-xn">Missed Connection</option>
-                        <option value="postcard">Postcard</option>
-                        <option value="compliment">Compliment</option>
-                        <option value="freestyle">Freestyle</option>
+                        <option value="Memory" id="memory">Memory</option>
+                        <option value="Missed Connection">Missed Connection</option>
+                        <option value="Postcard">Postcard</option>
+                        <option value="Compliment">Compliment</option>
+                        <option value="Freestyle">Freestyle</option>
                     </select>
                 </div>
                 <br />

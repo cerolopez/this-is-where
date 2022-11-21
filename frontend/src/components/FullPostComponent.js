@@ -9,13 +9,19 @@ function FullPostComponent(object) {
                 <div className="col-md-6">
                     <div className="card" id="postID">
                         <div className="card-body">
-                         <a href="/"><h4>{object.location}</h4></a>
+                         <h4 className="card-title">{object.location}</h4>
                          <div className="row justify-content-start">
                             <div className="col-md-3">
                                 <span className="badge bg-secondary">{object.city}</span>
                             </div>
                             <div className="col-md-3">
                                 <span className="badge bg-secondary">{object.type}</span>
+                            </div>
+                         </div>
+                         <br />
+                         <div className="row">
+                            <div className="col-md-12">
+                                <p>{object.body}</p>
                             </div>
                          </div>
                          <br />
