@@ -2,12 +2,11 @@ import { MongoClient, ObjectId } from 'mongodb';
 
 function postsDB () {
     const postsDB = {};
-
-    const uri = process.env.DB_URI || 'mongodb://localhost:27017';
     const DB_NAME = 'ThisIsWhereDatabase';
     const POSTS_COLLECTION = 'Posts';
 
-    postsDB.createPost = async function (postInfo = {}) {
+    postsDB.createPost = async function (postInfo = {}, user) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         console.log("I'm in the postsDB function")
         let client;
 
@@ -19,8 +18,9 @@ function postsDB () {
                 city: postInfo.city,
                 location: postInfo.location,
                 body: postInfo.msg,
-                date: postInfo.date,
+                date: postInfo.timestamp,
                 type: postInfo.type,
+                username: user,
                 isHidden: false,
                 isFlagged: false,
                 likeCount: 0
@@ -36,6 +36,7 @@ function postsDB () {
     }
 
     postsDB.getPosts = async function () {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         console.log("I'm in the getPosts function")
         let client;
 
@@ -55,6 +56,7 @@ function postsDB () {
 
     // executes when a user clicks on a post card
     postsDB.getPost = async function (postID = {}) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         console.log("I'm in the getPost db function")
         let client;
 

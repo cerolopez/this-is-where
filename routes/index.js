@@ -10,7 +10,9 @@ let router = express.Router();
 router.post('/newPost', async (req, res) => {
   console.log("I'm in the /newPost route");
   const postInfo = req.body;
-  let newPost = await postsDB.createPost(postInfo);
+  // TODO: get username through session
+  const username = "eloniusmusk";
+  let newPost = await postsDB.createPost(postInfo, username);
   res.json(newPost);
 
   // if (newPost) {
@@ -27,9 +29,9 @@ router.get('/getPosts', async (req, res) => {
 })
 
 // URL will have postID in URL as query
-router.get('/findPost/:id', async (req, res) => {
+router.get('/getPost', async (req, res) => {
   console.log("I'm in /findPost")
-  const postID = req.params.id;
+  const postID = req.query.id;
   console.log("postID: ", postID);
   const foundPost = await postsDB.getPost(postID);
 
