@@ -1,21 +1,6 @@
 import React from "react";
 import PageFooter from "./pages/parts/PageFooter.js";
-
-const LoginField = ({ _for, _label, _type }) => {
-    return (
-    <div className="mb-3">
-        <label for={"input" + _for} className="form-label">
-            {_label}
-        </label>
-        <input
-            type={_type}
-            className="form-control"
-            id={"input" + _label}
-            required
-        />
-    </div>
-    );
-};
+import InputField from "./components/InputField.js";
 
 const LogIn = () => {
     return (
@@ -31,10 +16,10 @@ const LogIn = () => {
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
-                        <form>
-                        <LoginField _for="Username" _label="Username" _type="text"> </LoginField>
+                        <form action="/loginTest" method="post">
+                        <InputField _for="Username" _label="Username" _type="text" _name="Username"> </InputField>
 
-                        <LoginField _for="Password" _label="Password" _type="password"> </LoginField>
+                        <InputField _for="Password" _label="Password" _type="password" _name="Password"> </InputField>
                             <button type="submit" className="btn btn-primary">
                                 Submit
                             </button>

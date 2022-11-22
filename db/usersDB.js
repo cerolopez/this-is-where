@@ -82,7 +82,7 @@ function UsersDB() {
 
   };
 
-  usersDB.getUserByUsername = async function(userName) {
+   usersDB.getUserByUsername = async function(userName) {
     const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
 
@@ -101,7 +101,29 @@ function UsersDB() {
     } finally {
       await client.close();
     }
-  };
+  }
+
+  usersDB.getUserByEmail = async function(email) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users).findOne({email: email});
+      if (dbResponse) {
+        return {success: true, msg: "Successfully retrieved User from database.", user: dbResponse};
+      } else {
+        return {success: false, msg: "Could not retrieve User from database.", user: null};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error retrieving User from database.", err: e};
+    } finally {
+      await client.close();
+    }
+  }
+
 
 
 
@@ -271,5 +293,6 @@ function UsersDB() {
 
   return usersDB;
 }
+
 
 export default UsersDB();

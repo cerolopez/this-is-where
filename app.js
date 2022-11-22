@@ -6,6 +6,10 @@ import logger from 'morgan';
 import session from 'express-session';
 import passport from 'passport';
 import dotenv from 'dotenv';
+import usersDB from "./db/usersDB.js";
+import initializePassport from "./auth.js";
+const getUserByUsername = usersDB.getUserByUsername;
+const getUserById = usersDB.getUserById;
 
 dotenv.config();
 
@@ -13,6 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 import indexRouter from './routes/index.js';
+import tempRouter from "./routes/tempRoutesFile.js";
 import { fileURLToPath } from 'url';
 
 const app = express();
@@ -33,10 +38,13 @@ app.use(
   })
 );
 
+initializePassport(passport, getUserByUsername, getUserById);
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
 //app.use("/", authRouter);
+app.use("/", tempRouter);
+
 
 export default app;

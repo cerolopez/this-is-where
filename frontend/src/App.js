@@ -5,7 +5,7 @@ import LandingPage from "./landingPage.js";
 import Home from "./index.js";
 import SignUp from "./signup.js";
 import LogIn from "./login.js";
-import CreatePost from "./CreatePost.js";
+import CreatePost from "./createPost.js";
 import Settings from "./settings.js";
 import ViewPost from "./ViewPost.js";
 
