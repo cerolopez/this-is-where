@@ -1,6 +1,6 @@
 import React from "react";
 import PageFooter from "./pages/parts/PageFooter.js";
-import InputField from "./components/InputField.js";
+import LoginField from "./components/LoginField.js";
 
 const LogIn = () => {
     return (
@@ -16,10 +16,10 @@ const LogIn = () => {
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
-                        <form action="/loginTest" method="post">
-                        <InputField _for="Username" _label="Username" _type="text" _name="Username"> </InputField>
+                        <form action="/userLogin" method="post">
+                        <LoginField _for="Username" _label="Username" _type="text" _name="username"> </LoginField>
 
-                        <InputField _for="Password" _label="Password" _type="password" _name="Password"> </InputField>
+                        <LoginField _for="Password" _label="Password" _type="password" _name="password"> </LoginField>
                             <button type="submit" className="btn btn-primary">
                                 Submit
                             </button>

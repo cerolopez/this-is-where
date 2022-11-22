@@ -25,7 +25,9 @@ function PageSidebar() {
                             </li>
                         </ul>
                     </div>
-                    <input className="btn btn-light" type="logout" value="Log Out" readOnly></input>
+                    <form action="/userLogout" method="post">
+                    <input className="btn btn-light" type="submit" value="Log Out" readOnly></input>
+                    </form>
                 </div>
 
             </div>

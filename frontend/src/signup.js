@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import PageFooter from "./pages/parts/PageFooter.js";
-import InputField from "./components/InputField.js";
+import SignupField from "./components/SignupField.js";
 import Alert from "./components/Alert.js";
 
 const SignUp = () => {
@@ -60,7 +60,7 @@ const SignUp = () => {
                     <div className="col-md-6">
                     <Alert display={alertVisibility}>{alertMsg}</Alert>
                         <form onSubmit={onSubmit}>
-                            <InputField
+                            <SignupField
                                 _for="FirstName"
                                 _label="First Name"
                                 _type="text"
@@ -69,8 +69,8 @@ const SignUp = () => {
                                 _setState={(evt) => setFirstName(evt.target.value)}
                             >
                                 {" "}
-                            </InputField>
-                            <InputField
+                            </SignupField>
+                            <SignupField
                                 _for="LastName"
                                 _label="Last Name"
                                 _type="text"
@@ -79,8 +79,8 @@ const SignUp = () => {
                                 _setState={(evt) => setLastName(evt.target.value)}
                             >
                                 {" "}
-                            </InputField>
-                            <InputField
+                            </SignupField>
+                            <SignupField
                                 _for="Email"
                                 _label="Email address"
                                 _type="email"
@@ -89,8 +89,8 @@ const SignUp = () => {
                                 _setState={(evt) => setEmail(evt.target.value)}
                             >
                                 {" "}
-                            </InputField>
-                            <InputField
+                            </SignupField>
+                            <SignupField
                                 _for="Username"
                                 _label="Username"
                                 _type="text"
@@ -99,9 +99,9 @@ const SignUp = () => {
                                 _setState={(evt) => setUsername(evt.target.value)}
                             >
                                 {" "}
-                            </InputField>
+                            </SignupField>
 
-                            <InputField
+                            <SignupField
                                 _for="Password"
                                 _label="Password"
                                 _type="password"
@@ -110,7 +110,7 @@ const SignUp = () => {
                                 _setState={(evt) => setPassword(evt.target.value)}
                             >
                                 {" "}
-                            </InputField>
+                            </SignupField>
                             <button type="submit" className="btn btn-primary">
                                 Submit
                             </button>

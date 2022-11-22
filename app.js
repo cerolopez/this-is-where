@@ -18,6 +18,7 @@ const __dirname = dirname(__filename);
 
 import indexRouter from './routes/index.js';
 import tempRouter from "./routes/tempRoutesFile.js";
+// import authRouter from "./auth.js";
 import { fileURLToPath } from 'url';
 
 const app = express();
@@ -43,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
-//app.use("/", authRouter);
+// app.use("/", authRouter);
 app.use("/", tempRouter);
 
 

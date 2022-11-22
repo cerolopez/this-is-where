@@ -53,30 +53,40 @@ router.post("/update-user-bio", async (req, res) => {
 
 //TODO - create successfulLogin and failedLogin routes
 router.post("/userLogin", passport.authenticate("local", {
-  successRedirect: "/successfulLogin",
-  failureRedirect: "/failedLogin"
+  successRedirect: "/dashboard",
+  failureRedirect: "/login"
 }));
 
-//temporary, just a test
-router.post("/loginTest", (req, res) => {
-  console.log("loginTest", req.body);
-
+router.post('/userLogout', (req, res) => {
+  req.logout(function(err) {
+    if (err) {return res.json({err: err, msg: "Error logging out."})};
+  });
+  res.redirect("/");
+  // req.session.destroy(()=>{
+  //   res.redirect('/');
+  // });
 });
 
-router.get("/successfulLogin", async (req, res) => {
-  req.session.storedData = {username: ""};
-  const dbResponse = await getUserById(req.session.passport.user);
-  if (dbResponse.success) {
-    req.session.storedData.username = dbResponse.user.username;
-  }
-  res.json({success: true, msg: "Login successful"});
+// //temporary, just a test
+// router.post("/loginTest", (req, res) => {
+//   console.log("loginTest", req.body);
 
-});
+// });
 
-router.get("/failedLogin", (req, res) => {
-  req.session.storedData = {username: ""};
-  res.json({success: false, msg: "Invalid login credentials"});
-});
+// router.get("/successfulLogin", async (req, res) => {
+//   req.session.storedData = {username: ""};
+//   const dbResponse = await getUserById(req.session.passport.user);
+//   if (dbResponse.success) {
+//     req.session.storedData.username = dbResponse.user.username;
+//   }
+//   res.json({success: true, msg: "Login successful"});
+
+// });
+
+// router.get("/failedLogin", (req, res) => {
+//   req.session.storedData = {username: ""};
+//   res.json({success: false, msg: "Invalid login credentials"});
+// });
 
 
 
