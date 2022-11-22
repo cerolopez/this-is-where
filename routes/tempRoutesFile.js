@@ -80,6 +80,15 @@ router.post("/register", async (req, res) => {
 
 });
 
+router.get("/getUserId", (req, res) => {
+  const id = req.session.passport.user.id;
+  res.json({user_id: id});
+});
+
+router.get("/getUsername", (req, res) => {
+  const username = req.session.passport.user.username;
+  res.json({username: username});
+});
 
 
 
