@@ -1,6 +1,10 @@
 import React from "react";
 import PageTemplate from "./pages/PageTemplate.js";
 
+import PropTypes from "prop-types";
+
+
+// Get this into a separate file
 const UserSetting = ({setting}) => {
     return (
         <div className="input-group flex-nowrap">
@@ -17,6 +21,10 @@ const UserSetting = ({setting}) => {
         </div>
     );
 };
+
+UserSetting.propTypes  = {
+    setting: PropTypes.string.isRequired
+}
 
 const Settings = () => {
     return (
@@ -71,5 +79,8 @@ const Settings = () => {
         </div>
     );
 };
+
+Settings.propTypes = {};
+
 
 export default Settings;
