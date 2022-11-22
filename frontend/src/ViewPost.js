@@ -38,8 +38,8 @@ function ViewPost() {
         <div>
         <div className="container">
             <div className="row d-flex header-row">
-            <div className="col-md-3"></div>
-            <div className="col-md-6">
+            <div className="col-md-2"></div>
+            <div className="col-md-8">
                 <h1>View Post</h1>
                 <a href="/dashboard">Back</a>
             </div>
@@ -50,7 +50,7 @@ function ViewPost() {
                 <div className="col-md-12">
                     <FullPostComponent {...post} />
                 </div>
-                <div className="col-md-3"></div>
+                <div className="col-md-2"></div>
             </div>
             </div>
             <PageTemplate></PageTemplate>

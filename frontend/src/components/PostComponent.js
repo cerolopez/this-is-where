@@ -1,5 +1,4 @@
 import React from "react";
-import ViewPost from "../ViewPost.js"
 import PropTypes from "prop-types";
 
 function PostComponent({ post }) {
@@ -9,8 +8,6 @@ function PostComponent({ post }) {
 
         window.location.replace('/view-post?id=' + id);
     }
-
-
 
     return (
         <div className="container">
