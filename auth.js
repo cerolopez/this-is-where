@@ -47,29 +47,3 @@ passport.deserializeUser(function (user, cb) {
 }
 
 export default initialize;
-
-
-
-
-// const strategy = new LocalStrategy(async function verify(username, password, cb) {
-//   const dbResponse = await usersDB.getUserByUsername(username);
-//   if (!dbResponse.success) {
-//     return cb(null, false, { message: "Invalid Username"});
-//     console.log("couldnt log in with this username.");
-//   }
-//   const user = dbResponse.user;
-//   try {
-//     if (await bcrypt.compare(password, user.password)) {
-//       console.log("Password matched!");
-//       return cb(null, user)
-
-//     } else {
-//       console.log("Password failed:(");
-//       return cb(null, false, { message: "Invalid Password" });
-
-//     }
-//   } catch (e) {
-//     return cb(e);
-//   }
-
-// });

@@ -51,7 +51,6 @@ router.post("/update-user-bio", async (req, res) => {
 
 });
 
-//TODO - create successfulLogin and failedLogin routes
 router.post("/userLogin", passport.authenticate("local", {
   successRedirect: "/dashboard",
   failureRedirect: "/login"
@@ -62,33 +61,7 @@ router.post('/userLogout', (req, res) => {
     if (err) {return res.json({err: err, msg: "Error logging out."})};
   });
   res.redirect("/");
-  // req.session.destroy(()=>{
-  //   res.redirect('/');
-  // });
 });
-
-// //temporary, just a test
-// router.post("/loginTest", (req, res) => {
-//   console.log("loginTest", req.body);
-
-// });
-
-// router.get("/successfulLogin", async (req, res) => {
-//   req.session.storedData = {username: ""};
-//   const dbResponse = await getUserById(req.session.passport.user);
-//   if (dbResponse.success) {
-//     req.session.storedData.username = dbResponse.user.username;
-//   }
-//   res.json({success: true, msg: "Login successful"});
-
-// });
-
-// router.get("/failedLogin", (req, res) => {
-//   req.session.storedData = {username: ""};
-//   res.json({success: false, msg: "Invalid login credentials"});
-// });
-
-
 
 router.post("/register", async (req, res) => {
   const usernameAvailable = await usernameIsAvailable(req.body.username);

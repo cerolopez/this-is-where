@@ -12,10 +12,6 @@ const SignUp = () => {
     const [alertMsg, setAlertMsg] = useState("");
     const [alertVisibility, setAlertVisibility] = useState("none");
 
-    // const successMsg = "Successfully created a new account! Redirecting to login...";
-    // const failureMsg = "That username is unavailable. Try another one.";
-
-
     async function onSubmit(evt) {
         evt.preventDefault();
         const registrationInfo = {
@@ -43,7 +39,6 @@ const SignUp = () => {
         }
 
     }
-
 
     return (
         <div>
