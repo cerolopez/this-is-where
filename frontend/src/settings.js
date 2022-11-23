@@ -1,24 +1,73 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import PageTemplate from "./pages/PageTemplate.js";
+import Alert from "./components/Alert.js";
 
-const UserSetting = ({setting}) => {
+const UserSetting = ({setting, _setState, _value, _type}) => {
     return (
         <div className="input-group flex-nowrap">
             <span className="input-group-text userSetting" id="addon-wrapping">
                 Change {setting} 
             </span>
             <input
-                type="text"
+                type={_type}
                 className="form-control userSetting"
-                placeholder={`New ${setting}`}
+                // placeholder={`New ${setting}`}
                 aria-label={`New ${setting}`}
                 aria-describedby="addon-wrapping"
+                onChange={_setState}
+                value={_value}
+                required
             />
         </div>
     );
 };
 
 const Settings = () => {
+    const [newUsername, setNewUsername] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [alertMsg, setAlertMsg] = useState("");
+    const [alertVisibility, setAlertVisibility] = useState("none");
+    const [alertType, setAlertType] = useState("");
+
+    useEffect( () => {
+        async function setCurrentUserInfo() {
+            const usernameRes = await fetch("/getUsername");
+            const usernameResJson = await usernameRes.json();
+            const emailRes = await fetch("/getEmail");
+            const emailResJson = await emailRes.json();
+            const currentUsername = usernameResJson.username;
+            const currentEmail = emailResJson.email;
+            setNewUsername(currentUsername);
+            setNewEmail(currentEmail);
+    }
+    setCurrentUserInfo();
+
+    }, []);
+
+    async function onSubmit(evt) {
+        evt.preventDefault();
+        const usernameRes = await fetch("/updateUsername", 
+            {method:"POST", 
+            headers: {"Content-Type": "application/json"}, 
+            body: JSON.stringify({username: newUsername})});
+        const usernameResJson = await usernameRes.json();
+        const emailRes = await fetch("/updateUserEmail", 
+            {method:"POST", 
+            headers: {"Content-Type": "application/json"}, 
+            body: JSON.stringify({email: newEmail})});
+        const emailResJson = await emailRes.json();
+        if (!usernameResJson.success || !emailResJson.success) {
+            setAlertMsg("There was an issue and your account information could not be updated at this time.");
+            setAlertType("danger");
+            setAlertVisibility("block");
+        } else {
+            setAlertMsg("Successfully changed your account information.");
+            setAlertType("success");
+            setAlertVisibility("block");
+        }
+    }
+
+
     return (
         <div>
             <div className="container">
@@ -32,9 +81,10 @@ const Settings = () => {
                 <div className="row d-flex">
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
-                        <form id="submitUsernameForm" name="submitUsernameForm">
-                        <UserSetting setting="username"></UserSetting>
-                        <UserSetting setting="email address"></UserSetting>
+                    <Alert alert_type={alertType} display={alertVisibility}>{alertMsg}</Alert>
+                        <form id="submitUsernameForm" name="submitUsernameForm" onSubmit={onSubmit}>
+                        <UserSetting _type="text" setting="username" _value={newUsername} _setState={(evt) => setNewUsername(evt.target.value)}></UserSetting>
+                        <UserSetting _type="email" setting="email address" _value={newEmail} _setState={(evt) => setNewEmail(evt.target.value)}></UserSetting>
                             <button
                                 type="submit"
                                 id="submitUsernameButton"
@@ -55,12 +105,14 @@ const Settings = () => {
                                     this will permanently delete your account
                                     and all of your posts!
                                 </p>
+                                <form action="/deleteAccount" method="post">
                                 <button
                                     className="btn btn-danger"
                                     id="deleteButton"
                                 >
                                     Delete Account
                                 </button>
+                                </form>
                             </div>
                         </div>
                     </div>

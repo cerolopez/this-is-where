@@ -212,6 +212,28 @@ function UsersDB() {
     }
   };
 
+  usersDB.updateEmail = async function(userId, newEmail) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users).updateOne({_id: userIdObj}, { $set: { email: newEmail } });
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully updated email."};
+      } else {
+        return {success: false, msg: "Could not update email."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error updating email.", err: e};
+    } finally {
+      await client.close();
+    }
+  };
+
   usersDB.updateUserBio = async function(userId, newBio) {
     const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);

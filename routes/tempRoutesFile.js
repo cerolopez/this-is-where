@@ -7,8 +7,8 @@ let router = express.Router();
 const dbError = new Error("No response from database.");
 
 
-router.get("/change-profile-privacy", async (req, res) => {
-  const userId = req.session.passport.user; //TODO - add userID to session
+router.get("/changeProfilePrivacy", async (req, res) => {
+  const userId = req.session.passport.user.id;
   if (!userId) {
     return res.json({
       success: false,
@@ -32,9 +32,9 @@ router.get("/change-profile-privacy", async (req, res) => {
 
 });
 
-router.post("/update-user-bio", async (req, res) => {
+router.post("/updateUserBio", async (req, res) => {
   const bio = req.body.bio;
-  const userId = req.session.passport.user;
+  const userId = req.session.passport.user.id;
   let dbResponse = await usersDB.updateUserBio(userId, bio);
   if (!dbResponse) {
     return res.json({
@@ -51,12 +51,53 @@ router.post("/update-user-bio", async (req, res) => {
 
 });
 
+router.post("/updateUserEmail", async (req, res) => {
+  const newEmail = req.body.email;
+  const userId = req.session.passport.user.id;
+  const dbResponse = await usersDB.updateEmail(userId, newEmail);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  if (!dbResponse.success) {
+    res.json({success: false, msg: dbResponse.msg});
+  } else {
+    res.json({success: true, msg: dbResponse.msg});
+  }
+});
+
+router.post("/updateUsername", async (req, res) => {
+  const newUsername = req.body.username;
+  const userId = req.session.passport.user.id;
+  const dbResponse = await usersDB.updateUsername(userId, newUsername);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  if (!dbResponse.success) {
+    res.json({success: false, msg: dbResponse.msg});
+  } else {
+    res.json({success: true, msg: dbResponse.msg});
+  }
+});
+
+
+
+
+
+
 router.post("/userLogin", passport.authenticate("local", {
   successRedirect: "/dashboard",
   failureRedirect: "/login"
 }));
 
 router.post('/userLogout', (req, res) => {
+  req.logout(function(err) {
+    if (err) {return res.json({err: err, msg: "Error logging out."})};
+  });
+  res.redirect("/");
+});
+
+router.post("/deleteAccount", async (req, res) => {
+  const dbResponse = await usersDB.deleteUserFromDb(req.session.passport.user.id);
   req.logout(function(err) {
     if (err) {return res.json({err: err, msg: "Error logging out."})};
   });
@@ -80,16 +121,38 @@ router.post("/register", async (req, res) => {
 
 });
 
+
 router.get("/getUserId", (req, res) => {
   const id = req.session.passport.user.id;
-  res.json({user_id: id});
+  if (!id) {
+    res.json({success: false, msg: "Could not retrieve user id", user_id: null});
+  } else {
+    res.json({success: true, msg: "Successfully retrieved user id", user_id: id});
+  }
 });
 
 router.get("/getUsername", (req, res) => {
   const username = req.session.passport.user.username;
-  res.json({username: username});
+  if (!username) {
+    res.json({success: false, msg: "Could not retrieve username", username: null});
+  } else {
+    res.json({success: true, msg: "Successfully retrieved username", username: username});
+  }
 });
 
+router.get("/getEmail", async (req, res) => {
+  const dbResponse = await usersDB.getUserByUsername(req.session.passport.user.username);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  if (!dbResponse.success) {
+    res.json({success: false, msg: "Could not retrieve user's email", email: null});
+  } else {
+    const email = dbResponse.user.email;
+    res.json({success: true, msg: "Successfully retrieved email", email: email});
+  }
+
+});
 
 
 
