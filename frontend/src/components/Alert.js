@@ -1,8 +1,9 @@
 import React from "react";
 
 function Alert({alert_type, children, display}) {
+  const alertClass = "alert alert-" + alert_type + " alert-dismissible fade show"
   return (
-    <div className={"alert alert-" + {alert_type} + " alert-dismissible fade show"} role="alert" style={{display:display}}>
+    <div className={alertClass} role="alert" style={{display:display}}>
       {children}
       <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

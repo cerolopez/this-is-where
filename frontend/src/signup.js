@@ -11,6 +11,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const [alertMsg, setAlertMsg] = useState("");
     const [alertVisibility, setAlertVisibility] = useState("none");
+    const [alertType, setAlertType] = useState("");
 
     async function onSubmit(evt) {
         evt.preventDefault();
@@ -29,9 +30,11 @@ const SignUp = () => {
         const resJson = await res.json();
         if (!resJson.success) {
             setAlertMsg(resJson.msg);
+            setAlertType("danger");
             setAlertVisibility("block");
         } else {
             setAlertMsg(resJson.msg);
+            setAlertType("success");
             setAlertVisibility("block");
             setTimeout(() => {
             window.location.replace("login");
@@ -53,7 +56,7 @@ const SignUp = () => {
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
-                    <Alert display={alertVisibility}>{alertMsg}</Alert>
+                    <Alert alert_type={alertType} display={alertVisibility}>{alertMsg}</Alert>
                         <form onSubmit={onSubmit}>
                             <SignupField
                                 _for="FirstName"
