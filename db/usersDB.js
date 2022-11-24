@@ -124,10 +124,6 @@ function UsersDB() {
     }
   }
 
-
-
-
-
   //NOTE: I could consolidate add/remove post into one function that takes a string ("add" or "remove") as a parameter
 
   /**

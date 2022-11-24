@@ -2,24 +2,18 @@ import express from 'express';
 import postsDB from '../db/postsDB.js';
 let router = express.Router();
 
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
-
 router.post('/newPost', async (req, res) => {
   console.log("I'm in the /newPost route");
   const postInfo = req.body;
-  // TODO: get username through session
-  const username = "eloniusmusk";
+  const username = req.session.passport.user.username;
+  const userId = req.session.passport.user.id;
+  //TODO - return Post from postsDB.createPost
   let newPost = await postsDB.createPost(postInfo, username);
-  res.json(newPost);
-
-  // if (newPost) {
-  //   return res.json({postCreated: true, err: null});
-  // } else {
-  //   res.json({postCreated: false, err: 'error creating new post'});
-  // }
+  const postID = newPost._id.toString();
+  const dbResponse = await usersDB.addPostToUser(userId, postId);
+  if (dbResponse.success) {
+    res.json({success: true, msg: "Successfully created new post.", post: newPost});
+  }
 })
 
 router.get('/getPosts', async (req, res) => {
