@@ -1,8 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PageFooter from "./pages/parts/PageFooter.js";
 import LoginField from "./components/LoginField.js";
+import {useNavigate} from "react-router-dom";
 
 const LogIn = () => {
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function getAuth() {
+      const res = await fetch("/getAuthentication");
+      const resJson = await res.json();
+      if (resJson.authenticated) {
+        console.log("user is authenticated.");
+        navigate("/dashboard", {replace: true});
+      } else {
+        console.log("user is not authenticated.");
+      }
+    }
+    getAuth();
+  })
     return (
         <div>
             <div className="container text-center">

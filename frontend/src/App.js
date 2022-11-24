@@ -8,6 +8,7 @@ import LogIn from "./login.js";
 import CreatePost from "./CreatePost.js";
 import Settings from "./settings.js";
 import ViewPost from "./ViewPost.js";
+import NotFound from "./pages/NotFound.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/create-post" element={<CreatePost></CreatePost>} />
         <Route exact path="/settings" element={<Settings></Settings>} />
         <Route exact path="/view-post" element={<ViewPost></ViewPost>} />
+        <Route path="*" element={<NotFound></NotFound>} />
 
       </Routes>
     </Router>

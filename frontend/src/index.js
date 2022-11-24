@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
+import {useNavigate} from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -15,6 +16,22 @@ root.render(
 );
 
 const Home = () => {
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function getAuth() {
+      const res = await fetch("/getAuthentication");
+      const resJson = await res.json();
+      if (!resJson.authenticated) {
+        console.log("user is not authenticated.");
+        navigate("/login", {replace: true});
+      } else {
+        console.log("user is authenticated.");
+      }
+    }
+    getAuth();
+  })
+
   return (
     <div>
       <div className="container">

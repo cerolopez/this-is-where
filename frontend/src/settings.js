@@ -1,28 +1,28 @@
 import React, {useState, useEffect} from "react";
 import PageTemplate from "./pages/PageTemplate.js";
 import Alert from "./components/Alert.js";
-
-const UserSetting = ({setting, _setState, _value, _type}) => {
-    return (
-        <div className="input-group flex-nowrap">
-            <span className="input-group-text userSetting" id="addon-wrapping">
-                Change {setting} 
-            </span>
-            <input
-                type={_type}
-                className="form-control userSetting"
-                // placeholder={`New ${setting}`}
-                aria-label={`New ${setting}`}
-                aria-describedby="addon-wrapping"
-                onChange={_setState}
-                value={_value}
-                required
-            />
-        </div>
-    );
-};
+import {useNavigate} from "react-router-dom";
+import UserSetting from "./components/UserSetting";
 
 const Settings = () => {
+    const [authenticated, setAuthenticated] = useState(false);
+    const navigate = useNavigate();
+      useEffect(() => {
+        async function getAuth() {
+          const res = await fetch("/getAuthentication");
+          const resJson = await res.json();
+          if (!resJson.authenticated) {
+            console.log("user is not authenticated.");
+            navigate("/login", {replace: true});
+          } else {
+            setAuthenticated(true);
+            console.log("user is authenticated.");
+          }
+        }
+        getAuth();
+      })
+
+
     const [newUsername, setNewUsername] = useState("");
     const [newEmail, setNewEmail] = useState("");
     const [alertMsg, setAlertMsg] = useState("");
@@ -31,6 +31,7 @@ const Settings = () => {
 
     useEffect( () => {
         async function setCurrentUserInfo() {
+            if (!authenticated) {return;}
             const usernameRes = await fetch("/getUsername");
             const usernameResJson = await usernameRes.json();
             const emailRes = await fetch("/getEmail");
@@ -42,7 +43,7 @@ const Settings = () => {
     }
     setCurrentUserInfo();
 
-    }, []);
+    }, [authenticated]);
 
     async function onSubmit(evt) {
         evt.preventDefault();

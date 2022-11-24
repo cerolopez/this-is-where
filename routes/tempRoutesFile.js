@@ -154,6 +154,10 @@ router.get("/getEmail", async (req, res) => {
 
 });
 
+router.get("/getAuthentication", (req, res) => {
+  res.json({authenticated: req.isAuthenticated()});
+});
+
 
 
 
