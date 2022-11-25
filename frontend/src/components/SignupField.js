@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const SignupField = ({ _for, _label, _type, _name, _setState, _value }) => {
     return (
@@ -19,6 +20,13 @@ const SignupField = ({ _for, _label, _type, _name, _setState, _value }) => {
     );
 };
 
-export default SignupField;
+SignupField.propTypes = {
+    _for: PropTypes.string.isRequired,
+    _label: PropTypes.string.isRequired,
+    _type: PropTypes.string.isRequired,
+    _name: PropTypes.string.isRequired,
+    _setState: PropTypes.func.isRequired,
+    _value: PropTypes.string.isRequired
+}
 
-//TODO: add propTypes
+export default SignupField;

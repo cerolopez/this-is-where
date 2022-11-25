@@ -84,8 +84,8 @@ const Settings = () => {
                     <div className="col-md-6">
                     <Alert alert_type={alertType} display={alertVisibility}>{alertMsg}</Alert>
                         <form id="submitUsernameForm" name="submitUsernameForm" onSubmit={onSubmit}>
-                        <UserSetting _type="text" setting="username" _value={newUsername} _setState={(evt) => setNewUsername(evt.target.value)}></UserSetting>
-                        <UserSetting _type="email" setting="email address" _value={newEmail} _setState={(evt) => setNewEmail(evt.target.value)}></UserSetting>
+                        <UserSetting _type="text" _setting="username" _value={newUsername} _setState={(evt) => setNewUsername(evt.target.value)}></UserSetting>
+                        <UserSetting _type="email" _setting="email address" _value={newEmail} _setState={(evt) => setNewEmail(evt.target.value)}></UserSetting>
                             <button
                                 type="submit"
                                 id="submitUsernameButton"

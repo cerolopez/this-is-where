@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PageTemplate from "./pages/PageTemplate.js"
 import FullPostComponent from "./components/FullPostComponent.js"
+import { Link } from "react-router-dom";
 
 function ViewPost() {
     const [post, setPost] = useState({});
@@ -41,7 +42,8 @@ function ViewPost() {
             <div className="col-md-2"></div>
             <div className="col-md-8">
                 <h1>View Post</h1>
-                <a href="/dashboard">Back</a>
+                <Link to="/dashboard">Back</Link>
+                {/*<a href="/dashboard">Back</a>*/}
             </div>
             <div className="col-md-3"></div>
             </div>

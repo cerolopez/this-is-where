@@ -1,16 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const UserSetting = ({setting, _setState, _value, _type}) => {
+const UserSetting = ({_setting, _setState, _value, _type}) => {
     return (
         <div className="input-group flex-nowrap">
             <span className="input-group-text userSetting" id="addon-wrapping">
-                Change {setting} 
+                Change {_setting} 
             </span>
             <input
                 type={_type}
                 className="form-control userSetting"
                 // placeholder={`New ${setting}`}
-                aria-label={`New ${setting}`}
+                aria-label={`New ${_setting}`}
                 aria-describedby="addon-wrapping"
                 onChange={_setState}
                 value={_value}
@@ -19,5 +20,12 @@ const UserSetting = ({setting, _setState, _value, _type}) => {
         </div>
     );
 };
+
+UserSetting.propTypes = {
+    _setting: PropTypes.string.isRequired,
+    _setState: PropTypes.func.isRequired,
+    _value: PropTypes.string.isRequired,
+    _type: PropTypes.string.isRequired
+}
 
 export default UserSetting;

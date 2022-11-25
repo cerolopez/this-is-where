@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function PageSidebar() {
 
@@ -15,13 +16,16 @@ function PageSidebar() {
                     <div className="offcanvas-body">
                         <ul className="navbar-nav flex-grow-1 pe-3">
                             <li className="nav-item">
-                                <a className="nav-link" href="/dashboard"><h5>Home</h5></a>
+                                <Link className="nav-link" to="/dashboard"><h5>Home</h5></Link>
+                                {/*<a className="nav-link" href="/dashboard"><h5>Home</h5></a>*/}
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/profile"><h5>Profile</h5></a>
+                                <Link className="nav-link" to="/profile"><h5>Profile</h5></Link>
+                                {/*<a className="nav-link" href="/profile"><h5>Profile</h5></a>*/}
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/settings"><h5>Settings</h5></a>
+                                <Link className="nav-link" to="/settings"><h5>Settings</h5></Link>
+                                {/*<a className="nav-link" href="/settings"><h5>Settings</h5></a>*/}
                             </li>
                         </ul>
                     </div>
