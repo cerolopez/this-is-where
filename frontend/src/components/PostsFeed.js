@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PostComponent from "./PostComponent.js";
 
-function PostsFeedComponent() {
+export function PostsFeedComponent() {
     const [posts, setPosts] = useState([{ post: '' }]);
 
     useEffect(
