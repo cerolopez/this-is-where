@@ -23,6 +23,7 @@ function postsDB () {
                 username: user,
                 isHidden: false,
                 flaggedBy: [],
+                reports: [],
                 likeCount: 0
             }
             console.log("Attempting to create a new post");
@@ -190,6 +191,11 @@ function postsDB () {
             client.close();
         }
     }
+    //TODO. Push reportType to Post's reports array.
+    //When a user submits a report, the report type sent will be 1, 2, or 3
+    postsDB.addReport = async function(reportType) {
+
+    };
 
     return postsDB;
 }

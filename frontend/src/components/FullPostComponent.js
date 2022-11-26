@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import getLikesByUser from ".//PostsFeed.js";
+import ReportPost from "./ReportPost.js";
 
 function FullPostComponent(post) {
     const [like, setLike] = useState();
@@ -59,7 +60,7 @@ function FullPostComponent(post) {
                     </button>
                 </div>
                 <div className="col-md-4">
-                Flag button/link goes here
+                <ReportPost> </ReportPost>
                 </div>
                 <div className="col-md-2">
                 </div>
