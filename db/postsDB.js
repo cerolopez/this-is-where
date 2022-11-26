@@ -22,7 +22,7 @@ function postsDB () {
                 type: postInfo.type,
                 username: user,
                 isHidden: false,
-                isFlagged: false,
+                flaggedBy: [],
                 likeCount: 0
             }
             console.log("Attempting to create a new post");
