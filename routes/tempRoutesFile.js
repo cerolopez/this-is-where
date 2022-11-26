@@ -202,7 +202,8 @@ router.post("/unflagPost", async (req, res) => {
   res.json(dbResponse);
 });
 
-router.post("/likePost", async (req, res) => {
+router.get("/likePost", async (req, res) => {
+  console.log("I'm in the /likePost route");
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
   const usersDbResponse = await usersDB.likePost(postId, userId);
@@ -219,7 +220,24 @@ router.post("/likePost", async (req, res) => {
     res.json({success: false, msg: "Could not like post or increment its like count."});
   }
 
-  //TODO [CL] - create postsDB.incrementLikes()
+});
+
+router.get("/unlikePost", async (req, res) => {
+  const postId = req.query.id;
+  const userId = req.session.passport.user.id;
+  const usersDbResponse = await usersDB.unlikePost(postId, userId);
+  const postsDbResponse = await postsDB.unlikePost(postId);
+  if (usersDbResponse.err) {
+    return res.json({success: false, msg: usersDbResponse.msg, err: usersDbResponse.err});
+  }
+  if (postsDbResponse.err) {
+    return res.json({success: false, msg: usersDbResponse.msg, err: postsDbResponse.err});
+  }
+  if (usersDbResponse.success && postsDbResponse.success) {
+    res.json({success: true, msg: "Successfully unliked post and decremented post's like count."});
+  } else {
+    res.json({success: false, msg: "Could not unlike post or decrement its like count."});
+  }
 
 });
 
@@ -295,27 +313,27 @@ router.post('/flagPost', async (req, res) => {
   }
 })
 
-router.post('/likePost', async (req, res) => {
-  const postID = req.query.id;
-  const likePost = await postsDB.likePost(postID);
+// router.post('/likePost', async (req, res) => {
+//   const postID = req.query.id;
+//   const likePost = await postsDB.likePost(postID);
 
-  if (likePost) {
-    return res.json({postLiked: true, err: null});
-  } else {
-    return res.json({postLiked: false, err: 'error liking post'});
-  }
-})
+//   if (likePost) {
+//     return res.json({postLiked: true, err: null});
+//   } else {
+//     return res.json({postLiked: false, err: 'error liking post'});
+//   }
+// })
 
-router.post('/unlikePost', async (req, res) => {
-  const postID = req.query.id;
-  const isUnliked = await postsDB.unlikePost(postID);
+// router.post('/unlikePost', async (req, res) => {
+//   const postID = req.query.id;
+//   const isUnliked = await postsDB.unlikePost(postID);
 
-  if (isUnliked) {
-    return res.json({postUnliked: true, err: null});
-  } else {
-    return res.json({postUnliked: false, err: 'error unliking post'});
-  }
-})
+//   if (isUnliked) {
+//     return res.json({postUnliked: true, err: null});
+//   } else {
+//     return res.json({postUnliked: false, err: 'error unliking post'});
+//   }
+// })
 
 // this route checks if the current user has liked a post; returns boolean
 router.get('/checkIfLiked', async (req, res) => {
