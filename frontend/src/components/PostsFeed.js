@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PostComponent from "./PostComponent.js";
 
 function PostsFeedComponent() {
-    const [posts, setPosts] = useState([{ post: 'test' }]);
+    const [posts, setPosts] = useState([{ post: '' }]);
 
     useEffect(
         () => {
@@ -16,6 +16,18 @@ function PostsFeedComponent() {
     }, []
     );
 
+    async function getLikesByUser(postID) {
+        const res = await fetch(`/checkIfLiked?id=${postID}`)
+        const isLiked = await res.json();
+        return isLiked;
+    }
+
+    async function getFavesByUser(postID) {
+        const res = await fetch(`/checkIfFavorited?id=${postID}`);
+        const isFavorited = await res.json();
+        return isFavorited;
+    }
+
     return (
 
         <div className="PostsFeed">
@@ -23,6 +35,9 @@ function PostsFeedComponent() {
                 <PostComponent
                     key={`object_${i}`}
                     post={p}
+                    initLikeCount={p.likeCount}
+                    getLikesByUser={getLikesByUser}
+                    getFavesByUser={getFavesByUser}
                     ></PostComponent>
             ))}
         </div>
