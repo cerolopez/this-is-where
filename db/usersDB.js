@@ -3,6 +3,7 @@ import * as mongodb from "mongodb";
 function UsersDB() {
   const usersDB = {};
   const Users = "Users";
+  const Posts = "Posts";
   const DB_NAME = "ThisIsWhereDatabase";
 
   /**
@@ -324,6 +325,37 @@ function UsersDB() {
     } finally {
       await client.close();
     }
+  };
+
+
+  //TODO - move this to postsDB.
+  usersDB.flagPost = async function(postId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const postIdObj = new mongodb.ObjectId(postId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const Post = await ThisIsWhereDb.collection(Posts).findOne({_id: postIdObj});
+      if (!Post) {
+        return {success: false, msg: "The Post could not be found."};
+      }
+      const dbResponse = await ThisIsWhereDb.collection(Posts)
+          .updateOne({_id: postIdObj}, {$set: {is_reported: true}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully flagged/unflagged post."};
+      } else {
+        return {success: false, msg: "Could not flag/unflag post."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error flagging/unflagging post.", err: e};
+
+    } finally {
+      await client.close();
+    }
+
   };
 
 

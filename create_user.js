@@ -13,10 +13,12 @@ export async function createUser(first_name, last_name, username, password, emai
     email: email,
     profile_is_hidden: false,
     location: "",
+    gender: "",
     bio: "",
     date_joined: Date(),
     posts: [],
-    favorited_posts: []
+    favorited_posts: [],
+    liked_posts: []
   }
   return user;
 }
