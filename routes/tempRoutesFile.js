@@ -159,21 +159,68 @@ router.get("/getAuthentication", (req, res) => {
 });
 
 router.post("/favoritePost", async (req, res) => {
-  const postId = req.body.postId;
+  const postId = req.query.id;
   const userId = req.session.passport.user.id;
   const dbResponse = await usersDB.addPostToFavorites(userId, postId);
   if (dbResponse.err) {
     return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
   }
   res.json(dbResponse); //sends back the dbResponse object with success boolean and msg
-})
+});
 
-router.post("/flagOrUnflagPost", async (req, res) => {
-  const postId = req.body.postId;
+router.post("/unfavoritePost", async (req, res) => {
+  const postId = req.query.id;
   const userId = req.session.passport.user.id;
-  //TODO - change to postsDB.changeFlagStatus
-  const dbResponse = await usersDB.changeFlagStatus(postId)
-})
+  const dbResponse = await usersDB.removePostFromFavorites(userId, postId);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  res.json(dbResponse); //sends back the dbResponse object with success boolean and msg
+
+});
+
+router.post("/flagPost", async (req, res) => {
+  const postId = req.query.id;
+  const userId = req.session.passport.user.id;
+  //TODO - change to postsDB.flagPost
+  const dbResponse = await usersDB.flagPost(postId, userId);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  res.json(dbResponse);
+});
+
+router.post("/unflagPost", async (req, res) => {
+  const postId = req.query.id;
+  const userId = req.session.passport.user.id;
+  //TODO - change to postsDB.unflagPost
+  const dbResponse = await usersDB.unflagPost(postId, userId);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  res.json(dbResponse);
+});
+
+router.post("/likePost", async (req, res) => {
+  const postId = req.query.id;
+  const userId = req.session.passport.user.id;
+  const usersDbResponse = await usersDB.likePost(postId, userId);
+  const postsDbResponse = await postsDB.likePost(postId);
+  if (usersDbResponse.err) {
+    return res.json({success: false, msg: usersDbResponse.msg, err: usersDbResponse.err});
+  }
+  if (postsDbResponse.err) {
+    return res.json({success: false, msg: usersDbResponse.msg, err: postsDbResponse.err});
+  }
+  if (usersDbResponse.success && postsDbResponse.success) {
+    res.json({success: true, msg: "Successfully liked post and incremented post's like count."});
+  } else {
+    res.json({success: false, msg: "Could not like post or increment its like count."});
+  }
+
+  //TODO [CL] - create postsDB.incrementLikes()
+
+});
 
 
 

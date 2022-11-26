@@ -208,6 +208,32 @@ function UsersDB() {
     }
   };
 
+  usersDB.removePostFromFavorites = async function(userId, postId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users)
+        .updateOne({_id: userIdObj}, {$pull: {favorited_posts: postId}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully removed Post from User's favorited posts."};
+      } else {
+        return {success: false, msg: "Could not remove Post from User's favorited posts."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error removing Post from User's favorited Posts.", err: e};
+    } finally {
+      await client.close();
+    }
+  };
+
+
+
+
   usersDB.updateUsername = async function(userId, newUsername) {
     const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
@@ -329,7 +355,7 @@ function UsersDB() {
 
 
   //TODO - move this to postsDB.
-  usersDB.flagPost = async function(postId) {
+  usersDB.flagPost = async function(postId, userId) {
     const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
     const postIdObj = new mongodb.ObjectId(postId);
@@ -337,26 +363,141 @@ function UsersDB() {
     try {
       await client.connect();
       const ThisIsWhereDb = await client.db(DB_NAME);
-      const Post = await ThisIsWhereDb.collection(Posts).findOne({_id: postIdObj});
-      if (!Post) {
-        return {success: false, msg: "The Post could not be found."};
-      }
       const dbResponse = await ThisIsWhereDb.collection(Posts)
-          .updateOne({_id: postIdObj}, {$set: {is_reported: true}});
+          .updateOne({_id: postIdObj}, {$push: {flaggedBy: userId}});
       if (dbResponse.acknowledged) {
-        return {success: true, msg: "Successfully flagged/unflagged post."};
+        return {success: true, msg: "Successfully flagged post."};
       } else {
-        return {success: false, msg: "Could not flag/unflag post."};
+        return {success: false, msg: "Could not flag post."};
       }
     } catch (e) {
       console.error(e);
-      return {success: false, msg: "Error flagging/unflagging post.", err: e};
+      return {success: false, msg: "Error flagging post.", err: e};
 
     } finally {
       await client.close();
     }
 
   };
+  //TODO = move this to postsDB.
+  usersDB.unflagPost = async function(postId, userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const postIdObj = new mongodb.ObjectId(postId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Posts)
+        .updateOne({_id: postIdObj}, {$pull: {flaggedBy: userId}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully unflagged post."};
+      } else {
+        return {success: false, msg: "Could not unflag post."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error unflagging post.", err: e};
+    } finally {
+      await client.close();
+    }
+
+  };
+
+  usersDB.likePost = async function(postId, userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users)
+        .updateOne({_id: userIdObj}, {$push: {liked_posts: postId}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully liked post."};
+      } else {
+        return {success: false, msg: "Could not like post."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error liking post.", err: e};
+    } finally {
+      await client.close();
+    }
+
+  };
+
+  usersDB.unlikePost = async function(postId, userId) {
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users)
+        .updateOne({_id: userIdObj}, {$pull: {liked_posts: postId}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully unliked post."};
+      } else {
+        return {success: false, msg: "Could not unlike post."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error unliking post.", err: e};
+    } finally {
+      await client.close();
+    }
+
+  };
+
+  usersDB.isLiked = async function(postId, userId) {
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users).findOne({_id: userIdObj});
+      if (!dbResponse) {
+        return {success: false, msg: "Could not retrieve User from database."};
+      }
+      const likedPosts = dbResponse.liked_posts;
+      const postIsLiked = likedPosts.includes(postId);
+      return {success: true, msg: "Successfully retrieved post Like info.", isLiked: postisLiked};
+
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error getting post Like info.", err: e};
+    } finally {
+      await client.close();
+    }
+
+  };
+
+  usersDB.isFavorited = async function(postId, userId) {
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users).findOne({_id: userIdObj});
+      if (!dbResponse) {
+        return {success: false, msg: "Could not retrieve User from database."};
+      }
+      const favoritedPosts = dbResponse.favorited_posts;
+      const postIsFavorited = favoritedPosts.includes(postId);
+      return {success: true, msg: "Successfully retrieved Post favorite info.", isFavorited: postIsFavorited};
+
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error getting post Favorite info.", err: e};
+    } finally {
+      await client.close();
+    }
+
+  }
 
 
 
