@@ -10,7 +10,7 @@ router.post('/newPost', async (req, res) => {
   //TODO - return Post from postsDB.createPost
   let newPost = await postsDB.createPost(postInfo, username);
   const postID = newPost._id.toString();
-  const dbResponse = await usersDB.addPostToUser(userId, postId);
+  const dbResponse = await usersDB.addPostToUser(userId, postID);
   if (dbResponse.success) {
     res.json({success: true, msg: "Successfully created new post.", post: newPost});
   }
@@ -72,9 +72,9 @@ router.post('/flagPost', async (req, res) => {
 
 router.post('/likePost', async (req, res) => {
   const postID = req.query.id;
-  const isLiked = await postsDB.likePost(postID);
+  const likePost = await postsDB.likePost(postID);
 
-  if (isLiked) {
+  if (likePost) {
     return res.json({postLiked: true, err: null});
   } else {
     return res.json({postLiked: false, err: 'error liking post'});
@@ -92,5 +92,22 @@ router.post('/unlikePost', async (req, res) => {
   }
 })
 
+// this route checks if the current user has liked a post; returns boolean
+router.get('/checkIfLiked', async (req, res) => {
+  const postID = req.query.id;
+  const currentUserID = req.session.passport.user.id;
+  // TODO: write DB function to get info
+  const isLiked = await usersDB.isLiked(postID, currentUserID);
+  res.json(isLiked);
+})
+
+// this route checks if the current user has favorited a post; returns boolean
+router.get('/checkIfFavorited', async (req, res) => {
+  const postID = req.query.id;
+  const currentUserID = req.session.passport.user.id;
+  // TODO: write DB function to get info
+  const isFavorited = await usersDB.isFavorited(postID, currentUserID);
+  res.json(isFavorited);
+})
 
 export default router;
