@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 function FullPostComponent(post) {
+    const [like, setLike] = useState();
 
     const fullDate = new Date(post.date);
     const dateString = fullDate.toDateString();
