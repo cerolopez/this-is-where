@@ -6,31 +6,30 @@ import { Link } from "react-router-dom";
 function ViewPost() {
     const [post, setPost] = useState({});
 
-    async function reloadData() {
-        let data;
+    useEffect(() => {
+            async function reloadData() {
+                let data;
+        
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const id = urlParams.get('id');
+                console.log("here's the ID in the URL: ", id);
+        
+                try {
+                    const res = await fetch(`/getPost?id=${id}`, {
+                        method: 'GET'
+                    });
+                    data = await res.json();
+                    console.log("here's the data: ", data);
+                } catch (e) {
+                    console("error downloading data: ", e);
+                    return false;
+                }
 
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const id = urlParams.get('id');
-        console.log("here's the ID in the URL: ", id);
-
-        try {
-            const res = await fetch(`/getPost?id=${id}`, {
-                method: 'GET'
-            });
-            data = await res.json();
-            console.log("here's the data: ", data);
-        } catch (e) {
-            console("error downloading data: ", e);
-            return false;
-        }
-
-        setPost(data.at(0));
-
-    }
-
-    useEffect(
-        () => {
+                console.log("data.at(0): ", data.at(0));
+        
+                setPost(data.at(0));
+            }
             reloadData();
         }, []
     );
