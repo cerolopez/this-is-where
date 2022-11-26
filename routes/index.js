@@ -1,5 +1,6 @@
 import express from 'express';
 import postsDB from '../db/postsDB.js';
+import usersDB from "../db/usersDB.js";
 let router = express.Router();
 
 router.post('/newPost', async (req, res) => {
@@ -24,7 +25,7 @@ router.get('/getPosts', async (req, res) => {
 
 // URL will have postID in URL as query
 router.get('/getPost', async (req, res) => {
-  console.log("I'm in /findPost")
+  console.log("I'm in /getPost")
   const postID = req.query.id;
   console.log("postID: ", postID);
   const foundPost = await postsDB.getPost(postID);
@@ -94,20 +95,24 @@ router.post('/unlikePost', async (req, res) => {
 
 // this route checks if the current user has liked a post; returns boolean
 router.get('/checkIfLiked', async (req, res) => {
-  const postID = req.query.id;
-  const currentUserID = req.session.passport.user.id;
-  // TODO: write DB function to get info
-  const isLiked = await usersDB.isLiked(postID, currentUserID);
-  res.json(isLiked);
+
+  // TODO: check why sessions isn't working
+  // const userId = req.session.passport.user.id;
+  console.log("I'm in checkIfLiked");
+  // const postID = req.query.id;
+
+  // TODO: check why db call isn't working
+  // const isLiked = await usersDB.isLiked(postID, userId);
+  res.json(false);
 })
 
 // this route checks if the current user has favorited a post; returns boolean
 router.get('/checkIfFavorited', async (req, res) => {
+  // const userId = req.session.passport.user.id;
   const postID = req.query.id;
-  const currentUserID = req.session.passport.user.id;
   // TODO: write DB function to get info
-  const isFavorited = await usersDB.isFavorited(postID, currentUserID);
-  res.json(isFavorited);
+  // const isFavorited = await usersDB.isFavorited(postID, userId);
+  res.json(true);
 })
 
 export default router;
