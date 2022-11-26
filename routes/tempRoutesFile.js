@@ -158,6 +158,15 @@ router.get("/getAuthentication", (req, res) => {
   res.json({authenticated: req.isAuthenticated()});
 });
 
+router.post("/favoritePost", async (req, res) => {
+  const postId = req.body.postID;
+  const userId = req.session.passport.user.id;
+  const dbResponse = await usersDB.addPostToFavorites(userId, postId);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  res.json(dbResponse); //sends back the dbResponse object with success boolean and msg
+})
 
 
 

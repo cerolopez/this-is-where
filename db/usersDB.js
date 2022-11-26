@@ -169,7 +169,8 @@ function UsersDB() {
     try {
       await client.connect();
       const ThisIsWhereDb = await client.db(DB_NAME);
-      const dbResponse = await ThisIsWhereDb.collection(Users).updateOne({_id: userIdObj}, {$push: {posts: postId}});
+      const dbResponse = await ThisIsWhereDb.collection(Users)
+        .updateOne({_id: userIdObj}, {$push: {posts: postId}});
       if (dbResponse.acknowledged) {
         return {success: true, msg: "Successfully added Post to User's posts."};
       } else {
@@ -181,8 +182,29 @@ function UsersDB() {
     } finally {
       await client.close();
     }
+  };
 
+  usersDB.addPostToFavorites = async function(userId, postId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
 
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users)
+        .updateOne({_id: userIdObj}, {$push: {favorited_posts: postId}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully added Post to User's favorited posts."};
+      } else {
+        return {success: false, msg: "Could not add Post to User's favorited posts."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error adding Post to User's favorited Posts.", err: e};
+    } finally {
+      await client.close();
+    }
   };
 
   usersDB.updateUsername = async function(userId, newUsername) {
