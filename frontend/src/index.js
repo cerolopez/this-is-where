@@ -43,7 +43,7 @@ const Home = () => {
               <h1>Browse Posts</h1>
             </div>
             <div className="col-md-2 test-col d-flex justify-content-evenly">
-            <Link to="/create-post" activeClassName="CreatePost"> 
+            <Link to="/create-post">
 
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
