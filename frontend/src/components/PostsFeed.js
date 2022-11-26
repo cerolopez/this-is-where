@@ -4,19 +4,16 @@ import PostComponent from "./PostComponent.js";
 function PostsFeedComponent() {
     const [posts, setPosts] = useState([{ post: 'test' }]);
 
-    async function reloadData() {
-        let postInfo;
-        const res = await fetch("/getPosts");
-        postInfo = await res.json();
-
-        setPosts(postInfo);
-    }
-
     useEffect(
         () => {
-            reloadData();
-        }, 
-        []
+            async function reloadData() {
+                let postInfo;
+                const res = await fetch("/getPosts");
+                postInfo = await res.json();
+                setPosts(postInfo);
+            }
+        reloadData();
+    }, []
     );
 
     return (
