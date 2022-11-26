@@ -429,6 +429,7 @@ function UsersDB() {
   };
 
   usersDB.unlikePost = async function(postId, userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
     const userIdObj = new mongodb.ObjectId(userId);
 
@@ -452,19 +453,20 @@ function UsersDB() {
   };
 
   usersDB.isLiked = async function(postId, userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
     const userIdObj = new mongodb.ObjectId(userId);
 
     try {
       await client.connect();
-      const ThisIsWhereDb = await client.db(DB_NAME);
+      const ThisIsWhereDb = client.db(DB_NAME);
       const dbResponse = await ThisIsWhereDb.collection(Users).findOne({_id: userIdObj});
       if (!dbResponse) {
         return {success: false, msg: "Could not retrieve User from database."};
       }
       const likedPosts = dbResponse.liked_posts;
       const postIsLiked = likedPosts.includes(postId);
-      return {success: true, msg: "Successfully retrieved post Like info.", isLiked: postisLiked};
+      return {success: true, msg: "Successfully retrieved post Like info.", isLiked: postIsLiked};
 
     } catch (e) {
       console.error(e);
@@ -476,6 +478,7 @@ function UsersDB() {
   };
 
   usersDB.isFavorited = async function(postId, userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
     const userIdObj = new mongodb.ObjectId(userId);
 
