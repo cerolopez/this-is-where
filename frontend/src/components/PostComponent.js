@@ -1,13 +1,33 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
+//import ViewPost from "../ViewPost";
 
 function PostComponent({ post }) {
+    const navigate = useNavigate();
+    const [isLikedByUser, setIsLikedByUser] = useState();
+    const [isFavoritedByUser, setIsFavoritedByUser] = useState();
+    const [isFlaggedByUser, setIsFlaggedByUser] = useState();
 
-    const handleLinkClick = async (evt, id) => {
+    useEffect(() => {
+        async function getAuth() {
+          const res = await fetch("/getAuthentication");
+          const resJson = await res.json();
+          if (resJson.authenticated) {
+            console.log("user is authenticated.");
+            navigate("/dashboard", {replace: true});
+          } else {
+            console.log("user is not authenticated.");
+          }
+        }
+        getAuth();
+      })
+
+    function handleLinkClick(evt, id) {
+        console.log("I'm in handleLinkClick");
         evt.preventDefault();
-
-        window.location.replace('/view-post?id=' + id);
-    }
+        navigate(`/view-post?id=${id}`, {replace: false});
+    };
 
     return (
         <div className="container">
