@@ -1,12 +1,10 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {useNavigate, Link} from "react-router-dom";
-import ViewPost from "../ViewPost";
 
 function PostComponent({ post, initLikeCount, getLikesByUser }) {
     const navigate = useNavigate();
     const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
-
     const [likeCount, setLikeCount] = useState(initLikeCount);
         
     function handleLinkClick(evt) {
@@ -15,15 +13,26 @@ function PostComponent({ post, initLikeCount, getLikesByUser }) {
         navigate(`/view-post?id=${post._id}`, {replace: false});
     };
 
+    async function likePost() {
+        const likeRes = await fetch(`/likePost?id=${post._id}`);
+        const likeSuccess = await likeRes.json();
+        return likeSuccess;
+    }
+
+    async function unlikePost() {
+        const unlikeRes = await fetch(`/unlikePost?id=${post._id}`);
+        const unlikeSuccess = await unlikeRes.json();
+        return unlikeSuccess;
+    }
+
     function sendLikeToDB(isLiked) {
-        console.log("testing: ", isLikedByUser);
         if (!isLiked) {
             setLikeCount(likeCount + 1);
+            likePost();
         } else {
             setLikeCount(likeCount - 1);
+            unlikePost();
         }
-
-        // TODO: send like to routes
     }
 
     return (

@@ -17,7 +17,7 @@ export function PostsFeedComponent() {
     );
 
     async function getLikesByUser(postID) {
-        const res = await fetch(`/checkIfLiked?id=${postID}`)
+        const res = await fetch(`/checkIfLiked?id=${postID}`);
         const isLiked = await res.json();
         return isLiked;
     }

@@ -149,6 +149,7 @@ function postsDB () {
     }
 
     postsDB.likePost = async function (postID = {}) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         let client;
 
         try {
@@ -171,6 +172,7 @@ function postsDB () {
     }
 
     postsDB.unlikePost = async function (postID = {}) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         let client;
 
         try {
