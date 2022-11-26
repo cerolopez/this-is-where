@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 import indexRouter from './routes/index.js';
-// import tempRouter from "./routes/tempRoutesFile.js";
+import tempRouter from "./routes/tempRoutesFile.js";
 
 import { fileURLToPath } from 'url';
 
@@ -44,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
-// app.use("/", tempRouter);
+app.use("/", tempRouter);
 
 
 export default app;
