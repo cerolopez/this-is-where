@@ -1,33 +1,30 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 //import ViewPost from "../ViewPost";
 
-function PostComponent({ post }) {
+function PostComponent({ post, initLikeCount, getLikesByUser }) {
     const navigate = useNavigate();
-    const [isLikedByUser, setIsLikedByUser] = useState();
-    const [isFavoritedByUser, setIsFavoritedByUser] = useState();
-    const [isFlaggedByUser, setIsFlaggedByUser] = useState();
+    const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
 
-    useEffect(() => {
-        async function getAuth() {
-          const res = await fetch("/getAuthentication");
-          const resJson = await res.json();
-          if (resJson.authenticated) {
-            console.log("user is authenticated.");
-            navigate("/dashboard", {replace: true});
-          } else {
-            console.log("user is not authenticated.");
-          }
-        }
-        getAuth();
-      })
-
-    function handleLinkClick(evt, id) {
+    const [likeCount, setLikeCount] = useState(initLikeCount);
+        
+    function handleLinkClick(evt) {
         console.log("I'm in handleLinkClick");
         evt.preventDefault();
-        navigate(`/view-post?id=${id}`, {replace: false});
+        navigate(`/view-post?id=${post._id}`, {replace: false});
     };
+
+    function sendLikeToDB(isLiked) {
+        console.log("testing: ", isLikedByUser);
+        if (!isLiked) {
+            setLikeCount(likeCount + 1);
+        } else {
+            setLikeCount(likeCount - 1);
+        }
+
+        // TODO: send like to routes
+    }
 
     return (
         <div className="container">
@@ -36,7 +33,7 @@ function PostComponent({ post }) {
                 <div className="col-md-6">
                     <div className="card" id="postID">
                         <div className="card-body">
-                         <a href="/view-post" onClick={event => handleLinkClick(event, `${post._id}`)}><h4>{post.location}</h4></a>
+                         <Link onClick={event => handleLinkClick(event)}><h4>{post.location}</h4></Link>
                          <div className="row justify-content-start">
                             <div className="col-md-3">
                                 <span className="badge bg-secondary">{post.city}</span>
@@ -56,12 +53,29 @@ function PostComponent({ post }) {
                 </div>
                 <div className="col-md-3"></div>
             </div>
+            <div className="row d-flex justify-content-center" id="like">
+                <div className="col-md-3"></div>
+                <div className="col-md-6">
+                <button
+                    type="button"
+                    onClick={() => {
+                        setIsLikedByUser(!isLikedByUser);
+                        sendLikeToDB(!isLikedByUser);
+                    }}
+                    className={!isLikedByUser ? "btn btn-outline-danger" : "btn btn-outline-secondary"}
+                    >
+                        Like {likeCount}
+                    </button>
+                </div>
+                <div className="col-md-3"></div>
+            </div>
         </div>
     )
 }
 
 PostComponent.propTypes = {
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    getLikesByUser: PropTypes.func.isRequired
 }
 
 export default PostComponent;
