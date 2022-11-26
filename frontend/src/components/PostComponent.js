@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {useNavigate, Link} from "react-router-dom";
-//import ViewPost from "../ViewPost";
+import ViewPost from "../ViewPost";
 
 function PostComponent({ post, initLikeCount, getLikesByUser }) {
     const navigate = useNavigate();
