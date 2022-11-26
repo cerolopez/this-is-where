@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import getLikesByUser from ".//PostsFeed.js";
 
 function FullPostComponent(post) {
     const [like, setLike] = useState();
+    const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
 
     const fullDate = new Date(post.date);
     const dateString = fullDate.toDateString();
     const subtitle = `Posted on ${dateString} by `;
+
+    // const testing = getLikesByUser();
+    // console.log("testing in the frontend: ", testing);
 
     return (
         <div className="container">
@@ -40,6 +45,25 @@ function FullPostComponent(post) {
                     </div>
                 </div>
                 <div className="col-md-2"></div>
+                <div className="row d-flex justify-content-center" id="like">
+                <div className="col-md-2"></div>
+                <div className="col-md-4">
+                <button
+                    type="button"
+                    onClick={() => {
+                        setIsLikedByUser(!isLikedByUser);
+                    }}
+                    className={!isLikedByUser ? "btn btn-outline-danger" : "btn btn-outline-secondary"}
+                    >
+                        Like {post.likeCount}
+                    </button>
+                </div>
+                <div className="col-md-4">
+                Flag button/link goes here
+                </div>
+                <div className="col-md-2">
+                </div>
+            </div>
             </div>
         </div>
     )
