@@ -53,6 +53,7 @@ function PostForm() {
                         <option value="Memory" id="memory">Memory</option>
                         <option value="Missed Connection">Missed Connection</option>
                         <option value="Postcard">Postcard</option>
+                        <option value="Love Letter">Love Letter</option>
                         <option value="Compliment">Compliment</option>
                         <option value="Freestyle">Freestyle</option>
                     </select>

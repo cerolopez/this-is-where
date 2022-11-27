@@ -1,0 +1,12 @@
+#filter-label {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+#filter-form {
+    background-color: grey;
+}
+
+p#filter-option {
+    color: white;
+}

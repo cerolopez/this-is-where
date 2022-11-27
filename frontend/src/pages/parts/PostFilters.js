@@ -1,13 +1,43 @@
 import React from "react";
+import CityDropdown from "./CityDropdown.js";
+import TypeDropdown from "./TypeDropdown.js";
+import SortDropdown from "./SortDropdown.js";
+import "./PostFilters.css";
 
-function PostFilters() {
+function PostFilters({
+    selectedCity, 
+    setSelectedCity, 
+    cityOptions, 
+    selectedType, 
+    setSelectedType, 
+    typeOptions, 
+    selectedSort, 
+    setSelectedSort, 
+    sortOptions
+    }) {
 
     return (
         <div className="container">
             <div className="row d-flex justify-content-center">
                 <div className="col-md-3"></div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <h5>Filter by</h5>
+                </div>
+                <div className="col-md-2 text-end">
+                    <h5>Sort</h5>
+                </div>
+                <div className="col-md-3"></div>
+            </div>
+            <div className="row d-flex justify-content-center">
+                <div className="col-md-3">
+                </div>
+                <div className="col-md-2">
+                    <p id="filter-label">City</p>
+                </div>
+                <div className="col-md-2">
+                    <p id="filter-label">Type</p>
+                </div>
+                <div className="col-md-2 text-end">
                 </div>
                 <div className="col-md-3"></div>
             </div>
@@ -15,47 +45,26 @@ function PostFilters() {
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
                     <div className="row d-flex justify-content-center">
-                        <div className="col-md-2">
-                            <div className="btn-group">
-                                <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                City
-                                </button>
-                                <ul className="dropdown-menu">
-                                    { /* TODO: ADD QUERY LINKS */ }
-                                    <li><a className="dropdown-item" href="/">San Jose</a></li>
-                                    <li><a className="dropdown-item" href="/">San Francisco</a></li>
-                                    <li><a className="dropdown-item" href="/">Mountain View</a></li>
-                                    <li><a className="dropdown-item" href="/">Palo Alto</a></li>
-                                    <li><a className="dropdown-item" href="/">Sunnyvale</a></li>
-                                </ul>
-                            </div>
+                        <div className="col-md-4">
+                            <CityDropdown
+                                selectedCity={selectedCity}
+                                setSelectedCity={setSelectedCity}
+                                cityOptions={cityOptions}
+                            ></CityDropdown>
                         </div>
-                        <div className="col-md-8">
-                            <div className="btn-group">
-                                <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Type
-                                </button>
-                                <ul className="dropdown-menu">
-                                    { /* TODO: ADD QUERY LINKS */ }
-                                    <li><a className="dropdown-item" href="/">Postcard</a></li>
-                                    <li><a className="dropdown-item" href="/">Missed Connection</a></li>
-                                    <li><a className="dropdown-item" href="/">Love Letter</a></li>
-                                    <li><a className="dropdown-item" href="/">Compliment</a></li>
-                                    <li><a className="dropdown-item" href="/">Memory</a></li>
-                                </ul>
-                            </div>
+                        <div className="col-md-4">
+                            <TypeDropdown
+                                selectedType={selectedType}
+                                setSelectedType={setSelectedType}
+                                typeOptions={typeOptions}
+                            ></TypeDropdown>
                         </div>
-                        <div className="col-md-2">
-                            <div className="btn-group">
-                                <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Sort
-                                </button>
-                                <ul className="dropdown-menu">
-                                    { /* TODO: ADD QUERY LINKS */ }
-                                    <li><a className="dropdown-item" href="/">Most recent</a></li>
-                                    <li><a className="dropdown-item" href="/">Most popular</a></li>
-                                </ul>
-                            </div>
+                        <div className="col-md-4 text-end">
+                            <SortDropdown
+                                selectedSort={selectedSort}
+                                setSelectedSort={setSelectedSort}
+                                sortOptions={sortOptions}
+                            ></SortDropdown>
                         </div>
                     </div>
                 </div>

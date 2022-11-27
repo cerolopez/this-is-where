@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import {useNavigate, Link} from "react-router-dom";
 import './index.css';
@@ -16,20 +16,32 @@ root.render(
 );
 
 const Home = () => {
-
   const navigate = useNavigate();
-  useEffect(() => {
-    async function getAuth() {
-      const res = await fetch("/getAuthentication");
-      const resJson = await res.json();
-      if (!resJson.authenticated) {
-        console.log("user is not authenticated.");
-        navigate("/login", {replace: true});
-      } else {
-        console.log("user is authenticated.");
-      }
+  const cityOptions = ["All", "San Jose", "San Francisco", "Mountain View", "Palo Alto", "Sunnyvale"];
+  const typeOptions = ["All", "Memory", "Missed Connection", "Postcard", "Love Letter", "Compliment", "Freestyle"];
+  const sortOptions = ["Most recent", "Most popular"];
+  const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
+  const [selectedType, setSelectedType] = useState(typeOptions[0]);
+  const [selectedSort, setSelectedSort] = useState(typeOptions[0]);
+
+  async function getAuth() {
+    const res = await fetch("/getAuthentication");
+    const resJson = await res.json();
+    if (!resJson.authenticated) {
+      console.log("user is not authenticated.");
+      navigate("/login", {replace: true});
+    } else {
+      console.log("user is authenticated.");
     }
+  }
+
+  async function reloadPage() {
+    console.log("selected city: ", selectedCity);
+  }
+
+  useEffect(() => {
     getAuth();
+    reloadPage();
   })
 
   return (
@@ -56,8 +68,20 @@ const Home = () => {
         <div className="col-md-3"></div>
       </div>
     </div>
-    <PostFilters></PostFilters>
-    <PostsFeed></PostsFeed>
+    <PostFilters
+      selectedCity={selectedCity}
+      setSelectedCity={setSelectedCity}
+      cityOptions={cityOptions}
+      selectedType={selectedType}
+      setSelectedType={setSelectedType}
+      typeOptions={typeOptions}
+      selectedSort={selectedSort}
+      setSelectedSort={setSelectedSort}
+      sortOptions={sortOptions}
+    ></PostFilters>
+    <PostsFeed
+      selectedCity={selectedCity}
+    ></PostsFeed>
     <PageTemplate></PageTemplate>
     </div>
   )

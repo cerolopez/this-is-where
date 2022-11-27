@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PostComponent from "./PostComponent.js";
 
-export function PostsFeedComponent() {
+function PostsFeedComponent({selectedCity}) {
     const [posts, setPosts] = useState([{ post: '' }]);
     const [fullDisplay, setFullDisplay] = useState("none");
     const [loadDisplay, setLoadDisplay] = useState("block");
 
     async function reloadData() {
         let postInfo;
-        const res = await fetch("/getPosts");
+        const res = await fetch(`/getPosts?city=${selectedCity}`);
         postInfo = await res.json();
         setPosts(postInfo);
         setFullDisplay("block");
