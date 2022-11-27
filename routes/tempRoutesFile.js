@@ -284,29 +284,19 @@ router.post('/newPost', async (req, res) => {
 
 
 router.get('/getPosts', async (req, res) => {
-<<<<<<< HEAD
-  console.log("I'm in the /getPosts route");
-  // const page = 0;
-  // const pageSize = 5;
+
   const query = req.query; //add filter/query    //await postsDB.getPosts({{filter: query}, page, pageSize})
   const page = query.page;
   const pageSize = query.pageSize;
-  console.log("from route: pageSize type = ", typeof(pageSize));
-  console.log("from route: page and page size = ", page, pageSize);
+
   const listOfPosts = await postsDB.getPosts(parseInt(page), parseInt(pageSize));
-=======
-  const listOfPosts = await postsDB.getPosts();
->>>>>>> 62fdd696f828400f5e7b1081db220e4cc38ca8cb
+
   res.json(listOfPosts);
 })
 
 
 // URL will have postID in URL as query
 router.get('/getPost', async (req, res) => {
-<<<<<<< HEAD
-  // console.log("I'm in /getPost")
-=======
->>>>>>> 62fdd696f828400f5e7b1081db220e4cc38ca8cb
   const postID = req.query.id;
   // console.log("postID: ", postID);
   const foundPost = await postsDB.getPost(postID);
@@ -387,18 +377,10 @@ router.get('/flagPost', async (req, res) => {
 // this route checks if the current user has liked a post; returns boolean
 router.get('/checkIfLiked', async (req, res) => {
   const userId = req.session.passport.user.id;
-<<<<<<< HEAD
-  // console.log("I'm in checkIfLiked");
-=======
->>>>>>> 62fdd696f828400f5e7b1081db220e4cc38ca8cb
+
   const postID = req.query.id;
 
-  // TODO: check why db call isn't working
   const isLiked = await usersDB.isLiked(postID, userId);
-<<<<<<< HEAD
-  // console.log("does user like post: ", isLiked);
-=======
->>>>>>> 62fdd696f828400f5e7b1081db220e4cc38ca8cb
   res.json(isLiked);
 })
 
