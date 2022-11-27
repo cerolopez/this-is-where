@@ -1,26 +1,36 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import {useNavigate, Link} from "react-router-dom";
 
-function PostComponent({ post, reloadData }) {
+function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
     const navigate = useNavigate();
+    const [isLikedByUser, setIsLikedByUser] = useState(false);
 
-    async function getLikesByUser(postID) {
-        const res = await fetch(`/checkIfLiked?id=${postID}`);
-        const isLiked = await res.json();
-        return isLiked;
-    }
+    useEffect(
+        () => {
+            async function reloadComponent() {
+                let isLiked;
+        
+                try {
+                    const res = await fetch(`/checkIfLiked?id=${post._id}`);
+                    isLiked = await res.json();
+                } catch (e) {
+                    console("error downloading data: ", e);
+                    return false;
+                }
+
+                setIsLikedByUser(isLiked);
+
+            }
+            reloadComponent();
+    }, []
+    );
 
     // async function getFavesByUser(postID) {
     //     const res = await fetch(`/checkIfFavorited?id=${postID}`);
     //     const isFavorited = await res.json();
     //     return isFavorited;
     // }
-
-    const initIsLiked = getLikesByUser(post._id);
-    const [isLikedByUser, setIsLikedByUser] = useState(initIsLiked);
-    const [likeCount, setLikeCount] = useState(post.likeCount);
-
         
     function handleLinkClick(evt) {
         console.log("I'm in handleLinkClick");
@@ -28,33 +38,24 @@ function PostComponent({ post, reloadData }) {
         navigate(`/view-post?id=${post._id}`, {replace: false});
     };
 
-    async function likePost() {
-        const likeRes = await fetch(`/likePost?id=${post._id}`);
-        const likeSuccess = await likeRes.json();
-        return likeSuccess;
-    }
-
-    async function unlikePost() {
-        const unlikeRes = await fetch(`/unlikePost?id=${post._id}`);
-        const unlikeSuccess = await unlikeRes.json();
-        return unlikeSuccess;
-    }
-
-    async function sendLikeToDB(isLiked) {
-        console.log("initIsLiked: ", initIsLiked);
-        if (!isLiked) {
-            setLikeCount(likeCount + 1);
-            await likePost();
+    async function sendLikeToDB() {
+        if (!isLikedByUser) {
+            console.log("I'm liking a post");
+            const likeRes = await fetch(`/likePost?id=${post._id}`);
+            const likeSuccess = await likeRes.json();
+            console.log("post liked: ", likeSuccess);
         } else {
-            setLikeCount(likeCount - 1);
-            await unlikePost();
+            console.log("I'm unliking a post");
+            const unlikeRes = await fetch(`/unlikePost?id=${post._id}`);
+            const unlikeSuccess = await unlikeRes.json();    
+            console.log("post unliked: ", unlikeSuccess);
         }
 
         reloadData();
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{display: `${fullDisplay}`}}>
             <div className="row d-flex justify-content-center" id="post">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
@@ -87,7 +88,7 @@ function PostComponent({ post, reloadData }) {
                     type="button"
                     onClick={() => {
                         setIsLikedByUser(!isLikedByUser);
-                        sendLikeToDB(isLikedByUser);
+                        sendLikeToDB();
                     }}
                     className={isLikedByUser ? "btn btn-outline-danger" : "btn btn-outline-secondary"}
                     >
@@ -101,8 +102,7 @@ function PostComponent({ post, reloadData }) {
 }
 
 PostComponent.propTypes = {
-    post: PropTypes.object.isRequired,
-    reloadData: PropTypes.func.isRequired
+    post: PropTypes.object.isRequired
 }
 
 export default PostComponent;

@@ -4,8 +4,8 @@ import getLikesByUser from ".//PostsFeed.js";
 import ReportPost from "./ReportPost.js";
 import Alert from "./Alert.js";
 
-function FullPostComponent(post) {
-    const [editable, setEditable] = useState("true");
+function FullPostComponent({ post, modDisplay, fullDisplay }) {
+    // const [editable, setEditable] = useState("true");
     const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
     const [alertVisibility, setAlertVisibility] = useState("none");
 
@@ -13,18 +13,19 @@ function FullPostComponent(post) {
     const dateString = fullDate.toDateString();
     const subtitle = `Posted on ${dateString} by `;
 
-
-
+    function showPopUp() {
+        console.log("delete?");
+    }
 
     return (
-        <div className="container">
+        <div className="container" style={{display: `${fullDisplay}`}}>
             <div className="row d-flex justify-content-center" id="post">
             <Alert alert_type="success" display={alertVisibility}>Your report has been sent. </Alert>
                 <div className="col-md-2"></div>
                 <div className="col-md-8">
                     <div className="card" id="postID">
                         <div className="card-body">
-                         <h4 contenteditable={editable} className="card-title">{post.location}</h4>
+                         <h4 className="card-title">{post.location}</h4>
                          <div className="row justify-content-start">
                             <div className="col-md-2">
                                 <span className="badge bg-secondary">{post.city}</span>
@@ -42,13 +43,25 @@ function FullPostComponent(post) {
                          <br />
                          <div className="row">
                             <div className="col-md-12">
-                                <h5 id="post-subtitle">{subtitle}<strong>{post.username}</strong></h5>
+                                <h5 id="post-subtitle" style={{display: `${fullDisplay}`}}>{subtitle}<strong>{post.username}</strong></h5>
                             </div>
                          </div>
                         </div>
                     </div>
                 </div>
-                <div className="col-md-2"></div>
+                <div className="col-md-2">
+                    <div style={{display: `${modDisplay}`}}>
+                        <button type="button" className="btn btn-outline-dark btn-sm">Edit</button>
+                    </div>
+                    <br />
+                    <div style={{display: `${modDisplay}`}}>
+                        <button 
+                        type="button" 
+                        className="btn btn-outline-dark btn-sm"
+                        onClick={() => showPopUp()}
+                        >Delete</button>
+                    </div>
+                </div>
                 <div className="row d-flex justify-content-center" id="like">
                 <div className="col-md-2"></div>
                 <div className="col-md-4">

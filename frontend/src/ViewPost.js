@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 function ViewPost() {
     const [post, setPost] = useState({});
+    const [modDisplay, setModDisplay] = useState("none");
+    const [fullDisplay, setFullDisplay] = useState("none");
 
     useEffect(() => {
             async function reloadData() {
@@ -25,10 +27,15 @@ function ViewPost() {
                     console("error downloading data: ", e);
                     return false;
                 }
-
-                console.log("data.at(0): ", data.at(0));
         
                 setPost(data.at(0));
+
+                if (true) {
+                    setModDisplay("block");
+                }
+                
+                setFullDisplay("block");
+
             }
             reloadData();
         }, []
@@ -49,7 +56,11 @@ function ViewPost() {
             <div className="row d-flex">
                 <div className="col-md-3"></div>
                 <div className="col-md-12">
-                    <FullPostComponent {...post} />
+                    <FullPostComponent 
+                        post={post}
+                        modDisplay={modDisplay}
+                        fullDisplay={fullDisplay}
+                         />
                 </div>
                 <div className="col-md-2"></div>
             </div>
