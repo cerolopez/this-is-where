@@ -38,14 +38,12 @@ function postsDB () {
 
     postsDB.getPosts = async function () {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-        console.log("I'm in the getPosts function")
         let client;
 
         try {
             client = new MongoClient(uri);
             await client.connect();
             const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
-            console.log("Attempting to get all posts");
             const res = await postsCollection.find().toArray();
             console.log("Found: ", res);
             return res;
@@ -78,7 +76,8 @@ function postsDB () {
         }
     }
 
-    postsDB.editPost = async function (postID = {}, postEdits) {
+    postsDB.editPost = async function (postID, postLocation, postBody) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         let client;
 
         try {
@@ -86,16 +85,11 @@ function postsDB () {
             await client.connect();
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
-            await postsCollection.updateOne({
-                _id: ObjectId(`${postID}`)
-            }, {
-                city: postEdits.city,
-                location: postEdits.location,
-                body: postEdits.body,
-                date: postEdits.date,
-                type: postEdits.type,
-                isHidden: postEdits.isHidden
-            });
+            await postsCollection.updateOne(
+            { _id: ObjectId(`${postID}`) }, 
+            { $set: {location: postLocation, body: postBody} },
+            { upsert: true }
+            );
 
             console.log('edited post');
 
@@ -106,7 +100,8 @@ function postsDB () {
         }
     }
 
-    postsDB.deletePost = async function (postID = {}) {
+    postsDB.deletePost = async function (postID) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         let client;
 
         try {
@@ -117,8 +112,7 @@ function postsDB () {
             await postsCollection.deleteOne({
                 _id: ObjectId(`${postID}`)
             });
-
-            console.log('post successfully deleted: ', postID);
+            console.log('post successfully deleted');
             return true;
         } finally {
             console.log('deletePost: closing DB connection');

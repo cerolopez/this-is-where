@@ -4,6 +4,7 @@ import PostComponent from "./PostComponent.js";
 export function PostsFeedComponent() {
     const [posts, setPosts] = useState([{ post: '' }]);
     const [fullDisplay, setFullDisplay] = useState("none");
+    const [loadDisplay, setLoadDisplay] = useState("block");
 
     async function reloadData() {
         let postInfo;
@@ -11,6 +12,7 @@ export function PostsFeedComponent() {
         postInfo = await res.json();
         setPosts(postInfo);
         setFullDisplay("block");
+        setLoadDisplay("none");
     }
 
     useEffect(
@@ -21,6 +23,10 @@ export function PostsFeedComponent() {
 
     return (
 
+        <>
+        <div className="row d-flex justify-content-center" id="post">
+            <div className="col-md-1"><p style={{display: `${loadDisplay}`}}>Loading...</p></div>
+        </div>
         <div className="PostsFeed">
             {posts.map((p, i) => (
                 <PostComponent
@@ -32,6 +38,7 @@ export function PostsFeedComponent() {
                     ></PostComponent>
             ))}
         </div>
+        </>
     )
 }
 

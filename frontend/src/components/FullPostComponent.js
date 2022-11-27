@@ -3,19 +3,16 @@ import PropTypes from "prop-types";
 import getLikesByUser from ".//PostsFeed.js";
 import ReportPost from "./ReportPost.js";
 import Alert from "./Alert.js";
+import DeletePost from "./DeletePost.js";
+import EditPost from "./EditPost.js";
 
-function FullPostComponent({ post, modDisplay, fullDisplay }) {
-    // const [editable, setEditable] = useState("true");
+function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
     const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
     const [alertVisibility, setAlertVisibility] = useState("none");
 
     const fullDate = new Date(post.date);
     const dateString = fullDate.toDateString();
     const subtitle = `Posted on ${dateString} by `;
-
-    function showPopUp() {
-        console.log("delete?");
-    }
 
     return (
         <div className="container" style={{display: `${fullDisplay}`}}>
@@ -50,16 +47,17 @@ function FullPostComponent({ post, modDisplay, fullDisplay }) {
                     </div>
                 </div>
                 <div className="col-md-2">
-                    <div style={{display: `${modDisplay}`}}>
-                        <button type="button" className="btn btn-outline-dark btn-sm">Edit</button>
+                <div style={{display: `${modDisplay}`}}>
+                        <EditPost
+                            post={post}
+                            reloadData={reloadData}
+                        ></EditPost>
                     </div>
                     <br />
                     <div style={{display: `${modDisplay}`}}>
-                        <button 
-                        type="button" 
-                        className="btn btn-outline-dark btn-sm"
-                        onClick={() => showPopUp()}
-                        >Delete</button>
+                        <DeletePost
+                            postID={post._id}
+                        ></DeletePost>
                     </div>
                 </div>
                 <div className="row d-flex justify-content-center" id="like">
