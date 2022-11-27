@@ -203,7 +203,7 @@ router.get("/unflagPost", async (req, res) => {
 });
 
 router.get("/likePost", async (req, res) => {
-  console.log("I'm in the /likePost route");
+  // console.log("I'm in the /likePost route");
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
   const usersDbResponse = await usersDB.likePost(postId, userId);
@@ -252,12 +252,18 @@ router.post("/addReport", async (req, res) => {
 
 });
 
+router.get("/getPostsLength", async(req, res) => {
+  const postsLength = await postsDB.getPostsLength();
+  res.json(postsLength);
+})
+
+
 
 
 //Below routes by CL
 
 router.post('/newPost', async (req, res) => {
-  console.log("I'm in the /newPost route");
+  // console.log("I'm in the /newPost route");
   const postInfo = req.body;
   const username = req.session.passport.user.username;
   const userId = req.session.passport.user.id;
@@ -270,17 +276,32 @@ router.post('/newPost', async (req, res) => {
   }
 })
 
+// router.get('/getPosts', async (req, res) => {
+//   console.log("I'm in the /getPosts route");
+//   const listOfPosts = await postsDB.getPosts();
+//   res.json(listOfPosts);
+// })
+
+
 router.get('/getPosts', async (req, res) => {
   console.log("I'm in the /getPosts route");
-  const listOfPosts = await postsDB.getPosts();
+  // const page = 0;
+  // const pageSize = 5;
+  const query = req.query; //add filter/query    //await postsDB.getPosts({{filter: query}, page, pageSize})
+  const page = query.page;
+  const pageSize = query.pageSize;
+  console.log("from route: pageSize type = ", typeof(pageSize));
+  console.log("from route: page and page size = ", page, pageSize);
+  const listOfPosts = await postsDB.getPosts(parseInt(page), parseInt(pageSize));
   res.json(listOfPosts);
 })
 
+
 // URL will have postID in URL as query
 router.get('/getPost', async (req, res) => {
-  console.log("I'm in /getPost")
+  // console.log("I'm in /getPost")
   const postID = req.query.id;
-  console.log("postID: ", postID);
+  // console.log("postID: ", postID);
   const foundPost = await postsDB.getPost(postID);
 
   if (foundPost) {
@@ -352,12 +373,12 @@ router.get('/checkIfLiked', async (req, res) => {
 
   // TODO: check why sessions isn't working
   const userId = req.session.passport.user.id;
-  console.log("I'm in checkIfLiked");
+  // console.log("I'm in checkIfLiked");
   const postID = req.query.id;
 
   // TODO: check why db call isn't working
   const isLiked = await usersDB.isLiked(postID, userId);
-  console.log("does user like post: ", isLiked);
+  // console.log("does user like post: ", isLiked);
   res.json(isLiked);
 })
 
