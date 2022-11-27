@@ -271,14 +271,12 @@ router.post('/newPost', async (req, res) => {
 })
 
 router.get('/getPosts', async (req, res) => {
-  console.log("I'm in the /getPosts route");
   const listOfPosts = await postsDB.getPosts();
   res.json(listOfPosts);
 })
 
 // URL will have postID in URL as query
 router.get('/getPost', async (req, res) => {
-  console.log("I'm in /getPost")
   const postID = req.query.id;
   console.log("postID: ", postID);
   const foundPost = await postsDB.getPost(postID);
@@ -291,9 +289,15 @@ router.get('/getPost', async (req, res) => {
 })
 
 router.post('/editPost', async (req, res) => {
-  const postID = req.query.id;
-  const postEdits = req.body;
-  const editedPost = await postsDB.editPost(postID, postEdits);
+  const postID = req.body.postId;
+  const postLocation = req.body.location;
+  const postBody = req.body.body;
+
+  console.log("req.body.id: ", postID);
+  console.log("req.body.location: ", postLocation);
+  console.log("req.body.body: ", postBody);
+
+  const editedPost = await postsDB.editPost(postID, postLocation, postBody);
 
   if (editedPost) {
     return res.json({postEdited: true, err: null});
@@ -303,11 +307,14 @@ router.post('/editPost', async (req, res) => {
 })
 
 router.get('/deletePost', async (req, res) => {
+  console.log("I'm in /deletePost. ID: ", req.query.id);
   const postID = req.query.id;
   const isDeleted = await postsDB.deletePost(postID);
+  const userId = req.session.passport.user.id;
+  const deleteFromUser = await usersDB.removePostFromUser(userId, postID);
 
   if (isDeleted) {
-    return res.json({postDeleted: true, err: null});
+    return res.json({postDeleted: true, err: null, deleteFromUser: deleteFromUser});
   } else {
     return res.json({postDeleted: false, err: 'error deleting post'});
   }
@@ -349,27 +356,21 @@ router.get('/flagPost', async (req, res) => {
 
 // this route checks if the current user has liked a post; returns boolean
 router.get('/checkIfLiked', async (req, res) => {
-
-  // TODO: check why sessions isn't working
   const userId = req.session.passport.user.id;
-  console.log("I'm in checkIfLiked");
   const postID = req.query.id;
 
   // TODO: check why db call isn't working
   const isLiked = await usersDB.isLiked(postID, userId);
-  console.log("does user like post: ", isLiked);
   res.json(isLiked);
 })
 
 // this route checks if the current user has favorited a post; returns boolean
 router.get('/checkIfFavorited', async (req, res) => {
-  // const userId = req.session.passport.user.id;
+  const userId = req.session.passport.user.id;
   const postID = req.query.id;
-  // TODO: write DB function to get info
-  // const isFavorited = await usersDB.isFavorited(postID, userId);
-  res.json(true);
+
+  const isFavorited = await usersDB.isFavorited(postID, userId);
+  res.json(isFavorited);
 })
-
-
 
 export default router;
