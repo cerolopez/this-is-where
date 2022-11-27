@@ -5,7 +5,7 @@ import ReportPost from "./ReportPost.js";
 import Alert from "./Alert.js";
 
 function FullPostComponent(post) {
-    const [like, setLike] = useState();
+    const [editable, setEditable] = useState("true");
     const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
     const [alertVisibility, setAlertVisibility] = useState("none");
 
@@ -13,8 +13,8 @@ function FullPostComponent(post) {
     const dateString = fullDate.toDateString();
     const subtitle = `Posted on ${dateString} by `;
 
-    // const testing = getLikesByUser();
-    // console.log("testing in the frontend: ", testing);
+
+
 
     return (
         <div className="container">
@@ -24,7 +24,7 @@ function FullPostComponent(post) {
                 <div className="col-md-8">
                     <div className="card" id="postID">
                         <div className="card-body">
-                         <h4 className="card-title">{post.location}</h4>
+                         <h4 contenteditable={editable} className="card-title">{post.location}</h4>
                          <div className="row justify-content-start">
                             <div className="col-md-2">
                                 <span className="badge bg-secondary">{post.city}</span>
