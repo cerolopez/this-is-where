@@ -466,7 +466,9 @@ function UsersDB() {
       }
       const likedPosts = dbResponse.liked_posts;
       const postIsLiked = likedPosts.includes(postId);
-      return {success: true, msg: "Successfully retrieved post Like info.", isLiked: postIsLiked};
+      // return {success: true, msg: "Successfully retrieved post Like info.", isLiked: postIsLiked};
+
+      return postIsLiked;
 
     } catch (e) {
       console.error(e);

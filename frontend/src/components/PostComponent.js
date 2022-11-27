@@ -2,10 +2,25 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {useNavigate, Link} from "react-router-dom";
 
-function PostComponent({ post, initLikeCount, getLikesByUser }) {
+function PostComponent({ post, reloadData }) {
     const navigate = useNavigate();
-    const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
-    const [likeCount, setLikeCount] = useState(initLikeCount);
+
+    async function getLikesByUser(postID) {
+        const res = await fetch(`/checkIfLiked?id=${postID}`);
+        const isLiked = await res.json();
+        return isLiked;
+    }
+
+    // async function getFavesByUser(postID) {
+    //     const res = await fetch(`/checkIfFavorited?id=${postID}`);
+    //     const isFavorited = await res.json();
+    //     return isFavorited;
+    // }
+
+    const initIsLiked = getLikesByUser(post._id);
+    const [isLikedByUser, setIsLikedByUser] = useState(initIsLiked);
+    const [likeCount, setLikeCount] = useState(post.likeCount);
+
         
     function handleLinkClick(evt) {
         console.log("I'm in handleLinkClick");
@@ -25,14 +40,17 @@ function PostComponent({ post, initLikeCount, getLikesByUser }) {
         return unlikeSuccess;
     }
 
-    function sendLikeToDB(isLiked) {
+    async function sendLikeToDB(isLiked) {
+        console.log("initIsLiked: ", initIsLiked);
         if (!isLiked) {
             setLikeCount(likeCount + 1);
-            likePost();
+            await likePost();
         } else {
             setLikeCount(likeCount - 1);
-            unlikePost();
+            await unlikePost();
         }
+
+        reloadData();
     }
 
     return (
@@ -69,9 +87,9 @@ function PostComponent({ post, initLikeCount, getLikesByUser }) {
                     type="button"
                     onClick={() => {
                         setIsLikedByUser(!isLikedByUser);
-                        sendLikeToDB(!isLikedByUser);
+                        sendLikeToDB(isLikedByUser);
                     }}
-                    className={!isLikedByUser ? "btn btn-outline-danger" : "btn btn-outline-secondary"}
+                    className={isLikedByUser ? "btn btn-outline-danger" : "btn btn-outline-secondary"}
                     >
                         Like {likeCount}
                     </button>
@@ -84,7 +102,7 @@ function PostComponent({ post, initLikeCount, getLikesByUser }) {
 
 PostComponent.propTypes = {
     post: PropTypes.object.isRequired,
-    getLikesByUser: PropTypes.func.isRequired
+    reloadData: PropTypes.func.isRequired
 }
 
 export default PostComponent;
