@@ -339,13 +339,14 @@ router.post('/flagPost', async (req, res) => {
 router.get('/checkIfLiked', async (req, res) => {
 
   // TODO: check why sessions isn't working
-  // const userId = req.session.passport.user.id;
+  const userId = req.session.passport.user.id;
   console.log("I'm in checkIfLiked");
-  // const postID = req.query.id;
+  const postID = req.query.id;
 
   // TODO: check why db call isn't working
-  // const isLiked = await usersDB.isLiked(postID, userId);
-  res.json(false);
+  const isLiked = await usersDB.isLiked(postID, userId);
+  console.log("does user like post: ", isLiked);
+  res.json(isLiked);
 })
 
 // this route checks if the current user has favorited a post; returns boolean
