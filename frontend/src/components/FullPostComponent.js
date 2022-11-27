@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import getLikesByUser from ".//PostsFeed.js";
 import ReportPost from "./ReportPost.js";
+import Alert from "./Alert.js";
 
 function FullPostComponent(post) {
     const [like, setLike] = useState();
     const [isLikedByUser, setIsLikedByUser] = useState(getLikesByUser(post._id));
+    const [alertVisibility, setAlertVisibility] = useState("none");
 
     const fullDate = new Date(post.date);
     const dateString = fullDate.toDateString();
@@ -17,6 +19,7 @@ function FullPostComponent(post) {
     return (
         <div className="container">
             <div className="row d-flex justify-content-center" id="post">
+            <Alert alert_type="success" display={alertVisibility}>Your report has been sent. </Alert>
                 <div className="col-md-2"></div>
                 <div className="col-md-8">
                     <div className="card" id="postID">
@@ -60,7 +63,10 @@ function FullPostComponent(post) {
                     </button>
                 </div>
                 <div className="col-md-4">
-                <ReportPost> </ReportPost>
+                <ReportPost 
+                    postId={post._id} 
+                    setAlertVisibility={setAlertVisibility}
+                > </ReportPost>
                 </div>
                 <div className="col-md-2">
                 </div>

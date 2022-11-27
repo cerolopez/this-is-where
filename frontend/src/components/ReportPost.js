@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-function ReportPost() {
+function ReportPost({postId, setAlertVisibility}) {
+  const [report, setReport] = useState("1");
 
 
-  async function onSubmit(evt) {
-    evt.preventDefault();
+  async function onSubmit() {
+    console.log("button is submitted");
+
+    const reportInfo = {postId: postId, reportType: report};
+    const res = await fetch("/addReport", 
+      {method: "POST", headers: {"Content-Type": "application/json"}, 
+      body: JSON.stringify(reportInfo)});
+    // const resJson = await res.json();
+    const res2 = await fetch(`/flagPost?id=${postId}`);
+    setAlertVisibility("block");
+
   }
 
   return (
@@ -41,8 +51,8 @@ function ReportPost() {
               <select
                 className="form-select"
                 aria-label="Report post options"
+                onChange={(evt) => setReport(evt.target.value)}
               >
-                {/*<option selected>I am reporting this post because:</option>*/}
                 <option selected value="1">It contains hate speech or threats </option>
                 <option value="2">It contains profanity or offensive language</option>
                 <option value="3">It reveals somebody's private, sensitive information</option>
@@ -56,7 +66,7 @@ function ReportPost() {
               >
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" onClick={onSubmit} className="btn btn-primary" data-bs-dismiss="modal">
                 Submit report
               </button>
             </div>

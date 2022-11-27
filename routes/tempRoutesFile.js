@@ -159,7 +159,7 @@ router.get("/getAuthentication", (req, res) => {
   res.json({authenticated: req.isAuthenticated()});
 });
 
-router.post("/favoritePost", async (req, res) => {
+router.get("/favoritePost", async (req, res) => {
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
   const dbResponse = await usersDB.addPostToFavorites(userId, postId);
@@ -169,7 +169,7 @@ router.post("/favoritePost", async (req, res) => {
   res.json(dbResponse); //sends back the dbResponse object with success boolean and msg
 });
 
-router.post("/unfavoritePost", async (req, res) => {
+router.get("/unfavoritePost", async (req, res) => {
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
   const dbResponse = await usersDB.removePostFromFavorites(userId, postId);
@@ -180,7 +180,7 @@ router.post("/unfavoritePost", async (req, res) => {
 
 });
 
-router.post("/flagPost", async (req, res) => {
+router.get("/flagPost", async (req, res) => {
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
   //TODO - change to postsDB.flagPost
@@ -191,7 +191,7 @@ router.post("/flagPost", async (req, res) => {
   res.json(dbResponse);
 });
 
-router.post("/unflagPost", async (req, res) => {
+router.get("/unflagPost", async (req, res) => {
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
   //TODO - change to postsDB.unflagPost
@@ -241,6 +241,17 @@ router.get("/unlikePost", async (req, res) => {
 
 });
 
+router.post("/addReport", async (req, res) => {
+  const postId = req.body.postId;
+  const reportType = req.body.reportType;
+  const dbResponse = await postsDB.addReport(postId, reportType);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  res.json(dbResponse);
+
+});
+
 
 
 //Below routes by CL
@@ -252,10 +263,10 @@ router.post('/newPost', async (req, res) => {
   const userId = req.session.passport.user.id;
   //TODO - return Post from postsDB.createPost
   let newPost = await postsDB.createPost(postInfo, username);
-  const postID = newPost._id.toString();
-  const dbResponse = await usersDB.addPostToUser(userId, postID);
+  const postId = newPost.insertedId.toString();
+  const dbResponse = await usersDB.addPostToUser(userId, postId);
   if (dbResponse.success) {
-    res.json({success: true, msg: "Successfully created new post.", post: newPost});
+    res.json({success: true, msg: "Successfully created new post.", postId: postId});
   }
 })
 
@@ -302,9 +313,10 @@ router.get('/deletePost', async (req, res) => {
   }
 })
 
-router.post('/flagPost', async (req, res) => {
-  const postID = req.query.id;
-  const isFlagged = await postsDB.flagPost(postID);
+router.get('/flagPost', async (req, res) => {
+  const postId = req.query.id;
+  const userId = req.session.passport.user.id;
+  const isFlagged = await postsDB.flagPost(postId, userId);
 
   if (isFlagged) {
     return res.json({postFlagged: true, err: null});

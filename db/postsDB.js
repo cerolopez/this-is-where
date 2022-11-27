@@ -126,7 +126,7 @@ function postsDB () {
         }
     }
 
-    postsDB.flagPost = async function (postID = {}) {
+    postsDB.flagPost = async function (postID = {}, userId) {
         let client;
 
         try {
@@ -136,8 +136,7 @@ function postsDB () {
             const postsCollection = db.collection(POSTS_COLLECTION);
             const res = await postsCollection.updateOne({
                 _id: ObjectId(`${postID}`)
-            }, {
-                isFlagged: true
+            }, {$push: {flaggedBy: userId}
             });
 
             console.log('post successfully flagged: ', res);
@@ -195,7 +194,29 @@ function postsDB () {
     }
     //TODO. Push reportType to Post's reports array.
     //When a user submits a report, the report type sent will be 1, 2, or 3
-    postsDB.addReport = async function(reportType) {
+    postsDB.addReport = async function(postId, reportType) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        let client;
+
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const db = client.db(DB_NAME);
+            const postsCollection = db.collection(POSTS_COLLECTION);
+            const res = await postsCollection
+                .updateOne({_id: ObjectId(`${postId}`)}, {$push: {reports: reportType}});
+            if (res.acknowledged) {
+                return {success: true, msg: "Successfully added report"};
+            } else {
+                return {success: false, msg: "Could not add report"};
+            }
+
+        } catch (e) {
+            console.error(e);
+            return ({success: false, msg: "Error adding report", err: e});
+        } finally {
+            await client.close();
+        }
 
     };
 
