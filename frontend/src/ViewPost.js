@@ -8,35 +8,48 @@ function ViewPost() {
     const [modDisplay, setModDisplay] = useState("none");
     const [fullDisplay, setFullDisplay] = useState("none");
 
+    async function reloadData() {
+        let resData;
+        let data;
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        console.log("here's the ID in the URL: ", id);
+
+        try {
+            const res = await fetch(`/getPost?id=${id}`, {
+                method: 'GET'
+            });
+            data = await res.json();
+            console.log("here's the data: ", data);
+        } catch (e) {
+            console("error downloading data: ", e);
+            return false;
+        }
+
+        setPost(data.at(0));
+
+        try {
+            const res = await fetch("/getUsername");
+            resData = await res.json();
+        } catch (e) {
+            console.log("error getting current user", e);
+        }
+
+        if (resData.username === data.at(0).username) {
+            console.log("users match: ", resData.username);
+            console.log(data.at(0).username);
+            setModDisplay("block");
+        } else {
+            setModDisplay("none");
+        }
+
+        setFullDisplay("block");
+
+    }
+
     useEffect(() => {
-            async function reloadData() {
-                let data;
-        
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
-                const id = urlParams.get('id');
-                console.log("here's the ID in the URL: ", id);
-        
-                try {
-                    const res = await fetch(`/getPost?id=${id}`, {
-                        method: 'GET'
-                    });
-                    data = await res.json();
-                    console.log("here's the data: ", data);
-                } catch (e) {
-                    console("error downloading data: ", e);
-                    return false;
-                }
-        
-                setPost(data.at(0));
-
-                if (true) {
-                    setModDisplay("block");
-                }
-                
-                setFullDisplay("block");
-
-            }
             reloadData();
         }, []
     );
@@ -60,6 +73,7 @@ function ViewPost() {
                         post={post}
                         modDisplay={modDisplay}
                         fullDisplay={fullDisplay}
+                        reloadData={reloadData}
                          />
                 </div>
                 <div className="col-md-2"></div>
