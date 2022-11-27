@@ -452,6 +452,54 @@ function UsersDB() {
 
   };
 
+  usersDB.favoritePost = async function(postId, userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users)
+        .updateOne({_id: userIdObj}, {$push: {favorited_posts: postId}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully favorited post."};
+      } else {
+        return {success: false, msg: "Could not favorite post."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error favoriting post.", err: e};
+    } finally {
+      await client.close();
+    }
+
+  };
+
+  usersDB.unfavoritePost = async function(postId, userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users)
+        .updateOne({_id: userIdObj}, {$pull: {favorited_posts: postId}});
+      if (dbResponse.acknowledged) {
+        return {success: true, msg: "Successfully unfavorited post."};
+      } else {
+        return {success: false, msg: "Could not unfavorite post."};
+      }
+    } catch (e) {
+      console.error(e);
+      return {success: false, msg: "Error unfavoriting post.", err: e};
+    } finally {
+      await client.close();
+    }
+
+  };
+
   usersDB.isLiked = async function(postId, userId) {
     const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
