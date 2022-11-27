@@ -284,13 +284,13 @@ router.post('/newPost', async (req, res) => {
 
 
 router.get('/getPosts', async (req, res) => {
-
   const query = req.query; //add filter/query    //await postsDB.getPosts({{filter: query}, page, pageSize})
   const page = query.page;
   const pageSize = query.pageSize;
-
   const listOfPosts = await postsDB.getPosts(parseInt(page), parseInt(pageSize));
 
+  const cityFilter = req.query.city;
+  console.log("city: ", cityFilter);
   res.json(listOfPosts);
 })
 
