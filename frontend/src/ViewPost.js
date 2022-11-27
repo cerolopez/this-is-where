@@ -7,6 +7,7 @@ function ViewPost() {
     const [post, setPost] = useState({});
     const [modDisplay, setModDisplay] = useState("none");
     const [fullDisplay, setFullDisplay] = useState("none");
+    const [loadDisplay, setloadDisplay] = useState("block");
 
     async function reloadData() {
         let resData;
@@ -46,6 +47,7 @@ function ViewPost() {
         }
 
         setFullDisplay("block");
+        setloadDisplay("none");
 
     }
 
@@ -62,9 +64,11 @@ function ViewPost() {
             <div className="col-md-8">
                 <h1>View Post</h1>
                 <Link to="/dashboard">Back</Link>
-                {/*<a href="/dashboard">Back</a>*/}
             </div>
             <div className="col-md-3"></div>
+            </div>
+            <div className="row d-flex justify-content-center">
+                <div className="col-md-1"><p style={{display: `${loadDisplay}`}}>Loading...</p></div>
             </div>
             <div className="row d-flex">
                 <div className="col-md-3"></div>
