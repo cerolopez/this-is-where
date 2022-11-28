@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PostComponent from "./PostComponent.js";
+import PropTypes from "prop-types";
 
 function PostsFeedComponent(props) {
     const [posts, setPosts] = useState([{ post: '' }]);
@@ -11,9 +12,14 @@ function PostsFeedComponent(props) {
 
         const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
         postInfo = await res.json();
+
+        // const lengthRes = await fetch(`/getFilteredPostsLength?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
+        // const filteredLength = await lengthRes.json();
+        
         setPosts(postInfo);
         setFullDisplay("block");
         setLoadDisplay("none");
+        // props.getFilteredLength(filteredLength);
     }
 
     useEffect(
@@ -48,7 +54,7 @@ function PostsFeedComponent(props) {
                 <PostComponent
                     key={`object_${i}`}
                     post={p}
-                    likeCount={p.likeCount}
+                    likeCount={p.likeCount || 0}
                     fullDisplay={fullDisplay}
                     reloadData={reloadData}
                     ></PostComponent>
@@ -56,6 +62,14 @@ function PostsFeedComponent(props) {
         </div>
         </>
     )
+}
+
+PostsFeedComponent.propTypes = {
+    page: PropTypes.number.isRequired,
+    pageSize: PropTypes.number.isRequired,
+    selectedCity: PropTypes.string.isRequired,
+    selectedType: PropTypes.string.isRequired,
+    getFilteredLength: PropTypes.func.isRequired
 }
 
 export default PostsFeedComponent;

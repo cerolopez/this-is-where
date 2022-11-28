@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import PropTypes from "prop-types";
 
 function EditPost({ post, reloadData }) {
     const [newLocation, setNewLocation] = useState(post.location);
@@ -51,6 +52,11 @@ function EditPost({ post, reloadData }) {
 </div>
         </>
     )
+}
+
+EditPost.propTypes = {
+  post: PropTypes.object.isRequired,
+  reloadData: PropTypes.func.isRequired
 }
 
 export default EditPost;

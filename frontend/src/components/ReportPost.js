@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 function ReportPost({postId, setAlertVisibility}) {
   const [report, setReport] = useState("1");
@@ -77,6 +78,11 @@ function ReportPost({postId, setAlertVisibility}) {
       </div>
     </>
   );
+}
+
+ReportPost.propTypes = {
+  postId: PropTypes.string.isRequired,
+  setAlertVisibility: PropTypes.func.isRequired
 }
 
 export default ReportPost;

@@ -19,37 +19,65 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
 
-    async function reloadComponent() {
-        let isLiked;
-        let faveInfo;
+    // async function reloadComponent() {
+    //     let isLiked;
+    //     let faveInfo;
 
-        try {
-            const res = await fetch(`/checkIfLiked?id=${id}`);
-            isLiked = await res.json();
-        } catch (e) {
-            console.log("error downloading data: ", e);
-            return false;
-        }
+    //     try {
+    //         const res = await fetch(`/checkIfLiked?id=${id}`);
+    //         isLiked = await res.json();
+    //     } catch (e) {
+    //         console.log("error downloading data: ", e);
+    //         return false;
+    //     }
 
-        setIsLikedByUser(isLiked);
+    //     setIsLikedByUser(isLiked);
 
-        try {
-            const res = await fetch(`/checkIfFavorited?id=${id}`);
-            faveInfo = await res.json();
-            console.log("isFavorited: ", faveInfo.isFavorited);
-        } catch (e) {
-            console("error downloading data: ", e);
-            return false;
-        }
+    //     try {
+    //         const res = await fetch(`/checkIfFavorited?id=${id}`);
+    //         faveInfo = await res.json();
+    //         console.log("isFavorited: ", faveInfo.isFavorited);
+    //     } catch (e) {
+    //         console("error downloading data: ", e);
+    //         return false;
+    //     }
 
-        setIsFavoritedByUser(faveInfo.isFavorited);
+    //     setIsFavoritedByUser(faveInfo.isFavorited);
 
-    }
+    // }
 
     useEffect(
         () => {
+
+            async function reloadComponent() {
+                let isLiked;
+                let faveInfo;
+
+                try {
+                    const res = await fetch(`/checkIfLiked?id=${id}`);
+                    isLiked = await res.json();
+                } catch (e) {
+                    console.log("error downloading data: ", e);
+                    return false;
+                }
+
+                setIsLikedByUser(isLiked);
+
+                try {
+                    const res = await fetch(`/checkIfFavorited?id=${id}`);
+                    faveInfo = await res.json();
+                    console.log("isFavorited: ", faveInfo.isFavorited);
+                } catch (e) {
+                    console("error downloading data: ", e);
+                    return false;
+                }
+
+                setIsFavoritedByUser(faveInfo.isFavorited);
+
+            }
+
             reloadComponent();
-    }, []
+    }, [id]
     );
 
     async function sendFavoriteToDB() {
@@ -166,7 +194,10 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
 }
 
 FullPostComponent.propTypes = {
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    modDisplay: PropTypes.string.isRequired,
+    fullDisplay: PropTypes.string.isRequired,
+    reloadData: PropTypes.func.isRequired
 }
 
 export default FullPostComponent;

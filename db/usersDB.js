@@ -511,7 +511,11 @@ function UsersDB() {
         return {success: false, msg: "Could not retrieve User from database."};
       }
       const likedPosts = dbResponse.liked_posts;
+      // console.log("User: ", userId);
+      // console.log("User's likedPosts: ", likedPosts);
+      // console.log("Post being checked: ", postId);
       const postIsLiked = likedPosts.includes(postId);
+      // console.log("Does user like post? ", postIsLiked);
 
       return postIsLiked;
 

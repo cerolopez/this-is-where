@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function CityDropdown({selectedCity, setSelectedCity, cityOptions}) {
 
@@ -18,6 +19,12 @@ function CityDropdown({selectedCity, setSelectedCity, cityOptions}) {
         </form>
         </>
     );
+}
+
+CityDropdown.propTypes = {
+    selectedCity: PropTypes.string.isRequired,
+    setSelectedCity: PropTypes.func.isRequired,
+    cityOptions: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default CityDropdown;

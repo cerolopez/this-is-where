@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function TypeDropdown({selectedType, setSelectedType, typeOptions}) {
 
@@ -18,6 +19,12 @@ function TypeDropdown({selectedType, setSelectedType, typeOptions}) {
         </form>
         </>
     );
+}
+
+TypeDropdown.propTypes = {
+    selectedType: PropTypes.string.isRequired,
+    setSelectedType: PropTypes.func.isRequired,
+    typeOptions: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default TypeDropdown;

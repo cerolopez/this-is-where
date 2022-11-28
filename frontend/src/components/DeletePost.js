@@ -1,5 +1,6 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
 function DeletePost({ postID }) {
     const navigate = useNavigate();
@@ -39,6 +40,10 @@ function DeletePost({ postID }) {
 </div>
         </>
     )
+}
+
+DeletePost.propTypes = {
+  postId: PropTypes.string
 }
 
 export default DeletePost;
