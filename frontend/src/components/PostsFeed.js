@@ -9,8 +9,7 @@ function PostsFeedComponent(props) {
     async function reloadData() {
         let postInfo;
 
-        console.log("props are: ", props);
-        const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}`);
+        const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
         postInfo = await res.json();
         setPosts(postInfo);
         setFullDisplay("block");
@@ -22,8 +21,7 @@ function PostsFeedComponent(props) {
             async function reloadData() {
             let postInfo;
 
-            console.log("props are: ", props);
-            const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}`); ///getPosts?page=${page}&pageSize=${pageSize}
+            const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
             postInfo = await res.json();
             setPosts(postInfo);
             setFullDisplay("block");

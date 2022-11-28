@@ -289,10 +289,13 @@ router.get('/getPosts', async (req, res) => {
   const pageSize = query.pageSize;
   console.log("query: ", query);
   console.log("page and pagesize: ", page, pageSize);
-  const listOfPosts = await postsDB.getPosts(parseInt(page), parseInt(pageSize));
-
-  const cityFilter = req.query.city;
+  const cityFilter = req.query.selectedCity;
+  const typeFilter = req.query.selectedType;
   console.log("city: ", cityFilter);
+  console.log("type: ", typeFilter);
+
+  const listOfPosts = await postsDB.getPosts(parseInt(page), parseInt(pageSize), cityFilter, typeFilter);
+
   res.json(listOfPosts);
 })
 

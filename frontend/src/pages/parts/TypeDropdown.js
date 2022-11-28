@@ -1,6 +1,6 @@
 import React from "react";
 
-function TypeDropdown({selectedType, setselectedType, typeOptions}) {
+function TypeDropdown({selectedType, setSelectedType, typeOptions}) {
 
     return (
         <>
@@ -8,7 +8,7 @@ function TypeDropdown({selectedType, setselectedType, typeOptions}) {
             <select
                 className="form-select-sm"
                 value={selectedType}
-                onChange={e => setselectedType(e.target.value)}>
+                onChange={e => setSelectedType(e.target.value)}>
                     {typeOptions.map((value) => (
                         <option value={value} key={value}>
                             {value}

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import PostsFeed from "./PostsFeed.js";
 // import PageNavButton from "./PageNavButton";
 
-function Pagination() {
+function Pagination(props) {
 
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
@@ -52,7 +52,11 @@ function Pagination() {
     }, [globalPostsLength, page, pageSize]); 
 
     return (
-    <>            
+    <>   
+        <br />
+        <br />         
+        <div className="row d-flex justify-content-center">
+            <div className="col-md-12 text-center">
         <div> Show <select name={"PageSize"} id="pageSizeOptions" onChange={(event) => {
             setPageSize(event.target.value);
             setPage(0);
@@ -63,8 +67,15 @@ function Pagination() {
         <option value={25}>25</option>
         <option value={50}>50</option>
         </select> results per page </div>
+            </div>
+        </div>
         {/*<PostsFeed getLength={getPostLength} page={page} pageSize={pageSize}></PostsFeed>*/}
-        <PostsFeed page={page} pageSize={pageSize}></PostsFeed>
+        <PostsFeed 
+            page={page} 
+            pageSize={pageSize} 
+            selectedCity={props.selectedCity} 
+            selectedType={props.selectedType}
+            ></PostsFeed>
         <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-center">
                     <li className="page-item">
@@ -74,7 +85,7 @@ function Pagination() {
                     </li>
                     {pageNumbersArr.map((p, i) => (
                         <li className="page-item">
-                            <button className={page===i ? "page-link active" : "page-link"} key={i} onClick={() => setPage(i)}>{i+1}</button>
+                            <button className={page===p[i] ? "page-link active" : "page-link"} key={i} onClick={() => setPage(i)}>{i+1}</button>
                         </li>
                     ))}
                                             {/*<PageNavButton key={i} onClickMethod={onPageNavClick(i)}>{i}</PageNavButton>*/}

@@ -83,7 +83,10 @@ const Home = () => {
 {/*    <PostsFeed
       selectedCity={selectedCity}
     ></PostsFeed>*/}
-    <Pagination></Pagination>
+    <Pagination
+      selectedCity={selectedCity}
+      selectedType={selectedType}
+      ></Pagination>
     {/*<PostsFeed></PostsFeed>*/}
     <PageTemplate></PageTemplate>
     </div>

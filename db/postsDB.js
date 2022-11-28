@@ -74,19 +74,48 @@ function postsDB () {
 
     }
 
-    postsDB.getPosts = async function (page, page_size) {
+    postsDB.getPosts = async function (page, page_size, cityFilter, typeFilter) {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         console.log("I'm in the getPosts function - page and pagesize are ", page, page_size);
         let client;
-
 
         try {
             client = new MongoClient(uri);
             await client.connect();
             const postsCol = client.db(DB_NAME).collection(POSTS_COLLECTION);
-            const res = await postsCol.find().skip(page * page_size).limit(page_size).toArray();
-            // console.log("Attempting to get all posts");
-            // console.log("Found: ", res);
+            let res;
+            console.log("typeFilter: ", typeFilter);
+            console.log("typeFilter typeof: ", typeof typeFilter);
+            console.log("cityFilter: ", cityFilter);
+            console.log("cityFilter typeof: ", typeof cityFilter);
+
+            if (cityFilter === "All" && typeFilter === "All") {
+                res = await postsCol
+                .find()
+                .skip(page * page_size)
+                .limit(page_size)
+                .toArray();
+            } else if (cityFilter !== "All" && typeFilter === "All") {
+                res = await postsCol
+                .find({ city: cityFilter })
+                .skip(page * page_size)
+                .limit(page_size)
+                .toArray();
+            } else if (cityFilter === "All" && typeFilter !== "All") {
+                res = await postsCol
+                .find({ type: typeFilter })
+                .skip(page * page_size)
+                .limit(page_size)
+                .toArray();
+            } else {
+                res = await postsCol
+                .find({ city: cityFilter, type: typeFilter })
+                .skip(page * page_size)
+                .limit(page_size)
+                .toArray();
+            }
+            console.log("Attempting to get all posts");
+            console.log("Filtered posts: ", res);
             return res;
         } finally {
             // console.log('getPosts: closing DB connection');

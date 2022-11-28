@@ -15,7 +15,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
         let faveInfo;
 
         try {
-            const res = await fetch(`/checkIfLiked?id=${post._id}`);
+            const res = await fetch(`/checkIfLiked?id=${post._id.toString()}`);
             isLiked = await res.json();
         } catch (e) {
             console("error downloading data: ", e);
