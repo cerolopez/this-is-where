@@ -28,10 +28,29 @@ function postsDB () {
             const res = await postsCollection.insertOne(newPost);
             return res;
         } finally {
-            console.log('createPosts: closing DB connection');
             client.close();
         }
     }
+
+    postsDB.createFakePost = async function (fakePost) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        let client;
+
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            console.log("Inserting fake post: ", fakePost);
+            const res = await postsCollection.insertOne(fakePost);
+            if (res.acknowledged) {
+                return {success: true, }
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            await client.close();
+        }
+    };
 
 
     postsDB.getPostsLength = async function() {

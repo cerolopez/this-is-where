@@ -8,6 +8,7 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import usersDB from "./db/usersDB.js";
 import initializePassport from "./auth.js";
+import dataGenerator from "./fakeDataGenerator.js";
 const getUserByUsername = usersDB.getUserByUsername;
 const getUserById = usersDB.getUserById;
 
@@ -45,6 +46,12 @@ app.use(passport.session());
 
 // app.use("/", indexRouter);
 app.use("/", tempRouter);
+
+//Generate some fake records:
+const records = await dataGenerator.generateRecords(5);
+console.log("from app - records type is: ", typeof records);
+console.log("from app - records is: ", records);
+dataGenerator.sendRecords(records);
 
 
 export default app;
