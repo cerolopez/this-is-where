@@ -26,7 +26,6 @@ function PostsFeedComponent(props) {
             setPosts(postInfo);
             setFullDisplay("block");
             setLoadDisplay("none");
-            // getLength(postInfo);
     }
         reloadData();
     }, [props]

@@ -31,14 +31,12 @@ const strategy = new LocalStrategy({ usernameField: "username"}, authenticateUse
 passport.use(strategy);
 
 passport.serializeUser(function (user, cb) {
-  // console.log("serialize", user);
   process.nextTick(function () {
     cb(null, { id: user._id.toString(), username: user.username });
   });
 });
 
 passport.deserializeUser(function (user, cb) {
-  // console.log("deserialize", user);
   process.nextTick(function () {
     return cb(null, user);
   });

@@ -12,11 +12,9 @@ const Settings = () => {
           const res = await fetch("/getAuthentication");
           const resJson = await res.json();
           if (!resJson.authenticated) {
-            console.log("user is not authenticated.");
             navigate("/login", {replace: true});
           } else {
             setAuthenticated(true);
-            console.log("user is authenticated.");
           }
         }
         getAuth();

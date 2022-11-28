@@ -125,8 +125,6 @@ function UsersDB() {
     }
   }
 
-  //NOTE: I could consolidate add/remove post into one function that takes a string ("add" or "remove") as a parameter
-
   /**
    * Removes a post from a User's list of Posts.
    * @param {userId} - expects the ID of the User to remove a Post from
@@ -514,7 +512,6 @@ function UsersDB() {
       }
       const likedPosts = dbResponse.liked_posts;
       const postIsLiked = likedPosts.includes(postId);
-      // return {success: true, msg: "Successfully retrieved post Like info.", isLiked: postIsLiked};
 
       return postIsLiked;
 
@@ -551,10 +548,6 @@ function UsersDB() {
     }
 
   }
-
-
-
-
 
 
   return usersDB;

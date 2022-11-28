@@ -6,7 +6,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import PageTemplate from "./pages/PageTemplate.js"
 import PostFilters from './pages/parts/PostFilters';
-// import PostsFeed from './components/PostsFeed';
 import Pagination from "./components/Pagination.js";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -29,10 +28,8 @@ const Home = () => {
     const res = await fetch("/getAuthentication");
     const resJson = await res.json();
     if (!resJson.authenticated) {
-      console.log("user is not authenticated.");
       navigate("/login", {replace: true});
     } else {
-      console.log("user is authenticated.");
     }
   }
 
@@ -80,14 +77,10 @@ const Home = () => {
       setSelectedSort={setSelectedSort}
       sortOptions={sortOptions}
     ></PostFilters>
-{/*    <PostsFeed
-      selectedCity={selectedCity}
-    ></PostsFeed>*/}
     <Pagination
       selectedCity={selectedCity}
       selectedType={selectedType}
       ></Pagination>
-    {/*<PostsFeed></PostsFeed>*/}
     <PageTemplate></PageTemplate>
     </div>
   )

@@ -10,7 +10,6 @@ const UserSetting = ({_setting, _setState, _value, _type}) => {
             <input
                 type={_type}
                 className="form-control userSetting"
-                // placeholder={`New ${setting}`}
                 aria-label={`New ${_setting}`}
                 aria-describedby="addon-wrapping"
                 onChange={_setState}

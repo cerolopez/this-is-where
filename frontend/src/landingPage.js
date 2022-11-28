@@ -16,8 +16,6 @@ const LandingPage = () => {
                         </h1></div>
                     <div className="top-right">
                     <Link to="/login" className="btn btn-outline-light" role="button">Log In</Link>
-
-                        {/*<a className="btn btn-outline-light" href="/login" role="button">Log In</a>*/}
                     </div>
                 </div>
             </div>
@@ -31,7 +29,6 @@ const LandingPage = () => {
                         sapien faucibus. Vulputate dignissim suspendisse in est ante in nibh mauris. 
                         Lectus quam id leo in vitae turpis massa. Leo vel orci porta non pulvinar neque.</p>
                         <Link to="/signup" className="btn btn-dark" role="button">Sign Up</Link>
-                    {/*<a className="btn btn-dark" href="/signup" role="button">Sign Up</a>*/}
                 </div>
                 <div className="col-md-3"></div>
             </div>

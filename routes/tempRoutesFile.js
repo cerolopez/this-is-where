@@ -203,7 +203,6 @@ router.get("/unflagPost", async (req, res) => {
 });
 
 router.get("/likePost", async (req, res) => {
-  // console.log("I'm in the /likePost route");
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
   const usersDbResponse = await usersDB.likePost(postId, userId);
@@ -263,7 +262,6 @@ router.get("/getPostsLength", async(req, res) => {
 //Below routes by CL
 
 router.post('/newPost', async (req, res) => {
-  // console.log("I'm in the /newPost route");
   const postInfo = req.body;
   const username = req.session.passport.user.username;
   const userId = req.session.passport.user.id;
@@ -276,23 +274,13 @@ router.post('/newPost', async (req, res) => {
   }
 })
 
-// router.get('/getPosts', async (req, res) => {
-//   console.log("I'm in the /getPosts route");
-//   const listOfPosts = await postsDB.getPosts();
-//   res.json(listOfPosts);
-// })
-
 
 router.get('/getPosts', async (req, res) => {
-  const query = req.query; //add filter/query    //await postsDB.getPosts({{filter: query}, page, pageSize})
+  const query = req.query;
   const page = query.page;
   const pageSize = query.pageSize;
-  console.log("query: ", query);
-  console.log("page and pagesize: ", page, pageSize);
   const cityFilter = req.query.selectedCity;
   const typeFilter = req.query.selectedType;
-  console.log("city: ", cityFilter);
-  console.log("type: ", typeFilter);
 
   const listOfPosts = await postsDB.getPosts(parseInt(page), parseInt(pageSize), cityFilter, typeFilter);
 
@@ -303,7 +291,6 @@ router.get('/getPosts', async (req, res) => {
 // URL will have postID in URL as query
 router.get('/getPost', async (req, res) => {
   const postID = req.query.id;
-  // console.log("postID: ", postID);
   const foundPost = await postsDB.getPost(postID);
 
   if (foundPost) {
@@ -318,10 +305,6 @@ router.post('/editPost', async (req, res) => {
   const postLocation = req.body.location;
   const postBody = req.body.body;
 
-  console.log("req.body.id: ", postID);
-  console.log("req.body.location: ", postLocation);
-  console.log("req.body.body: ", postBody);
-
   const editedPost = await postsDB.editPost(postID, postLocation, postBody);
 
   if (editedPost) {
@@ -332,7 +315,6 @@ router.post('/editPost', async (req, res) => {
 })
 
 router.get('/deletePost', async (req, res) => {
-  console.log("I'm in /deletePost. ID: ", req.query.id);
   const postID = req.query.id;
   const isDeleted = await postsDB.deletePost(postID);
   const userId = req.session.passport.user.id;
@@ -357,27 +339,6 @@ router.get('/flagPost', async (req, res) => {
   }
 })
 
-// router.post('/likePost', async (req, res) => {
-//   const postID = req.query.id;
-//   const likePost = await postsDB.likePost(postID);
-
-//   if (likePost) {
-//     return res.json({postLiked: true, err: null});
-//   } else {
-//     return res.json({postLiked: false, err: 'error liking post'});
-//   }
-// })
-
-// router.post('/unlikePost', async (req, res) => {
-//   const postID = req.query.id;
-//   const isUnliked = await postsDB.unlikePost(postID);
-
-//   if (isUnliked) {
-//     return res.json({postUnliked: true, err: null});
-//   } else {
-//     return res.json({postUnliked: false, err: 'error unliking post'});
-//   }
-// })
 
 // this route checks if the current user has liked a post; returns boolean
 router.get('/checkIfLiked', async (req, res) => {

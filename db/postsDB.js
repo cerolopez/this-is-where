@@ -7,7 +7,6 @@ function postsDB () {
 
     postsDB.createPost = async function (postInfo = {}, user) {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-        console.log("I'm in the postsDB function")
         let client;
 
         try {
@@ -26,9 +25,7 @@ function postsDB () {
                 reports: [],
                 likeCount: 0
             }
-            console.log("Attempting to create a new post");
             const res = await postsCollection.insertOne(newPost);
-            console.log("Inserted: ", res);
             return res;
         } finally {
             console.log('createPosts: closing DB connection');
@@ -36,28 +33,9 @@ function postsDB () {
         }
     }
 
-//.getPosts before Armen's changes
-    // postsDB.getPosts = async function () {
-    //     const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-    //     let client;
-
-    //     try {
-    //         client = new MongoClient(uri);
-    //         await client.connect();
-    //         const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
-    //         const res = await postsCollection.find().toArray();
-    //         console.log("Found: ", res);
-    //         return res;
-    //     } finally {
-    //         console.log('getPosts: closing DB connection');
-    //         client.close();
-    //     }
-    // }
-
 
     postsDB.getPostsLength = async function() {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-        console.log("I'm in the getPostsLength function")
         let client;
         try {
             client = new MongoClient(uri);
@@ -71,12 +49,10 @@ function postsDB () {
         } finally {
             await client.close();
         }
-
     }
 
     postsDB.getPosts = async function (page, page_size, cityFilter, typeFilter) {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-        console.log("I'm in the getPosts function - page and pagesize are ", page, page_size);
         let client;
 
         try {
@@ -84,10 +60,6 @@ function postsDB () {
             await client.connect();
             const postsCol = client.db(DB_NAME).collection(POSTS_COLLECTION);
             let res;
-            console.log("typeFilter: ", typeFilter);
-            console.log("typeFilter typeof: ", typeof typeFilter);
-            console.log("cityFilter: ", cityFilter);
-            console.log("cityFilter typeof: ", typeof cityFilter);
 
             if (cityFilter === "All" && typeFilter === "All") {
                 res = await postsCol
@@ -114,11 +86,9 @@ function postsDB () {
                 .limit(page_size)
                 .toArray();
             }
-            console.log("Attempting to get all posts");
-            console.log("Filtered posts: ", res);
+
             return res;
         } finally {
-            // console.log('getPosts: closing DB connection');
             client.close();
         }
     }
@@ -127,7 +97,6 @@ function postsDB () {
     // executes when a user clicks on a post card
     postsDB.getPost = async function (postID = {}) {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-        console.log("I'm in the getPost db function")
         let client;
 
         try {
@@ -138,11 +107,8 @@ function postsDB () {
                 _id: ObjectId(`${postID}`)
             }).toArray();
 
-            console.log('found post: ', res);
-
             return res;
         } finally {
-            console.log('getPost: closing DB connection');
             client.close();
         }
     }
@@ -162,11 +128,8 @@ function postsDB () {
             { upsert: true }
             );
 
-            console.log('edited post');
-
             return true;
         } finally {
-            console.log('editPost: closing DB connection');
             client.close();
         }
     }
@@ -183,10 +146,9 @@ function postsDB () {
             await postsCollection.deleteOne({
                 _id: ObjectId(`${postID}`)
             });
-            console.log('post successfully deleted');
+
             return true;
         } finally {
-            console.log('deletePost: closing DB connection');
             client.close();
         }
     }
@@ -204,10 +166,8 @@ function postsDB () {
             }, {$push: {flaggedBy: userId}
             });
 
-            console.log('post successfully flagged: ', res);
             return true;
         } finally {
-            console.log('flagPost: closing DB connection');
             client.close();
         }
     }
@@ -227,10 +187,8 @@ function postsDB () {
                 $inc: { likeCount: 1 }
             });
 
-            console.log('post successfully liked: ', res);
             return true;
         } finally {
-            console.log('likePost: closing DB connection');
             client.close();
         }
     }
@@ -250,14 +208,12 @@ function postsDB () {
                 $inc: { likeCount: -1 }
             });
 
-            console.log('post successfully unliked: ', res);
             return true;
         } finally {
-            console.log('unlikePost: closing DB connection');
             client.close();
         }
     }
-    //TODO. Push reportType to Post's reports array.
+
     //When a user submits a report, the report type sent will be 1, 2, or 3
     postsDB.addReport = async function(postId, reportType) {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';

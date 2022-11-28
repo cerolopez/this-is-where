@@ -27,7 +27,6 @@ export async function usernameIsAvailable(username) {
   const dbResponse = await usersDB.getUserByUsername(username);
   return (!dbResponse.success);
 }
-//TODO - check if email is available
 
 export async function emailCanBeUsed(email) {
   const dbResponse = await usersDB.getUserByEmail(email);

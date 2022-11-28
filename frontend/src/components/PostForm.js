@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-//import PropTypes from "prop-types";
 
 function PostForm() {
     const [location, setLocation] = useState("");
@@ -132,8 +131,5 @@ function PostForm() {
     )
 }
 
-// PostForm.propTypes = {
-//     onCreatePost: PropTypes.func.isRequired,
-// }
 
 export default PostForm;

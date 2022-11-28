@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import PostsFeed from "./PostsFeed.js";
-// import PageNavButton from "./PageNavButton";
 
 function Pagination(props) {
 
@@ -10,16 +9,11 @@ function Pagination(props) {
     const [displayMsg, setDisplayMsg] = useState("");
     const [numOfPagesRequired, setNumOfPagesRequired] = useState(1);
     const [pageNumbersArr, setPageNumbersArr] = useState([]);
-    // const [lastPostShown, setLastPostShown] = useState(5);
-    // function getPostLength(posts) {
-    //     console.log("Setting postLength to: ", posts.length);
-    //     setPostsLength(posts.length);
-    // }
+
     useEffect(() => {
         async function getLength() {
             const res = await fetch("/getPostsLength");
             const length = await res.json();
-            console.log("getlength resjson: ", length)
             setGlobalPostsLength(length);
             setNumOfPagesRequired(Math.ceil(length/pageSize));
             const arr = new Array(numOfPagesRequired);
@@ -69,7 +63,6 @@ function Pagination(props) {
         </select> results per page </div>
             </div>
         </div>
-        {/*<PostsFeed getLength={getPostLength} page={page} pageSize={pageSize}></PostsFeed>*/}
         <PostsFeed 
             page={page} 
             pageSize={pageSize} 
@@ -93,22 +86,7 @@ function Pagination(props) {
                             <button className={page===p[i] ? "page-link active" : "page-link"} key={i} onClick={() => setPage(i)}>{i+1}</button>
                         </li>
                     ))}
-                                            {/*<PageNavButton key={i} onClickMethod={onPageNavClick(i)}>{i}</PageNavButton>*/}
-{/*                    <li className="page-item">
-                        <button className="page-link">
-                            1
-                        </button>
-                    </li>
-                    <li className="page-item">
-                        <button className="page-link">
-                            2
-                        </button>
-                    </li>
-                    <li className="page-item">
-                        <button className="page-link">
-                            3
-                        </button>
-                    </li>*/}
+
                     <li className="page-item">
                         <button className="page-link" onClick={() => setPage(Math.min(page+1, globalPostsLength))}>
                             Next
@@ -119,7 +97,6 @@ function Pagination(props) {
             </div>
             <div className="col-md-3"></div>
             </div>
-            {/*<div>Showing {parseInt(pageSize) * parseInt(page)}-{parseInt(pageSize) * parseInt(page) + parseInt(pageSize)} out of {globalPostsLength} posts.</div>*/}
              <div className="row d-flex justify-content-center">
                 <div className="col-md-3"></div>
                 <div className="col-md-6 text-center">{displayMsg}</div>
