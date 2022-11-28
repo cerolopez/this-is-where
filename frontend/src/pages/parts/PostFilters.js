@@ -2,6 +2,7 @@ import React from "react";
 import CityDropdown from "./CityDropdown.js";
 import TypeDropdown from "./TypeDropdown.js";
 import "./PostFilters.css";
+import PropTypes from "prop-types";
 
 function PostFilters({
     selectedCity, 
@@ -59,6 +60,15 @@ function PostFilters({
             </div>
         </div>
     )
+}
+
+PostFilters.propTypes = {
+    selectedCity: PropTypes.string.isRequired,
+    setSelectedCity: PropTypes.func.isRequired,
+    cityOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    selectedType: PropTypes.string.isRequired,
+    setSelectedType: PropTypes.func.isRequired,
+    typeOptions: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default PostFilters;
