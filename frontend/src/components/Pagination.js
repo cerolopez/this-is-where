@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import PostsFeed from "./PostsFeed.js";
 import PropTypes from "prop-types";
+import "./Pagination.css";
 
 function Pagination(props) {
 
@@ -11,13 +12,14 @@ function Pagination(props) {
     const [displayMsg, setDisplayMsg] = useState("");
     const [numOfPagesRequired, setNumOfPagesRequired] = useState(1);
     const [pageNumbersArr, setPageNumbersArr] = useState([]);
+    const [fullDisplay, setFullDisplay] = useState("none");
 
     useEffect(() => {
         async function getLength() {
             const res = await fetch("/getPostsLength");
             const length = await res.json();
             setGlobalPostsLength(length);
-
+            setFullDisplay("block");
             let arr;
             setNumOfPagesRequired(Math.ceil(length/pageSize));
             if (length === filteredPostsLength){
@@ -75,7 +77,7 @@ function Pagination(props) {
         <br />         
         <div className="row d-flex justify-content-center">
             <div className="col-md-12 text-center">
-        <div> Show <select name={"PageSize"} id="pageSizeOptions" onChange={(event) => {
+        <div><span style={{display: `${fullDisplay}`}}> Show <select name={"PageSize"} id="pageSizeOptions" onChange={(event) => {
             setPageSize(event.target.value);
             setPage(0);
         }
@@ -84,7 +86,7 @@ function Pagination(props) {
         <option value={10}>10</option>
         <option value={25}>25</option>
         <option value={50}>50</option>
-        </select> results per page </div>
+        </select> results per page </span></div>
             </div>
         </div>
         <PostsFeed 
@@ -96,6 +98,7 @@ function Pagination(props) {
             ></PostsFeed>
             <br />
             <br />
+        <span style={{display: `${fullDisplay}`}}>
         <div className="row d-flex justify-content-center">
             <div className="col-md-3"></div>
             <div className="col-md-6">
@@ -127,6 +130,7 @@ function Pagination(props) {
                 <div className="col-md-6 text-center">{displayMsg}</div>
                 <div className="col-md-3"></div>
              </div>
+             </span>
             </>);
 }
 
