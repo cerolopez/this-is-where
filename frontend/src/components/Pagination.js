@@ -11,7 +11,7 @@ function Pagination(props) {
     const [filteredPostsLength, setFilteredPostsLength] = useState(100);
     const [displayMsg, setDisplayMsg] = useState("");
     const [numOfPagesRequired, setNumOfPagesRequired] = useState(1);
-    const [pageNumbersArr, setPageNumbersArr] = useState([]);
+    // const [pageNumbersArr, setPageNumbersArr] = useState([]);
     const [fullDisplay, setFullDisplay] = useState("none");
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function Pagination(props) {
             const length = await res.json();
             setGlobalPostsLength(length);
             setFullDisplay("block");
-            let arr;
+            // let arr;
             setNumOfPagesRequired(Math.ceil(length/pageSize));
             if (length === filteredPostsLength){
                 setNumOfPagesRequired(Math.ceil(length/pageSize));
@@ -28,11 +28,11 @@ function Pagination(props) {
                 setNumOfPagesRequired(Math.ceil(filteredPostsLength/pageSize));
                 setPage(0); //if filtering has happened, restart at first page
             }
-            arr = new Array(numOfPagesRequired);
-            for (let i = 0; i < arr.length; i++) {
-                arr[i] = i;
-            }
-                setPageNumbersArr(arr);
+            // arr = new Array(numOfPagesRequired);
+            // for (let i = 0; i < arr.length; i++) {
+            //     arr[i] = i;
+            // }
+                // setPageNumbersArr(arr);
         }
         getLength();
     }, [pageSize, numOfPagesRequired, filteredPostsLength]);
@@ -109,11 +109,11 @@ function Pagination(props) {
                             Previous
                         </button>
                     </li>
-                    {pageNumbersArr.map((p) => (
+{/*                    {pageNumbersArr.map((p) => (
                         <li className="page-item" key={`page_${p}`}>
                             <button className={page===p ? "page-link active" : "page-link"}  onClick={() => setPage(parseInt(p))}>{p+1}</button>
                         </li>
-                    ))}
+                    ))}*/}
 
                     <li className="page-item" key="next">
                         <button className="page-link" onClick={() => setPage(Math.min(page+1, globalPostsLength))}>
