@@ -9,16 +9,12 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
     const [isLikedByUser, setIsLikedByUser] = useState(false);
     const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get('id');
-
     async function reloadComponent() {
         let isLiked;
         let faveInfo;
 
         try {
-            const res = await fetch(`/checkIfLiked?id=${id}`);
+            const res = await fetch(`/checkIfLiked?id=${post._id}`);
             isLiked = await res.json();
         } catch (e) {
             console.log("error downloading data: ", e);
@@ -28,7 +24,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
         setIsLikedByUser(isLiked);
 
         try {
-            const res = await fetch(`/checkIfFavorited?id=${id}`);
+            const res = await fetch(`/checkIfFavorited?id=${post._id}`);
             faveInfo = await res.json();
             console.log("isFavorited: ", faveInfo.isFavorited);
         } catch (e) {
@@ -49,12 +45,12 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
     async function sendFavoriteToDB() {
         if (!isFavoritedByUser) {
             console.log("I'm favoriting a post");
-            const favRes = await fetch(`/favoritePost?id=${id}`);
+            const favRes = await fetch(`/favoritePost?id=${post._id}`);
             const favSuccess = await favRes.json();
             console.log("post favorited: ", favSuccess);
         } else {
             console.log("I'm unliking a post");
-            const unfavRes = await fetch(`/unfavoritePost?id=${id}`);
+            const unfavRes = await fetch(`/unfavoritePost?id=${post._id}`);
             const unfavSuccess = await unfavRes.json();    
             console.log("post unfavorited: ", unfavSuccess);
         }
@@ -65,12 +61,12 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
     async function sendLikeToDB() {
         if (!isLikedByUser) {
             console.log("I'm liking a post");
-            const likeRes = await fetch(`/likePost?id=${id}`);
+            const likeRes = await fetch(`/likePost?id=${post._id}`);
             const likeSuccess = await likeRes.json();
             console.log("post liked: ", likeSuccess);
         } else {
             console.log("I'm unliking a post");
-            const unlikeRes = await fetch(`/unlikePost?id=${id}`);
+            const unlikeRes = await fetch(`/unlikePost?id=${post._id}`);
             const unlikeSuccess = await unlikeRes.json();    
             console.log("post unliked: ", unlikeSuccess);
         }
@@ -94,7 +90,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
 </svg></Link>&nbsp;&nbsp;
                          <Link to={{
                             pathname: "/view-post", 
-                            search: `?id=${id}` 
+                            search: `?id=${post._id}` 
                             }}>{post.location}</Link></h4>
                          <div className="row justify-content-start">
                             <div className="col-md-3">
