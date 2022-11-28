@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 
 function ViewPost(props) {
     const location = useLocation();
-    const test = props.location.state;
+    //const test = props.location.state;
     const [post, setPost] = useState({});
     const [modDisplay, setModDisplay] = useState("none");
     const [fullDisplay, setFullDisplay] = useState("none");
@@ -15,7 +15,7 @@ function ViewPost(props) {
         let resData;
         let data;
 
-        console.log(test);
+        //console.log(test);
 
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
