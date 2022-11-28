@@ -6,7 +6,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import PageTemplate from "./pages/PageTemplate.js"
 import PostFilters from './pages/parts/PostFilters';
-import PostsFeed from './components/PostsFeed';
+// import PostsFeed from './components/PostsFeed';
+import Pagination from "./components/Pagination.js";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -79,9 +80,11 @@ const Home = () => {
       setSelectedSort={setSelectedSort}
       sortOptions={sortOptions}
     ></PostFilters>
-    <PostsFeed
+{/*    <PostsFeed
       selectedCity={selectedCity}
-    ></PostsFeed>
+    ></PostsFeed>*/}
+    <Pagination></Pagination>
+    {/*<PostsFeed></PostsFeed>*/}
     <PageTemplate></PageTemplate>
     </div>
   )

@@ -33,10 +33,6 @@ function Pagination() {
 
 
     useEffect(() => {
-
-    });
-
-    useEffect(() => {
         function lastPostShown() {
             return parseInt(pageSize) * parseInt(page) + parseInt(pageSize);
         }
@@ -53,7 +49,7 @@ function Pagination() {
         const message = updateShowing();
         setDisplayMsg(message);
 
-    }, [globalPostsLength, page, pageSize]);
+    }, [globalPostsLength, page, pageSize]); 
 
     return (
     <>            

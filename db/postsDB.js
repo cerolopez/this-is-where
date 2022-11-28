@@ -36,22 +36,64 @@ function postsDB () {
         }
     }
 
-    postsDB.getPosts = async function () {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-        let client;
+//.getPosts before Armen's changes
+    // postsDB.getPosts = async function () {
+    //     const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+    //     let client;
 
+    //     try {
+    //         client = new MongoClient(uri);
+    //         await client.connect();
+    //         const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
+    //         const res = await postsCollection.find().toArray();
+    //         console.log("Found: ", res);
+    //         return res;
+    //     } finally {
+    //         console.log('getPosts: closing DB connection');
+    //         client.close();
+    //     }
+    // }
+
+
+    postsDB.getPostsLength = async function() {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        console.log("I'm in the getPostsLength function")
+        let client;
         try {
             client = new MongoClient(uri);
             await client.connect();
             const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
             const res = await postsCollection.find().toArray();
-            console.log("Found: ", res);
+            const length = res.length;
+            return length;
+        } catch (e) {
+            console.err(e);
+        } finally {
+            await client.close();
+        }
+
+    }
+
+    postsDB.getPosts = async function (page, page_size) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        console.log("I'm in the getPosts function - page and pagesize are ", page, page_size);
+        let client;
+
+
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const postsCol = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            const res = await postsCol.find().skip(page * page_size).limit(page_size).toArray();
+            // console.log("Attempting to get all posts");
+            // console.log("Found: ", res);
             return res;
         } finally {
-            console.log('getPosts: closing DB connection');
+            // console.log('getPosts: closing DB connection');
             client.close();
         }
     }
+
 
     // executes when a user clicks on a post card
     postsDB.getPost = async function (postID = {}) {
