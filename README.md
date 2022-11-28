@@ -21,8 +21,6 @@ HTML, CSS, JavaScript, React, Node.js, Express, and MongoDB
 - [Design document](https://docs.google.com/document/d/11GxXK1zScE64_QWL6XZSFd0i5UL_BFe4B4dVAdSydp0/edit?usp=sharing)
 
 ## Instructions to run
-### If you want to contribute...
-* Ensure you have http-server downloaded
 * Clone the repository
 * Open the terminal and enter the project folder
 * run npm install
