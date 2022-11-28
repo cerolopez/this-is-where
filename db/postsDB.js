@@ -51,6 +51,40 @@ function postsDB () {
         }
     }
 
+    postsDB.getFilteredLength = async function(page, page_size, cityFilter, typeFilter) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        let client;
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const postsCol = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            let res;
+            if (cityFilter === "All" && typeFilter === "All") {
+                res = await postsCol
+                .find()
+                .toArray();
+            } else if (cityFilter !== "All" && typeFilter === "All") {
+                res = await postsCol
+                .find({ city: cityFilter })
+                .toArray();
+            } else if (cityFilter === "All" && typeFilter !== "All") {
+                res = await postsCol
+                .find({ type: typeFilter })
+                .toArray();
+            } else {
+                res = await postsCol
+                .find({ city: cityFilter, type: typeFilter })
+                .toArray();
+            }
+            return res.length;
+        } catch(e) {
+            console.error(e);
+        } finally {
+            await client.close();
+        }
+
+    };
+
     postsDB.getPosts = async function (page, page_size, cityFilter, typeFilter) {
         const uri = process.env.DB_URI || 'mongodb://localhost:27017';
         let client;

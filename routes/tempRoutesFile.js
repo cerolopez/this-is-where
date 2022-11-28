@@ -254,6 +254,18 @@ router.post("/addReport", async (req, res) => {
 router.get("/getPostsLength", async(req, res) => {
   const postsLength = await postsDB.getPostsLength();
   res.json(postsLength);
+});
+
+
+router.get("/getFilteredPostsLength", async(req, res) => {
+  const query = req.query;
+  const page = query.page;
+  const pageSize = query.pageSize;
+  const cityFilter = req.query.selectedCity;
+  const typeFilter = req.query.selectedType;
+
+  const filteredLength = await postsDB.getFilteredLength(page, pageSize, cityFilter, typeFilter);
+  res.json(filteredLength);
 })
 
 

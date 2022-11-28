@@ -6,6 +6,7 @@ function Pagination(props) {
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [globalPostsLength, setGlobalPostsLength] = useState(100);
+    const [filteredPostsLength, setFilteredPostsLength] = useState(100);
     const [displayMsg, setDisplayMsg] = useState("");
     const [numOfPagesRequired, setNumOfPagesRequired] = useState(1);
     const [pageNumbersArr, setPageNumbersArr] = useState([]);
@@ -15,15 +16,22 @@ function Pagination(props) {
             const res = await fetch("/getPostsLength");
             const length = await res.json();
             setGlobalPostsLength(length);
-            setNumOfPagesRequired(Math.ceil(length/pageSize));
-            const arr = new Array(numOfPagesRequired);
+            let arr;
+            if (length === filteredPostsLength){
+                setNumOfPagesRequired(Math.ceil(length/pageSize));
+            } else {
+                setNumOfPagesRequired(Math.ceil(filteredPostsLength/pageSize));
+                setPage(0); //if filtering has happened, restart at first page
+            }
+            arr = new Array(numOfPagesRequired);
             for (let i = 0; i < arr.length; i++) {
                 arr[i] = i;
             }
-            setPageNumbersArr(arr);
+                setPageNumbersArr(arr);
         }
         getLength();
-    }, [pageSize, numOfPagesRequired]);
+    }, [pageSize, numOfPagesRequired, filteredPostsLength]);
+
 
 
     useEffect(() => {
@@ -33,17 +41,30 @@ function Pagination(props) {
         function updateShowing() {
             const last = lastPostShown();
             let msg;
-            if (last <= globalPostsLength) {
-                msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${parseInt(pageSize) * parseInt(page) + parseInt(pageSize)} out of ${globalPostsLength} posts`;
+            if (globalPostsLength === filteredPostsLength) {
+                if (last <= globalPostsLength) {
+                    msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${parseInt(pageSize) * parseInt(page) + parseInt(pageSize)} out of ${globalPostsLength} posts`;
+                } else {
+                    msg = `Showing ${last - pageSize + 1}-${globalPostsLength} out of ${globalPostsLength} posts`;
+                }
+
             } else {
-                msg = `Showing ${last - pageSize + 1}-${globalPostsLength} out of ${globalPostsLength} posts`;
+                if (last <= filteredPostsLength) {
+                    msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${parseInt(pageSize) * parseInt(page) + parseInt(pageSize)} out of ${filteredPostsLength} posts`;
+                } else {
+                    msg = `Showing ${last - pageSize + 1}-${filteredPostsLength} out of ${filteredPostsLength} posts`;
+                }
             }
             return msg;
         }
         const message = updateShowing();
         setDisplayMsg(message);
 
-    }, [globalPostsLength, page, pageSize]); 
+    }, [globalPostsLength, page, pageSize, filteredPostsLength]); 
+
+    function getFilteredLength(length) {
+        setFilteredPostsLength(length);
+    }
 
     return (
     <>   
@@ -67,7 +88,8 @@ function Pagination(props) {
             page={page} 
             pageSize={pageSize} 
             selectedCity={props.selectedCity} 
-            selectedType={props.selectedType}
+            selectedType={props.selectedType} 
+            getFilteredLength={getFilteredLength}
             ></PostsFeed>
             <br />
             <br />

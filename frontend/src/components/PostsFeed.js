@@ -23,9 +23,13 @@ function PostsFeedComponent(props) {
 
             const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
             postInfo = await res.json();
+            const lengthRes = await fetch(`/getFilteredPostsLength?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
+            const filteredLength = await lengthRes.json();
+
             setPosts(postInfo);
             setFullDisplay("block");
             setLoadDisplay("none");
+            props.getFilteredLength(filteredLength);
     }
         reloadData();
     }, [props]
