@@ -11,8 +11,10 @@ function ReportPost({postId, setAlertVisibility}) {
     const res = await fetch("/addReport", 
       {method: "POST", headers: {"Content-Type": "application/json"}, 
       body: JSON.stringify(reportInfo)});
-    // const resJson = await res.json();
+    const resJson = await res.json();
     const res2 = await fetch(`/flagPost?id=${postId}`);
+    const res2Json = await res2.json();
+    if (!resJson.success || !res2Json.success) {console.log("Error sending report.")};
     setAlertVisibility("block");
 
   }
@@ -53,7 +55,7 @@ function ReportPost({postId, setAlertVisibility}) {
                 aria-label="Report post options"
                 onChange={(evt) => setReport(evt.target.value)}
               >
-                <option selected value="1">It contains hate speech or threats </option>
+                <option defaultValue="1">It contains hate speech or threats </option>
                 <option value="2">It contains profanity or offensive language</option>
                 <option value="3">It reveals somebody's private, sensitive information</option>
               </select>

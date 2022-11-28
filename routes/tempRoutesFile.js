@@ -345,9 +345,9 @@ router.get('/flagPost', async (req, res) => {
   const isFlagged = await postsDB.flagPost(postId, userId);
 
   if (isFlagged) {
-    return res.json({postFlagged: true, err: null});
+    return res.json({success: true, postFlagged: true, err: null});
   } else {
-    return res.json({postFlagged: false, err: 'error flagging post'});
+    return res.json({success: true, postFlagged: false, err: 'error flagging post'});
   }
 })
 
