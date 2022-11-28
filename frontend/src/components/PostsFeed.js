@@ -1,34 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import PostComponent from "./PostComponent.js";
 
-function PostsFeedComponent({ page, pageSize }) {
+function PostsFeedComponent(props) {
     const [posts, setPosts] = useState([{ post: '' }]);
     const [fullDisplay, setFullDisplay] = useState("none");
     const [loadDisplay, setLoadDisplay] = useState("block");
 
     async function reloadData() {
         let postInfo;
-        const page = 0;
-        const pageSize = 5;
-        const res = await fetch(`/getPosts?page=${page}&pageSize=${pageSize}`);
+
+        console.log("props are: ", props);
+        const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}`);
         postInfo = await res.json();
         setPosts(postInfo);
         setFullDisplay("block");
         setLoadDisplay("none");
     }
 
-    // useEffect(
-    //     () => {
-    //     reloadData();
-    // }, []
-    // );
     useEffect(
         () => {
             async function reloadData() {
             let postInfo;
-            const page = 0;
-            const pageSize = 5;
-            const res = await fetch(`/getPosts?page=${page}&pageSize=${pageSize}`); ///getPosts?page=${page}&pageSize=${pageSize}
+
+            console.log("props are: ", props);
+            const res = await fetch(`/getPosts?page=${props.page}&pageSize=${props.pageSize}`); ///getPosts?page=${page}&pageSize=${pageSize}
             postInfo = await res.json();
             setPosts(postInfo);
             setFullDisplay("block");
@@ -36,7 +31,7 @@ function PostsFeedComponent({ page, pageSize }) {
             // getLength(postInfo);
     }
         reloadData();
-    }, //[page, pageSize]
+    }, [props]
     );
 
 
