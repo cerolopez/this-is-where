@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
 function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
-    // const navigate = useNavigate();
     let dateFormat;
     const timestamp = post.date;
     dateFormat = new Date(timestamp);
@@ -18,7 +17,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
             const res = await fetch(`/checkIfLiked?id=${post._id.toString()}`);
             isLiked = await res.json();
         } catch (e) {
-            console("error downloading data: ", e);
+            console.log("error downloading data: ", e);
             return false;
         }
 
@@ -98,7 +97,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                          <Link to={{
                             pathname: "/view-post", 
                             search: `?id=${post._id}`, 
-                            // state: "Hello woueirld"
+                            state: "Hello woueirld"
                             }}>{post.location}</Link></h4>
                          <div className="row justify-content-start">
                             <div className="col-md-3">
