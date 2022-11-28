@@ -17,8 +17,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// import indexRouter from './routes/index.js';
-import tempRouter from "./routes/tempRoutesFile.js";
+import router from "./routes/routes.js";
 
 import { fileURLToPath } from 'url';
 
@@ -30,7 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
-// app.use('/', indexRouter);
 
 app.use(
   session({
@@ -44,8 +42,8 @@ initializePassport(passport, getUserByUsername, getUserById);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use("/", indexRouter);
-app.use("/", tempRouter);
+
+app.use("/", router);
 
 //Generate some fake records:
 // const records = await dataGenerator.generateRecords(5);
