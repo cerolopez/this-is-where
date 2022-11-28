@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import PostsFeed from "./PostsFeed.js";
+import PropTypes from "prop-types";
 
 function Pagination(props) {
 
@@ -16,7 +17,9 @@ function Pagination(props) {
             const res = await fetch("/getPostsLength");
             const length = await res.json();
             setGlobalPostsLength(length);
+
             let arr;
+            setNumOfPagesRequired(Math.ceil(length/pageSize));
             if (length === filteredPostsLength){
                 setNumOfPagesRequired(Math.ceil(length/pageSize));
             } else {
@@ -42,10 +45,10 @@ function Pagination(props) {
             const last = lastPostShown();
             let msg;
             if (globalPostsLength === filteredPostsLength) {
-                if (last <= globalPostsLength) {
-                    msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${parseInt(pageSize) * parseInt(page) + parseInt(pageSize)} out of ${globalPostsLength} posts`;
+                if (last <= filteredPostsLength) {
+                    msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${parseInt(pageSize) * parseInt(page) + parseInt(pageSize)} out of ${filteredPostsLength} posts`;
                 } else {
-                    msg = `Showing ${last - pageSize + 1}-${globalPostsLength} out of ${globalPostsLength} posts`;
+                    msg = `Showing ${last - pageSize + 1}-${filteredPostsLength} out of ${filteredPostsLength} posts`;
                 }
 
             } else {
@@ -104,8 +107,8 @@ function Pagination(props) {
                         </button>
                     </li>
                     {pageNumbersArr.map((p) => (
-                        <li className="page-item" key={p}>
-                            <button className={page===p ? "page-link active" : "page-link"}  onClick={() => setPage(p)}>{p+1}</button>
+                        <li className="page-item" key={`page_${p}`}>
+                            <button className={page===p ? "page-link active" : "page-link"}  onClick={() => setPage(parseInt(p))}>{p+1}</button>
                         </li>
                     ))}
 
@@ -125,6 +128,12 @@ function Pagination(props) {
                 <div className="col-md-3"></div>
              </div>
             </>);
+}
+
+Pagination.propTypes = {
+    selectedCity: PropTypes.string.isRequired,
+    selectedType: PropTypes.string.isRequired
+
 }
 
 export default Pagination;
