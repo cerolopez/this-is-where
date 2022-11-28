@@ -62,7 +62,7 @@ function Pagination(props) {
             setPage(0);
         }
         }>
-        <option selected value={5}>5</option>
+        <option defaultValue={5}>5</option>
         <option value={10}>10</option>
         <option value={25}>25</option>
         <option value={50}>50</option>
@@ -76,6 +76,11 @@ function Pagination(props) {
             selectedCity={props.selectedCity} 
             selectedType={props.selectedType}
             ></PostsFeed>
+            <br />
+            <br />
+        <div className="row d-flex justify-content-center">
+            <div className="col-md-3"></div>
+            <div className="col-md-6">
         <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-center">
                     <li className="page-item">
@@ -111,8 +116,15 @@ function Pagination(props) {
                     </li>
                 </ul>
             </nav>
+            </div>
+            <div className="col-md-3"></div>
+            </div>
             {/*<div>Showing {parseInt(pageSize) * parseInt(page)}-{parseInt(pageSize) * parseInt(page) + parseInt(pageSize)} out of {globalPostsLength} posts.</div>*/}
-             <div>{displayMsg}</div>
+             <div className="row d-flex justify-content-center">
+                <div className="col-md-3"></div>
+                <div className="col-md-6 text-center">{displayMsg}</div>
+                <div className="col-md-3"></div>
+             </div>
             </>);
 }
 
