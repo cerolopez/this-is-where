@@ -18,7 +18,7 @@ function Pagination(props) {
             setNumOfPagesRequired(Math.ceil(length/pageSize));
             const arr = new Array(numOfPagesRequired);
             for (let i = 0; i < arr.length; i++) {
-                arr.fill(i);
+                arr[i] = i;
             }
             setPageNumbersArr(arr);
         }
@@ -76,18 +76,18 @@ function Pagination(props) {
             <div className="col-md-6">
         <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-center">
-                    <li className="page-item">
+                    <li className="page-item" key="previous">
                         <button className="page-link" onClick={() => setPage(Math.max(page-1, 0))}>
                             Previous
                         </button>
                     </li>
-                    {pageNumbersArr.map((p, i) => (
-                        <li className="page-item">
-                            <button className={page===p[i] ? "page-link active" : "page-link"} key={i} onClick={() => setPage(i)}>{i+1}</button>
+                    {pageNumbersArr.map((p) => (
+                        <li className="page-item" key={p}>
+                            <button className={page===p ? "page-link active" : "page-link"}  onClick={() => setPage(p)}>{p+1}</button>
                         </li>
                     ))}
 
-                    <li className="page-item">
+                    <li className="page-item" key="next">
                         <button className="page-link" onClick={() => setPage(Math.min(page+1, globalPostsLength))}>
                             Next
                         </button>
