@@ -26,7 +26,6 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
         try {
             const res = await fetch(`/checkIfFavorited?id=${post._id}`);
             faveInfo = await res.json();
-            console.log("isFavorited: ", faveInfo.isFavorited);
         } catch (e) {
             console.log("error downloading data: ", e);
             return false;
@@ -44,12 +43,10 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
 
     async function sendFavoriteToDB() {
         if (!isFavoritedByUser) {
-            console.log("I'm favoriting a post");
             const favRes = await fetch(`/favoritePost?id=${post._id}`);
             const favSuccess = await favRes.json();
             console.log("post favorited: ", favSuccess);
         } else {
-            console.log("I'm unliking a post");
             const unfavRes = await fetch(`/unfavoritePost?id=${post._id}`);
             const unfavSuccess = await unfavRes.json();    
             console.log("post unfavorited: ", unfavSuccess);
@@ -60,12 +57,10 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
 
     async function sendLikeToDB() {
         if (!isLikedByUser) {
-            console.log("I'm liking a post");
             const likeRes = await fetch(`/likePost?id=${post._id}`);
             const likeSuccess = await likeRes.json();
             console.log("post liked: ", likeSuccess);
         } else {
-            console.log("I'm unliking a post");
             const unlikeRes = await fetch(`/unlikePost?id=${post._id}`);
             const unlikeSuccess = await unlikeRes.json();    
             console.log("post unliked: ", unlikeSuccess);
