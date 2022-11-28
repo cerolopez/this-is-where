@@ -213,7 +213,7 @@ router.get("/likePost", async (req, res) => {
   if (postsDbResponse.err) {
     return res.json({success: false, msg: usersDbResponse.msg, err: postsDbResponse.err});
   }
-  if (usersDbResponse.success && postsDbResponse.success) {
+  if (usersDbResponse.success) {
     res.json({success: true, msg: "Successfully liked post and incremented post's like count."});
   } else {
     res.json({success: false, msg: "Could not like post or increment its like count."});
@@ -232,7 +232,7 @@ router.get("/unlikePost", async (req, res) => {
   if (postsDbResponse.err) {
     return res.json({success: false, msg: usersDbResponse.msg, err: postsDbResponse.err});
   }
-  if (usersDbResponse.success && postsDbResponse.success) {
+  if (usersDbResponse.success) {
     res.json({success: true, msg: "Successfully unliked post and decremented post's like count."});
   } else {
     res.json({success: false, msg: "Could not unlike post or decrement its like count."});
@@ -264,7 +264,7 @@ router.get("/getFilteredPostsLength", async(req, res) => {
   const cityFilter = req.query.selectedCity;
   const typeFilter = req.query.selectedType;
 
-  const filteredLength = await postsDB.getFilteredLength(page, pageSize, cityFilter, typeFilter);
+  const filteredLength = await postsDB.getFilteredLength(parseInt(page), parseInt(pageSize), cityFilter, typeFilter);
   res.json(filteredLength);
 })
 
