@@ -3,6 +3,7 @@ import PageTemplate from "./pages/PageTemplate.js";
 import Alert from "./components/Alert.js";
 import {useNavigate} from "react-router-dom";
 import UserSetting from "./components/UserSetting";
+import "./Settings.css";
 
 const Settings = () => {
     const [authenticated, setAuthenticated] = useState(false);
@@ -87,7 +88,7 @@ const Settings = () => {
                             <button
                                 type="submit"
                                 id="submitUsernameButton"
-                                className="btn btn-primary submitButton"
+                                className="btn btn-dark submitButton"
                             >
                                 Submit
                             </button>

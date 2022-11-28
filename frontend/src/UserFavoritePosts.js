@@ -1,41 +1,33 @@
 import React, {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom/client';
-import {useNavigate, Link} from "react-router-dom";
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {Link} from "react-router-dom";
 import PageTemplate from "./pages/PageTemplate.js"
 import PostFilters from './pages/parts/PostFilters';
 import Pagination from "./components/Pagination.js";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 
-const Home = () => {
-  const navigate = useNavigate();
-  const cityOptions = ["All", "Alameda", "Berkeley", "Burlingame", "Cupertino", "Daly City", 
-  "Danville", "Foster City", "Fremont", "Gilroy", "Hayward", "Livermore", "Menlo Park", "Milpitas", 
-  "Mountain View", "Oakland", "Palo Alto", "San Carlos", "San Francisco", "San Jose", "San Leandro", 
-  "San Mateo", "San Rafael", "Santa Clara", "Saratoga", "Sunnyvale", "Union City", "Vallejo"]
-
+const UserFavoritePosts = () => {
+  const cityOptions = ["All", "San Jose", "San Francisco", "Mountain View", "Palo Alto", "Sunnyvale"];
   const typeOptions = ["All", "Memory", "Missed Connection", "Postcard", "Love Letter", "Compliment", "Freestyle"];
   const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
   const [selectedType, setSelectedType] = useState(typeOptions[0]);
 
-  useEffect(() => {
-    async function getAuth() {
-      const res = await fetch("/getAuthentication");
-      const resJson = await res.json();
-      if (!resJson.authenticated) {
-        navigate("/login", {replace: true});
-      } else {
-      }
+  async function reloadPage() {
+    let data;
+
+    try {
+        const res = await fetch(`/getUserPosts`, {
+            method: 'GET'
+        });
+        data = await res.json();
+        console.log("user posts: ", data);
+    } catch (e) {
+        console("error downloading data: ", e);
+        return false;
     }
-    getAuth();
+  }
+
+  useEffect(() => {
+    reloadPage();
   })
 
   return (
@@ -46,7 +38,7 @@ const Home = () => {
         <div className="col-md-6">
           <div className="row test-row">
             <div className="col-md-10 test-col">
-              <h1>Browse Posts</h1>
+              <h1>Your Posts</h1>
             </div>
             <div className="col-md-2 test-col d-flex justify-content-evenly">
             <Link to="/create-post">
@@ -79,9 +71,4 @@ const Home = () => {
   )
 }
 
-export default Home;
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+export default UserFavoritePosts;

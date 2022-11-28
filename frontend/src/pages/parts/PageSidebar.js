@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./PageSidebar.css";
 
 function PageSidebar() {
 
@@ -19,16 +20,18 @@ function PageSidebar() {
                                 <Link className="nav-link" to="/dashboard"><h5>Home</h5></Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/profile"><h5>Profile</h5></Link>
-                            </li>
-                            <li className="nav-item">
                                 <Link className="nav-link" to="/settings"><h5>Settings</h5></Link>
                             </li>
                         </ul>
                     </div>
-                    <form action="/userLogout" method="post">
-                    <input className="btn btn-light" type="submit" value="Log Out" readOnly></input>
-                    </form>
+                    <div className="row d-flex justify-content-center">
+                        <div className="col-md-12 text-center">
+                            <form action="/userLogout" method="post">
+                                <input className="btn btn-dark" type="submit" value="Log Out" readOnly></input>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
                 </div>
 
             </div>

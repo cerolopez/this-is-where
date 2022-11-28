@@ -1,0 +1,16 @@
+#post-title {
+    color: black;
+    text-decoration: none;
+}
+
+#post-title:hover {
+    color: blue;
+}
+
+svg#favorite-icon:hover {
+    fill: #F6BE00;
+}
+
+#postID {
+    background-color: white;
+}

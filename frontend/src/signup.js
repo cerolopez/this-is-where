@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Link} from "react-router-dom";
 import PageFooter from "./pages/parts/PageFooter.js";
 import SignupField from "./components/SignupField.js";
 import Alert from "./components/Alert.js";
@@ -54,8 +55,11 @@ const SignUp = () => {
                     <div className="col-md-3"></div>
                 </div>
                 <div className="row d-flex justify-content-center">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-6">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="row">
                     <Alert alert_type={alertType} display={alertVisibility}>{alertMsg}</Alert>
                         <form onSubmit={onSubmit}>
                             <SignupField
@@ -109,12 +113,20 @@ const SignUp = () => {
                             >
                                 {" "}
                             </SignupField>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-dark">
                                 Submit
                             </button>
+                            <br />
+                            <br />
+                            <div className="row">
+                                <p>Already have an account? <Link to="/login">Log in.</Link></p>
+                            </div>
                         </form>
                     </div>
-                    <div className="col-md-3"></div>
+                    </div>
+                    </div>
+                    </div>
+                    <div className="col-md-4"></div>
                 </div>
             </div>
             <PageFooter></PageFooter>
