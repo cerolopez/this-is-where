@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PageTemplate from "./pages/PageTemplate.js"
 import FullPostComponent from "./components/FullPostComponent.js"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-function ViewPost() {
+function ViewPost(props) {
+    const location = useLocation();
+    const test = props.location.state;
     const [post, setPost] = useState({});
     const [modDisplay, setModDisplay] = useState("none");
     const [fullDisplay, setFullDisplay] = useState("none");
@@ -12,6 +14,8 @@ function ViewPost() {
     async function reloadData() {
         let resData;
         let data;
+
+        console.log(test);
 
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
