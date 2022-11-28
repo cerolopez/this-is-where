@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PageTemplate from "./pages/PageTemplate.js"
 import FullPostComponent from "./components/FullPostComponent.js"
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function ViewPost(props) {
-    const location = useLocation();
-    //const test = props.location.state;
+function ViewPost() {
     const [post, setPost] = useState({});
     const [modDisplay, setModDisplay] = useState("none");
     const [fullDisplay, setFullDisplay] = useState("none");
@@ -15,12 +13,9 @@ function ViewPost(props) {
         let resData;
         let data;
 
-        //console.log(test);
-
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('id');
-        console.log("here's the ID in the URL: ", id);
 
         try {
             const res = await fetch(`/getPost?id=${id}`, {
@@ -43,8 +38,6 @@ function ViewPost(props) {
         }
 
         if (resData.username === data.at(0).username) {
-            console.log("users match: ", resData.username);
-            console.log(data.at(0).username);
             setModDisplay("block");
         } else {
             setModDisplay("none");
