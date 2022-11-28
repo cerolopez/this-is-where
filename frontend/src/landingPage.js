@@ -23,11 +23,10 @@ const LandingPage = () => {
             <div className="row d-flex justify-content-center header-row">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                        tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare 
-                        aenean euismod. Justo nec ultrices dui sapien eget mi. Lorem donec massa 
-                        sapien faucibus. Vulputate dignissim suspendisse in est ante in nibh mauris. 
-                        Lectus quam id leo in vitae turpis massa. Leo vel orci porta non pulvinar neque.</p>
+                    <p>This Is Where is an app where people can share a sentiment that is connected 
+                        to a place in time in the SF Bay Area. You can choose between 
+                        a variety of post formats, such as a missed connection, a memory, 
+                        a love letter, a postcard, or a compliment.</p>
                         <Link to="/signup" className="btn btn-dark" role="button">Sign Up</Link>
                 </div>
                 <div className="col-md-3"></div>
