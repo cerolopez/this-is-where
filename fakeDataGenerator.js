@@ -12,7 +12,10 @@ function DataGenerator() {
       fields: [{
         name: "city",
         type: "Custom List",
-        values: ["San Jose", "Sunnyvale", "Palo Alto", "Mountain View", "San Francisco"]
+        values: ["Alameda", "Berkeley", "Burlingame", "Cupertino", "Daly City", 
+  "Danville", "Foster City", "Fremont", "Gilroy", "Hayward", "Livermore", "Menlo Park", "Milpitas", 
+  "Mountain View", "Oakland", "Palo Alto", "San Carlos", "San Francisco", "San Jose", "San Leandro", 
+  "San Mateo", "San Rafael", "Santa Clara", "Saratoga", "Sunnyvale", "Union City", "Vallejo"]
       }, {
         name: "location",
         type: "Sentences"
