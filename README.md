@@ -17,7 +17,7 @@ HTML, CSS, JavaScript, React, Node.js, Express, and MongoDB
 
 ## Presentation materials
 - [Figma](https://www.figma.com/file/OHjx2GGy9EndvLDzlG7cHR/This-Is-Where?node-id=0%3A1&t=Pdy1c59f07eGguRN-1)
-- [Slides](https://docs.google.com/document/d/11GxXK1zScE64_QWL6XZSFd0i5UL_BFe4B4dVAdSydp0/edit?usp=sharing)
+- [Slides](https://docs.google.com/presentation/d/1axdtd0WfqfbihteLFJYkZ_oNIAmx99wxDEascEqkLW8/edit?usp=sharing)
 - [Design document](https://docs.google.com/document/d/11GxXK1zScE64_QWL6XZSFd0i5UL_BFe4B4dVAdSydp0/edit?usp=sharing)
 
 ## Instructions to run
