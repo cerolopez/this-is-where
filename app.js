@@ -45,6 +45,10 @@ app.use(passport.session());
 
 app.use("/", router);
 
+app.get('/*', function(req,res) {
+    res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+});
+
 //Generate some fake records:
 // const records = await dataGenerator.generateRecords(60);
 // console.log("from app - records type is: ", typeof records);
