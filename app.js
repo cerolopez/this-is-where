@@ -46,7 +46,7 @@ app.use(passport.session());
 app.use("/", router);
 
 //Generate some fake records:
-// const records = await dataGenerator.generateRecords(5);
+// const records = await dataGenerator.generateRecords(60);
 // console.log("from app - records type is: ", typeof records);
 // console.log("from app - records is: ", records);
 // dataGenerator.sendRecords(records);

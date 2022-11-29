@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www.js"
+    "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www.js",
+    "postinstall": "cd frontend && npm install && npm run build"
   },
   "type": "module",
   "dependencies": {

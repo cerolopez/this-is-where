@@ -117,24 +117,28 @@ function postsDB () {
             if (cityFilter === "All" && typeFilter === "All") {
                 res = await postsCol
                 .find()
+                .hint( {$natural : -1} )
                 .skip(page * page_size)
                 .limit(page_size)
                 .toArray();
             } else if (cityFilter !== "All" && typeFilter === "All") {
                 res = await postsCol
                 .find({ city: cityFilter })
+                .hint( {$natural : -1} )
                 .skip(page * page_size)
                 .limit(page_size)
                 .toArray();
             } else if (cityFilter === "All" && typeFilter !== "All") {
                 res = await postsCol
                 .find({ type: typeFilter })
+                .hint( {$natural : -1} )
                 .skip(page * page_size)
                 .limit(page_size)
                 .toArray();
             } else {
                 res = await postsCol
                 .find({ city: cityFilter, type: typeFilter })
+                .hint( {$natural : -1} )
                 .skip(page * page_size)
                 .limit(page_size)
                 .toArray();
