@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function ReportPost({postId, setAlertVisibility}) {
+function ReportPost({ postId, setAlertVisibility }) {
   const [report, setReport] = useState("1");
-
 
   async function onSubmit() {
     console.log("button is submitted");
 
-    const reportInfo = {postId: postId, reportType: report};
-    const res = await fetch("/addReport", 
-      {method: "POST", headers: {"Content-Type": "application/json"}, 
-      body: JSON.stringify(reportInfo)});
+    const reportInfo = { postId: postId, reportType: report };
+    const res = await fetch("/addReport", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reportInfo),
+    });
     const resJson = await res.json();
     const res2 = await fetch(`/flagPost?id=${postId}`);
     const res2Json = await res2.json();
-    if (!resJson.success || !res2Json.success) {console.log("Error sending report.")};
+    if (!resJson.success || !res2Json.success) {
+      console.log("Error sending report.");
+    }
     setAlertVisibility("block");
-
   }
 
   return (
@@ -56,9 +58,15 @@ function ReportPost({postId, setAlertVisibility}) {
                 aria-label="Report post options"
                 onChange={(evt) => setReport(evt.target.value)}
               >
-                <option defaultValue="1">It contains hate speech or threats </option>
-                <option value="2">It contains profanity or offensive language</option>
-                <option value="3">It reveals somebody's private, sensitive information</option>
+                <option defaultValue="1">
+                  It contains hate speech or threats{" "}
+                </option>
+                <option value="2">
+                  It contains profanity or offensive language
+                </option>
+                <option value="3">
+                  It reveals somebody's private, sensitive information
+                </option>
               </select>
             </div>
             <div className="modal-footer">
@@ -69,7 +77,12 @@ function ReportPost({postId, setAlertVisibility}) {
               >
                 Cancel
               </button>
-              <button type="submit" onClick={onSubmit} className="btn btn-primary" data-bs-dismiss="modal">
+              <button
+                type="submit"
+                onClick={onSubmit}
+                className="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
                 Submit report
               </button>
             </div>
@@ -82,7 +95,7 @@ function ReportPost({postId, setAlertVisibility}) {
 
 ReportPost.propTypes = {
   postId: PropTypes.string.isRequired,
-  setAlertVisibility: PropTypes.func.isRequired
-}
+  setAlertVisibility: PropTypes.func.isRequired,
+};
 
 export default ReportPost;

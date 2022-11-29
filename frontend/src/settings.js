@@ -1,26 +1,25 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PageTemplate from "./pages/PageTemplate.js";
 import Alert from "./components/Alert.js";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserSetting from "./components/UserSetting";
 import "./Settings.css";
 
 const Settings = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const navigate = useNavigate();
-      useEffect(() => {
+    useEffect(() => {
         async function getAuth() {
-          const res = await fetch("/getAuthentication");
-          const resJson = await res.json();
-          if (!resJson.authenticated) {
-            navigate("/login", {replace: true});
-          } else {
-            setAuthenticated(true);
-          }
+            const res = await fetch("/getAuthentication");
+            const resJson = await res.json();
+            if (!resJson.authenticated) {
+                navigate("/login", { replace: true });
+            } else {
+                setAuthenticated(true);
+            }
         }
         getAuth();
-      })
-
+    });
 
     const [newUsername, setNewUsername] = useState("");
     const [newEmail, setNewEmail] = useState("");
@@ -28,9 +27,11 @@ const Settings = () => {
     const [alertVisibility, setAlertVisibility] = useState("none");
     const [alertType, setAlertType] = useState("");
 
-    useEffect( () => {
+    useEffect(() => {
         async function setCurrentUserInfo() {
-            if (!authenticated) {return;}
+            if (!authenticated) {
+                return;
+            }
             const usernameRes = await fetch("/getUsername");
             const usernameResJson = await usernameRes.json();
             const emailRes = await fetch("/getEmail");
@@ -39,25 +40,28 @@ const Settings = () => {
             const currentEmail = emailResJson.email;
             setNewUsername(currentUsername);
             setNewEmail(currentEmail);
-    }
-    setCurrentUserInfo();
-
+        }
+        setCurrentUserInfo();
     }, [authenticated]);
 
     async function onSubmit(evt) {
         evt.preventDefault();
-        const usernameRes = await fetch("/updateUsername", 
-            {method:"POST", 
-            headers: {"Content-Type": "application/json"}, 
-            body: JSON.stringify({username: newUsername})});
+        const usernameRes = await fetch("/updateUsername", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: newUsername }),
+        });
         const usernameResJson = await usernameRes.json();
-        const emailRes = await fetch("/updateUserEmail", 
-            {method:"POST", 
-            headers: {"Content-Type": "application/json"}, 
-            body: JSON.stringify({email: newEmail})});
+        const emailRes = await fetch("/updateUserEmail", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: newEmail }),
+        });
         const emailResJson = await emailRes.json();
         if (!usernameResJson.success || !emailResJson.success) {
-            setAlertMsg("There was an issue and your account information could not be updated at this time.");
+            setAlertMsg(
+                "There was an issue and your account information could not be updated at this time."
+            );
             setAlertType("danger");
             setAlertVisibility("block");
         } else {
@@ -66,7 +70,6 @@ const Settings = () => {
             setAlertVisibility("block");
         }
     }
-
 
     return (
         <div>
@@ -81,10 +84,30 @@ const Settings = () => {
                 <div className="row d-flex">
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
-                    <Alert alert_type={alertType} display={alertVisibility}>{alertMsg}</Alert>
-                        <form id="submitUsernameForm" name="submitUsernameForm" onSubmit={onSubmit}>
-                        <UserSetting _type="text" _setting="username" _value={newUsername} _setState={(evt) => setNewUsername(evt.target.value)}></UserSetting>
-                        <UserSetting _type="email" _setting="email address" _value={newEmail} _setState={(evt) => setNewEmail(evt.target.value)}></UserSetting>
+                        <Alert alert_type={alertType} display={alertVisibility}>
+                            {alertMsg}
+                        </Alert>
+                        <form
+                            id="submitUsernameForm"
+                            name="submitUsernameForm"
+                            onSubmit={onSubmit}
+                        >
+                            <UserSetting
+                                _type="text"
+                                _setting="username"
+                                _value={newUsername}
+                                _setState={(evt) =>
+                                    setNewUsername(evt.target.value)
+                                }
+                            ></UserSetting>
+                            <UserSetting
+                                _type="email"
+                                _setting="email address"
+                                _value={newEmail}
+                                _setState={(evt) =>
+                                    setNewEmail(evt.target.value)
+                                }
+                            ></UserSetting>
                             <button
                                 type="submit"
                                 id="submitUsernameButton"
@@ -93,7 +116,7 @@ const Settings = () => {
                                 Submit
                             </button>
                         </form>
-                        <br/>
+                        <br />
                         <div className="card userSetting">
                             <div className="card-header">Remove account</div>
                             <div className="card-body">
@@ -106,12 +129,12 @@ const Settings = () => {
                                     and all of your posts!
                                 </p>
                                 <form action="/deleteAccount" method="post">
-                                <button
-                                    className="btn btn-danger"
-                                    id="deleteButton"
-                                >
-                                    Delete Account
-                                </button>
+                                    <button
+                                        className="btn btn-danger"
+                                        id="deleteButton"
+                                    >
+                                        Delete Account
+                                    </button>
                                 </form>
                             </div>
                         </div>

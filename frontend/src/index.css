@@ -1,5 +1,6 @@
-h1, h4 {
-  font-family: 'Raleway', serif;
+h1,
+h4 {
+  font-family: "Raleway", serif;
 }
 
 #post {
@@ -16,7 +17,7 @@ h1, h4 {
 }
 
 .createPost:hover {
-  color: #FEE4B2;
+  color: #fee4b2;
 }
 
 .main-hero {
@@ -38,19 +39,18 @@ h1, h4 {
 }
 
 #landingPageTitle {
-  color: #EAEBEE;
+  color: #eaebee;
   font-size: 85px;
   text-shadow: 2px 2px 8px #000000;
   text-align: center;
-
 }
 
 h6 {
   font-size: 16px;
-  color: #54647F;
+  color: #54647f;
 }
 
 h5#post-subtitle {
   font-size: 10px;
-  color: #54647F;
+  color: #54647f;
 }

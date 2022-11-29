@@ -1,18 +1,20 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from "mongodb";
 
-function postsDB () {
+function postsDB() {
     const postsDB = {};
-    const DB_NAME = 'ThisIsWhereDatabase';
-    const POSTS_COLLECTION = 'Posts';
+    const DB_NAME = "ThisIsWhereDatabase";
+    const POSTS_COLLECTION = "Posts";
 
     postsDB.createPost = async function (postInfo = {}, user) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
             client = new MongoClient(uri);
             await client.connect();
-            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            const postsCollection = client
+                .db(DB_NAME)
+                .collection(POSTS_COLLECTION);
             const newPost = {
                 city: postInfo.city,
                 location: postInfo.location,
@@ -23,27 +25,29 @@ function postsDB () {
                 isHidden: false,
                 flaggedBy: [],
                 reports: [],
-                likeCount: 0
-            }
+                likeCount: 0,
+            };
             const res = await postsCollection.insertOne(newPost);
             return res;
         } finally {
             client.close();
         }
-    }
+    };
 
     postsDB.createFakePost = async function (fakePost) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
             client = new MongoClient(uri);
             await client.connect();
-            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            const postsCollection = client
+                .db(DB_NAME)
+                .collection(POSTS_COLLECTION);
             console.log("Inserting fake post: ", fakePost);
             const res = await postsCollection.insertOne(fakePost);
             if (res.acknowledged) {
-                return {success: true, }
+                return { success: true };
             }
         } catch (e) {
             console.error(e);
@@ -52,14 +56,15 @@ function postsDB () {
         }
     };
 
-
-    postsDB.getPostsLength = async function() {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+    postsDB.getPostsLength = async function () {
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
         try {
             client = new MongoClient(uri);
             await client.connect();
-            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            const postsCollection = client
+                .db(DB_NAME)
+                .collection(POSTS_COLLECTION);
             const res = await postsCollection.find().toArray();
             const length = res.length;
             return length;
@@ -68,10 +73,15 @@ function postsDB () {
         } finally {
             await client.close();
         }
-    }
+    };
 
-    postsDB.getFilteredLength = async function(page, page_size, cityFilter, typeFilter) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+    postsDB.getFilteredLength = async function (
+        page,
+        page_size,
+        cityFilter,
+        typeFilter
+    ) {
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
         try {
             client = new MongoClient(uri);
@@ -79,33 +89,31 @@ function postsDB () {
             const postsCol = client.db(DB_NAME).collection(POSTS_COLLECTION);
             let res;
             if (cityFilter === "All" && typeFilter === "All") {
-                res = await postsCol
-                .find()
-                .toArray();
+                res = await postsCol.find().toArray();
             } else if (cityFilter !== "All" && typeFilter === "All") {
-                res = await postsCol
-                .find({ city: cityFilter })
-                .toArray();
+                res = await postsCol.find({ city: cityFilter }).toArray();
             } else if (cityFilter === "All" && typeFilter !== "All") {
-                res = await postsCol
-                .find({ type: typeFilter })
-                .toArray();
+                res = await postsCol.find({ type: typeFilter }).toArray();
             } else {
                 res = await postsCol
-                .find({ city: cityFilter, type: typeFilter })
-                .toArray();
+                    .find({ city: cityFilter, type: typeFilter })
+                    .toArray();
             }
             return res.length;
-        } catch(e) {
+        } catch (e) {
             console.error(e);
         } finally {
             await client.close();
         }
-
     };
 
-    postsDB.getPosts = async function (page, page_size, cityFilter, typeFilter) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+    postsDB.getPosts = async function (
+        page,
+        page_size,
+        cityFilter,
+        typeFilter
+    ) {
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
@@ -116,62 +124,65 @@ function postsDB () {
 
             if (cityFilter === "All" && typeFilter === "All") {
                 res = await postsCol
-                .find()
-                .hint( {$natural : -1} )
-                .skip(page * page_size)
-                .limit(page_size)
-                .toArray();
+                    .find()
+                    .hint({ $natural: -1 })
+                    .skip(page * page_size)
+                    .limit(page_size)
+                    .toArray();
             } else if (cityFilter !== "All" && typeFilter === "All") {
                 res = await postsCol
-                .find({ city: cityFilter })
-                .hint( {$natural : -1} )
-                .skip(page * page_size)
-                .limit(page_size)
-                .toArray();
+                    .find({ city: cityFilter })
+                    .hint({ $natural: -1 })
+                    .skip(page * page_size)
+                    .limit(page_size)
+                    .toArray();
             } else if (cityFilter === "All" && typeFilter !== "All") {
                 res = await postsCol
-                .find({ type: typeFilter })
-                .hint( {$natural : -1} )
-                .skip(page * page_size)
-                .limit(page_size)
-                .toArray();
+                    .find({ type: typeFilter })
+                    .hint({ $natural: -1 })
+                    .skip(page * page_size)
+                    .limit(page_size)
+                    .toArray();
             } else {
                 res = await postsCol
-                .find({ city: cityFilter, type: typeFilter })
-                .hint( {$natural : -1} )
-                .skip(page * page_size)
-                .limit(page_size)
-                .toArray();
+                    .find({ city: cityFilter, type: typeFilter })
+                    .hint({ $natural: -1 })
+                    .skip(page * page_size)
+                    .limit(page_size)
+                    .toArray();
             }
 
             return res;
         } finally {
             client.close();
         }
-    }
-
+    };
 
     // executes when a user clicks on a post card
     postsDB.getPost = async function (postID = {}) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
             client = new MongoClient(uri);
             await client.connect();
-            const postsCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
-            const res = await postsCollection.find({
-                _id: ObjectId(`${postID}`)
-            }).toArray();
+            const postsCollection = client
+                .db(DB_NAME)
+                .collection(POSTS_COLLECTION);
+            const res = await postsCollection
+                .find({
+                    _id: ObjectId(`${postID}`),
+                })
+                .toArray();
 
             return res;
         } finally {
             client.close();
         }
-    }
+    };
 
     postsDB.editPost = async function (postID, postLocation, postBody) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
@@ -180,19 +191,19 @@ function postsDB () {
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
             await postsCollection.updateOne(
-            { _id: ObjectId(`${postID}`) }, 
-            { $set: {location: postLocation, body: postBody} },
-            { upsert: true }
+                { _id: ObjectId(`${postID}`) },
+                { $set: { location: postLocation, body: postBody } },
+                { upsert: true }
             );
 
             return true;
         } finally {
             client.close();
         }
-    }
+    };
 
     postsDB.deletePost = async function (postID) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
@@ -201,14 +212,14 @@ function postsDB () {
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
             await postsCollection.deleteOne({
-                _id: ObjectId(`${postID}`)
+                _id: ObjectId(`${postID}`),
             });
 
             return true;
         } finally {
             client.close();
         }
-    }
+    };
 
     postsDB.flagPost = async function (postID = {}, userId) {
         let client;
@@ -218,19 +229,21 @@ function postsDB () {
             await client.connect();
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
-            const res = await postsCollection.updateOne({
-                _id: ObjectId(`${postID}`)
-            }, {$push: {flaggedBy: userId}
-            });
+            const res = await postsCollection.updateOne(
+                {
+                    _id: ObjectId(`${postID}`),
+                },
+                { $push: { flaggedBy: userId } }
+            );
 
             return true;
         } finally {
             client.close();
         }
-    }
+    };
 
     postsDB.likePost = async function (postID = {}) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
@@ -238,20 +251,23 @@ function postsDB () {
             await client.connect();
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
-            const res = await postsCollection.updateOne({
-                _id: ObjectId(`${postID}`)
-            }, {
-                $inc: { likeCount: 1 }
-            });
+            const res = await postsCollection.updateOne(
+                {
+                    _id: ObjectId(`${postID}`),
+                },
+                {
+                    $inc: { likeCount: 1 },
+                }
+            );
 
             return true;
         } finally {
             client.close();
         }
-    }
+    };
 
     postsDB.unlikePost = async function (postID = {}) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
@@ -259,21 +275,24 @@ function postsDB () {
             await client.connect();
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
-            const res = await postsCollection.updateOne({
-                _id: ObjectId(`${postID}`)
-            }, {
-                $inc: { likeCount: -1 }
-            });
+            const res = await postsCollection.updateOne(
+                {
+                    _id: ObjectId(`${postID}`),
+                },
+                {
+                    $inc: { likeCount: -1 },
+                }
+            );
 
             return true;
         } finally {
             client.close();
         }
-    }
+    };
 
     //When a user submits a report, the report type sent will be 1, 2, or 3
-    postsDB.addReport = async function(postId, reportType) {
-        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+    postsDB.addReport = async function (postId, reportType) {
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
 
         try {
@@ -281,21 +300,21 @@ function postsDB () {
             await client.connect();
             const db = client.db(DB_NAME);
             const postsCollection = db.collection(POSTS_COLLECTION);
-            const res = await postsCollection
-                .updateOne({_id: ObjectId(`${postId}`)}, {$push: {reports: reportType}});
+            const res = await postsCollection.updateOne(
+                { _id: ObjectId(`${postId}`) },
+                { $push: { reports: reportType } }
+            );
             if (res.acknowledged) {
-                return {success: true, msg: "Successfully added report"};
+                return { success: true, msg: "Successfully added report" };
             } else {
-                return {success: false, msg: "Could not add report"};
+                return { success: false, msg: "Could not add report" };
             }
-
         } catch (e) {
             console.error(e);
-            return ({success: false, msg: "Error adding report", err: e});
+            return { success: false, msg: "Error adding report", err: e };
         } finally {
             await client.close();
         }
-
     };
 
     return postsDB;

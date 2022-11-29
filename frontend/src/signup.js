@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import PageFooter from "./pages/parts/PageFooter.js";
 import SignupField from "./components/SignupField.js";
 import Alert from "./components/Alert.js";
@@ -21,12 +21,12 @@ const SignUp = () => {
             lastName,
             email,
             username,
-            password
+            password,
         };
         const res = await fetch("/register", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(registrationInfo)
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(registrationInfo),
         });
         const resJson = await res.json();
         if (!resJson.success) {
@@ -38,10 +38,9 @@ const SignUp = () => {
             setAlertType("success");
             setAlertVisibility("block");
             setTimeout(() => {
-            window.location.replace("login");
-        }, 2000);
+                window.location.replace("login");
+            }, 2000);
         }
-
     }
 
     return (
@@ -57,74 +56,95 @@ const SignUp = () => {
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-4"></div>
                     <div className="col-md-4">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="row">
-                    <Alert alert_type={alertType} display={alertVisibility}>{alertMsg}</Alert>
-                        <form onSubmit={onSubmit}>
-                            <SignupField
-                                _for="FirstName"
-                                _label="First Name"
-                                _type="text"
-                                _name="first_name"
-                                _value={firstName}
-                                _setState={(evt) => setFirstName(evt.target.value)}
-                            >
-                                {" "}
-                            </SignupField>
-                            <SignupField
-                                _for="LastName"
-                                _label="Last Name"
-                                _type="text"
-                                _name="last_name"
-                                _value={lastName}
-                                _setState={(evt) => setLastName(evt.target.value)}
-                            >
-                                {" "}
-                            </SignupField>
-                            <SignupField
-                                _for="Email"
-                                _label="Email address"
-                                _type="email"
-                                _name="email"
-                                _value={email}
-                                _setState={(evt) => setEmail(evt.target.value)}
-                            >
-                                {" "}
-                            </SignupField>
-                            <SignupField
-                                _for="Username"
-                                _label="Username"
-                                _type="text"
-                                _name="username"
-                                _value={username}
-                                _setState={(evt) => setUsername(evt.target.value)}
-                            >
-                                {" "}
-                            </SignupField>
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="row">
+                                    <Alert
+                                        alert_type={alertType}
+                                        display={alertVisibility}
+                                    >
+                                        {alertMsg}
+                                    </Alert>
+                                    <form onSubmit={onSubmit}>
+                                        <SignupField
+                                            _for="FirstName"
+                                            _label="First Name"
+                                            _type="text"
+                                            _name="first_name"
+                                            _value={firstName}
+                                            _setState={(evt) =>
+                                                setFirstName(evt.target.value)
+                                            }
+                                        >
+                                            {" "}
+                                        </SignupField>
+                                        <SignupField
+                                            _for="LastName"
+                                            _label="Last Name"
+                                            _type="text"
+                                            _name="last_name"
+                                            _value={lastName}
+                                            _setState={(evt) =>
+                                                setLastName(evt.target.value)
+                                            }
+                                        >
+                                            {" "}
+                                        </SignupField>
+                                        <SignupField
+                                            _for="Email"
+                                            _label="Email address"
+                                            _type="email"
+                                            _name="email"
+                                            _value={email}
+                                            _setState={(evt) =>
+                                                setEmail(evt.target.value)
+                                            }
+                                        >
+                                            {" "}
+                                        </SignupField>
+                                        <SignupField
+                                            _for="Username"
+                                            _label="Username"
+                                            _type="text"
+                                            _name="username"
+                                            _value={username}
+                                            _setState={(evt) =>
+                                                setUsername(evt.target.value)
+                                            }
+                                        >
+                                            {" "}
+                                        </SignupField>
 
-                            <SignupField
-                                _for="Password"
-                                _label="Password"
-                                _type="password"
-                                _name="password"
-                                _value={password}
-                                _setState={(evt) => setPassword(evt.target.value)}
-                            >
-                                {" "}
-                            </SignupField>
-                            <button type="submit" className="btn btn-dark">
-                                Submit
-                            </button>
-                            <br />
-                            <br />
-                            <div className="row">
-                                <p>Already have an account? <Link to="/login">Log in.</Link></p>
+                                        <SignupField
+                                            _for="Password"
+                                            _label="Password"
+                                            _type="password"
+                                            _name="password"
+                                            _value={password}
+                                            _setState={(evt) =>
+                                                setPassword(evt.target.value)
+                                            }
+                                        >
+                                            {" "}
+                                        </SignupField>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-dark"
+                                        >
+                                            Submit
+                                        </button>
+                                        <br />
+                                        <br />
+                                        <div className="row">
+                                            <p>
+                                                Already have an account?{" "}
+                                                <Link to="/login">Log in.</Link>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                    </div>
-                    </div>
+                        </div>
                     </div>
                     <div className="col-md-4"></div>
                 </div>

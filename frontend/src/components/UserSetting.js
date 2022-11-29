@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const UserSetting = ({_setting, _setState, _value, _type}) => {
+const UserSetting = ({ _setting, _setState, _value, _type }) => {
     return (
         <div className="input-group flex-nowrap">
             <span className="input-group-text userSetting" id="addon-wrapping">
-                Change {_setting} 
+                Change {_setting}
             </span>
             <input
                 type={_type}
@@ -24,7 +24,7 @@ UserSetting.propTypes = {
     _setting: PropTypes.string.isRequired,
     _setState: PropTypes.func.isRequired,
     _value: PropTypes.string.isRequired,
-    _type: PropTypes.string.isRequired
-}
+    _type: PropTypes.string.isRequired,
+};
 
 export default UserSetting;

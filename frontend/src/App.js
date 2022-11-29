@@ -1,6 +1,6 @@
-import React from 'react';
-import './index.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from "react";
+import "./index.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./landingPage.js";
 import Home from "./index.js";
 import SignUp from "./signup.js";
@@ -22,10 +22,8 @@ function App() {
         <Route exact path="/settings" element={<Settings></Settings>} />
         <Route exact path="/view-post" element={<ViewPost></ViewPost>} />
         <Route path="*" element={<NotFound></NotFound>} />
-
       </Routes>
     </Router>
-
   );
 }
 
