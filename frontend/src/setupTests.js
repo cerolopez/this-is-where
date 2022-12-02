@@ -1,3 +1,4 @@
+// CODE REVIEW: it is better to remove unused create-react-app files
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
