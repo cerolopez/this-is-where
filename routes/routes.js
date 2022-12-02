@@ -46,6 +46,8 @@ router.post("/updateUserBio", async (req, res) => {
       err: dbError,
     });
   }
+//   CODE REVIEW: good practice of organizing the response consistently
+//   so frontend can also process the response consistently.
   return res.json({
     success: dbResponse.success,
     msg: dbResponse.msg,
