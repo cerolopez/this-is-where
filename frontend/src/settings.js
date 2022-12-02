@@ -1,3 +1,4 @@
+// CODE REVIEW: perhaps these files can be either put into components or pages folder?
 import React, { useState, useEffect } from "react";
 import PageTemplate from "./pages/PageTemplate.js";
 import Alert from "./components/Alert.js";
