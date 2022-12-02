@@ -4,7 +4,8 @@ function postsDB() {
     const postsDB = {};
     const DB_NAME = "ThisIsWhereDatabase";
     const POSTS_COLLECTION = "Posts";
-
+    const MONGO_URI = process.env.DB_URI || "mongodb://localhost:27017";
+    
     postsDB.createPost = async function (postInfo = {}, user) {
         const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
