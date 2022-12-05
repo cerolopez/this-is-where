@@ -10,6 +10,8 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
     const [isLikedByUser, setIsLikedByUser] = useState(false);
     const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
     const [alertVisibility, setAlertVisibility] = useState("none");
+    const [usersLikes, setUsersLikes] = useState([]);
+    const [usersFavorites, setUsersFavorites] = useState([]);
 
     const fullDate = new Date(post.date);
     const dateString = fullDate.toDateString();
@@ -19,35 +21,48 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
 
+
+    useEffect(() => {
+        async function getLikesAndFavorites() {
+            const likes = await fetch("/getLikes");
+            const likesArray = await likes.json();
+            setUsersLikes(likesArray);
+            const favorites = await fetch("/getFavorites");
+            const favoritesArray = await favorites.json();
+            setUsersFavorites(favoritesArray);
+
+        }
+        getLikesAndFavorites();
+    }, []);
+
     useEffect(() => {
         async function reloadComponent() {
             let isLiked;
-            let faveInfo;
+            let isFavorited;
 
             try {
-                const res = await fetch(`/checkIfLiked?id=${id}`);
-                isLiked = await res.json();
+                // const res = await fetch(`/checkIfLiked?id=${id}`);
+                isLiked = usersLikes.includes(id);
             } catch (e) {
                 console.log("error downloading data: ", e);
                 return false;
             }
 
-            setIsLikedByUser(isLiked);
-
             try {
-                const res = await fetch(`/checkIfFavorited?id=${id}`);
-                faveInfo = await res.json();
-                console.log("isFavorited: ", faveInfo.isFavorited);
+                // const res = await fetch(`/checkIfFavorited?id=${id}`);
+                isFavorited = usersFavorites.includes(id);
+                console.log("isFavorited: ", isFavorited);
             } catch (e) {
                 console("error downloading data: ", e);
                 return false;
             }
-
-            setIsFavoritedByUser(faveInfo.isFavorited);
+            
+            setIsLikedByUser(isLiked);
+            setIsFavoritedByUser(isFavorited);
         }
 
         reloadComponent();
-    }, [id]);
+    }, [id, usersFavorites, usersLikes]);
 
     async function sendFavoriteToDB() {
         if (!isFavoritedByUser) {

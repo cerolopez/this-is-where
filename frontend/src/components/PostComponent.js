@@ -3,40 +3,87 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./PostComponent.css";
 
-function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
+function PostComponent({ post, fullDisplay, reloadData, usersLikes, usersFavorites }) {
     let dateFormat;
     const timestamp = post.date;
     dateFormat = new Date(timestamp);
-    const [isLikedByUser, setIsLikedByUser] = useState(false);
-    const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
+    const isLiked = usersLikes.includes(post._id);
+    console.log("is ", post.location, "liked? ", isLiked);
+    console.log("postId: ", post._id);
+    console.log("usersLikes: ", usersLikes);
+    const isFavorited = usersFavorites.includes(post._id);
+    console.log("isFavoriteD?", isFavorited);
+    const [isLikedByUser, setIsLikedByUser] = useState(isLiked);
+    const [isFavoritedByUser, setIsFavoritedByUser] = useState(isFavorited);
+    const [currentLikes, setCurrentLikes] = useState(post.likeCount);
+    console.log("currentLikes is: ", currentLikes);
+    console.log("post ", post.location, " has ", post.likeCount, " likes");
+    // console.log("post ", post.location, " should have ", currentLikes, "likes");
+    // const [usersLikes, setUsersLikes] = useState([]);
+    // const [usersFavorites, setUsersFavorites] = useState([]);
+
+
+    useEffect(() => {
+        function updateLikeCount() {
+            setCurrentLikes(post.likeCount);
+        }
+        updateLikeCount();
+    }, [post.likeCount]);
+
+    // useEffect(() => {
+    //     function updateIsLiked() {
+    //         setIsLikedByUser(usersLikes.includes(post._id));
+    //     }
+    //     updateIsLiked();
+    // });
+
+    // useEffect(() => {
+    //     async function getLikesAndFavorites() {
+    //         const likes = await fetch("/getLikes");
+    //         const likesJson = await likes.json();
+
+    //         // console.log("likeJson: ", likesJson);
+    //         const likesArray = likesJson.at(0).liked_posts;
+    //         // console.log("likesArray: ", likesArray);
+    //         setUsersLikes(likesArray);
+    //         const favorites = await fetch("/getFavorites");
+    //         const favoritesJson = await favorites.json();
+    //         const favoritesArray = favoritesJson.at(0).favorited_posts;
+    //         setUsersFavorites(favoritesArray);
+    //     }
+    //     getLikesAndFavorites();
+    // }, []);
 
     useEffect(() => {
         async function reloadComponent() {
             let isLiked;
-            let faveInfo;
+            let isFavorited;
+            // console.log("usersLikes: ", usersLikes);
+            isLiked = usersLikes.includes(post._id);
 
-            try {
-                const res = await fetch(`/checkIfLiked?id=${post._id}`);
-                isLiked = await res.json();
-            } catch (e) {
-                console.log("error downloading data: ", e);
-                return false;
-            }
+            // try {
+            //     const res = await fetch(`/checkIfLiked?id=${post._id}`);
+            //     isLiked = await res.json();
+            // } catch (e) {
+            //     console.log("error downloading data: ", e);
+            //     return false;
+            // }
 
             setIsLikedByUser(isLiked);
+            isFavorited = usersFavorites.includes(post._id);
 
-            try {
-                const res = await fetch(`/checkIfFavorited?id=${post._id}`);
-                faveInfo = await res.json();
-            } catch (e) {
-                console.log("error downloading data: ", e);
-                return false;
-            }
+            // try {
+            //     const res = await fetch(`/checkIfFavorited?id=${post._id}`);
+            //     faveInfo = await res.json();
+            // } catch (e) {
+            //     console.log("error downloading data: ", e);
+            //     return false;
+            // }
 
-            setIsFavoritedByUser(faveInfo.isFavorited);
+            setIsFavoritedByUser(isFavorited);
         }
         reloadComponent();
-    }, [post._id]);
+    }, [post._id, usersLikes, usersFavorites]);
 
     async function sendFavoriteToDB() {
         if (!isFavoritedByUser) {
@@ -49,21 +96,23 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
             console.log("post unfavorited: ", unfavSuccess);
         }
 
-        reloadData();
+         // reloadData();
     }
 
     async function sendLikeToDB() {
         if (!isLikedByUser) {
+            setCurrentLikes(currentLikes + 1);
             const likeRes = await fetch(`/likePost?id=${post._id}`);
             const likeSuccess = await likeRes.json();
             console.log("post liked: ", likeSuccess);
         } else {
+            setCurrentLikes(currentLikes - 1);
             const unlikeRes = await fetch(`/unlikePost?id=${post._id}`);
             const unlikeSuccess = await unlikeRes.json();
             console.log("post unliked: ", unlikeSuccess);
         }
 
-        reloadData();
+         // reloadData();
     }
 
     return (
@@ -150,7 +199,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                                 : "btn btn-outline-secondary"
                         }
                     >
-                        Likes {likeCount}
+                        Likes {currentLikes}
                     </button>
                 </div>
                 <div className="col-md-3"></div>

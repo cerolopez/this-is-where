@@ -27,6 +27,7 @@ function ViewPost() {
             console("error downloading data: ", e);
             return false;
         }
+        console.log("data.at(0): ", data.at(0));
 
         setPost(data.at(0));
 

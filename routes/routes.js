@@ -464,6 +464,20 @@ router.get("/flagPost", async (req, res) => {
   }
 });
 
+
+router.get("/getLikes", async (req, res) => {
+  const userId = req.session.passport.user.id;
+  const likesArray = await usersDB.getLikes(userId);
+  res.json(likesArray);
+});
+
+router.get("/getFavorites", async (req, res) => {
+  const userId = req.session.passport.user.id;
+  const favoritesArray = await usersDB.getFavorites(userId);
+  res.json(favoritesArray);
+
+});
+
 // this route checks if the current user has liked a post; returns boolean
 router.get("/checkIfLiked", async (req, res) => {
   const userId = req.session.passport.user.id;

@@ -65,7 +65,7 @@ function postsDB() {
             const postsCollection = client
                 .db(DB_NAME)
                 .collection(POSTS_COLLECTION);
-            const res = await postsCollection.find().toArray();
+            const res = await postsCollection.find().project({_id:1}).toArray();
             const length = res.length;
             return length;
         } catch (e) {
@@ -89,14 +89,15 @@ function postsDB() {
             const postsCol = client.db(DB_NAME).collection(POSTS_COLLECTION);
             let res;
             if (cityFilter === "All" && typeFilter === "All") {
-                res = await postsCol.find().toArray();
+                res = await postsCol.find().project({_id:1}).toArray();
             } else if (cityFilter !== "All" && typeFilter === "All") {
-                res = await postsCol.find({ city: cityFilter }).toArray();
+                res = await postsCol.find({ city: cityFilter }).project({_id:1}).toArray();
             } else if (cityFilter === "All" && typeFilter !== "All") {
-                res = await postsCol.find({ type: typeFilter }).toArray();
+                res = await postsCol.find({ type: typeFilter }).project({_id:1}).toArray();
             } else {
                 res = await postsCol
                     .find({ city: cityFilter, type: typeFilter })
+                    .project({_id:1})
                     .toArray();
             }
             return res.length;
@@ -115,6 +116,7 @@ function postsDB() {
     ) {
         const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
+        const projection = {_id:1, city:1, location:1, body:1, date:1, type:1, username:1, likeCount:1};
 
         try {
             client = new MongoClient(uri);
@@ -125,6 +127,7 @@ function postsDB() {
             if (cityFilter === "All" && typeFilter === "All") {
                 res = await postsCol
                     .find()
+                    .project(projection)
                     .hint({ $natural: -1 })
                     .skip(page * page_size)
                     .limit(page_size)
@@ -132,6 +135,7 @@ function postsDB() {
             } else if (cityFilter !== "All" && typeFilter === "All") {
                 res = await postsCol
                     .find({ city: cityFilter })
+                    .project(projection)
                     .hint({ $natural: -1 })
                     .skip(page * page_size)
                     .limit(page_size)
@@ -139,6 +143,7 @@ function postsDB() {
             } else if (cityFilter === "All" && typeFilter !== "All") {
                 res = await postsCol
                     .find({ type: typeFilter })
+                    .project(projection)
                     .hint({ $natural: -1 })
                     .skip(page * page_size)
                     .limit(page_size)
@@ -146,6 +151,7 @@ function postsDB() {
             } else {
                 res = await postsCol
                     .find({ city: cityFilter, type: typeFilter })
+                    .project(projection)
                     .hint({ $natural: -1 })
                     .skip(page * page_size)
                     .limit(page_size)
@@ -162,6 +168,7 @@ function postsDB() {
     postsDB.getPost = async function (postID = {}) {
         const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
+        const projection = {_id:1, city:1, location:1, body:1, date:1, type:1, username:1, likeCount:1};
 
         try {
             client = new MongoClient(uri);
@@ -173,6 +180,7 @@ function postsDB() {
                 .find({
                     _id: ObjectId(`${postID}`),
                 })
+                .project(projection)
                 .toArray();
 
             return res;
