@@ -2,6 +2,11 @@
 
 - [Link to our class website](https://johnguerra.co/classes/webDevelopment_fall_2022/)
 
+## Releases
+* [60% release](https://github.com/cerolopez/this-is-where/releases/tag/60%25)
+* [80% release](https://github.com/cerolopez/this-is-where/releases/tag/80pct_milestone5)
+* [100% release](https://github.com/cerolopez/this-is-where/releases/tag/p3deadline)
+
 ## Authors
 Cecilia Lopez and Armen Sarkisian
 
