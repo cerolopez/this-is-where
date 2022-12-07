@@ -121,12 +121,12 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
                             {/* <h4 className="card-title">{post.location}</h4> */}
                             <div className="row justify-content-start">
                                 <div className="col-md-2">
-                                    <span className="badge bg-secondary">
+                                    <span className="label info">
                                         {post.city}
                                     </span>
                                 </div>
-                                <div className="col-md-2">
-                                    <span className="badge bg-secondary">
+                                <div className="col-md-4">
+                                    <span className="label info">
                                         {post.type}
                                     </span>
                                 </div>
@@ -140,13 +140,13 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
                             <br />
                             <div className="row">
                                 <div className="col-md-12">
-                                    <h5
+                                    <h4
                                         id="post-subtitle"
                                         style={{ display: `${fullDisplay}` }}
                                     >
                                         {subtitle}
                                         <strong>{post.username}</strong>
-                                    </h5>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
