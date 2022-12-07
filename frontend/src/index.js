@@ -59,6 +59,7 @@ const Home = () => {
   ];
   const [selectedCity, setSelectedCity] = useState(cityOptions[0]);
   const [selectedType, setSelectedType] = useState(typeOptions[0]);
+  
 
   useEffect(() => {
     async function getAuth() {
@@ -71,6 +72,7 @@ const Home = () => {
     }
     getAuth();
   });
+
 
   return (
     <div>

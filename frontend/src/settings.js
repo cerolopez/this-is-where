@@ -68,6 +68,9 @@ const Settings = () => {
             setAlertMsg("Successfully changed your account information.");
             setAlertType("success");
             setAlertVisibility("block");
+            // setTimeout(() => {
+            //     navigate("/settings", { replace: true });
+            // }, 1500);
         }
     }
 
@@ -116,7 +119,7 @@ const Settings = () => {
                                 Submit
                             </button>
                         </form>
-                        <br />
+                        <br /> <br /> <br /> <hr />
                         <div className="card userSetting">
                             <div className="card-header">Remove account</div>
                             <div className="card-body">
@@ -124,13 +127,13 @@ const Settings = () => {
                                     Do you want to delete your account?
                                 </h5>
                                 <p className="card-text">
-                                    Please click submit only if you are sure -
+                                    Please click the button below only if you are absolutely sure -
                                     this will permanently delete your account
                                     and all of your posts!
                                 </p>
                                 <form action="/deleteAccount" method="post">
                                     <button
-                                        className="btn btn-danger"
+                                        className="btn btn-outline-dark"
                                         id="deleteButton"
                                     >
                                         Delete Account

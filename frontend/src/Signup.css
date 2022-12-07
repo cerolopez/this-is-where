@@ -1,0 +1,8 @@
+.signUpButton {
+  background-color: #D98E04;
+
+}
+
+.signUpButton:hover {
+  background-color: #A64F03;
+}

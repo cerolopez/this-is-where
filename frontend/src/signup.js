@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PageFooter from "./pages/parts/PageFooter.js";
 import SignupField from "./components/SignupField.js";
 import Alert from "./components/Alert.js";
+import "./Signup.css";
 
 const SignUp = () => {
     const [firstName, setFirstName] = useState("");
@@ -129,7 +130,7 @@ const SignUp = () => {
                                         </SignupField>
                                         <button
                                             type="submit"
-                                            className="btn btn-dark"
+                                            className="btn btn-dark signUpButton"
                                         >
                                             Submit
                                         </button>

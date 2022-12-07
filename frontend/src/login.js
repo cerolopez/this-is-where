@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PageFooter from "./pages/parts/PageFooter.js";
 import LoginField from "./components/LoginField.js";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const LogIn = () => {
     const navigate = useNavigate();
@@ -54,7 +55,7 @@ const LogIn = () => {
                                     </LoginField>
                                     <button
                                         type="submit"
-                                        className="btn btn-dark"
+                                        className="btn btn-dark logInButton"
                                     >
                                         Submit
                                     </button>

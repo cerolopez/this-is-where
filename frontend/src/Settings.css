@@ -3,3 +3,40 @@
     margin-bottom: 7px;
     margin-top: 7px;
 }
+
+.settingLabel {
+    background-color: #BFCFD9;
+}
+
+#deleteButton {
+/*    background-color: #8A0202;
+    color: white;*/
+
+    background-color: #140000;
+    color: white;
+}
+#deleteButton:hover {
+    border-color: #140000;
+    background-color: red;
+    color: #140000;
+}
+
+.card-header {
+    background-color: #BFCFD9;
+}
+
+
+.submitButton {
+    background-color: #D98E04;
+}
+
+.submitButton:hover{
+    background-color: #A64F03; 
+}
+
+hr {
+    border: 0px;
+    height: 2px;
+    background: #333;
+    background-image: linear-gradient(to right, #D98E04, #A64F03, #D98E04);
+}
