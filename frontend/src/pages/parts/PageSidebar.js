@@ -17,10 +17,10 @@ function PageSidebar() {
                     <div className="offcanvas-body">
                         <ul className="navbar-nav flex-grow-1 pe-3">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/dashboard"><h5>Home</h5></Link>
+                                <Link className="nav-link" to="/dashboard"><h2>Home</h2></Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/settings"><h5>Settings</h5></Link>
+                                <Link className="nav-link" to="/settings"><h2>Settings</h2></Link>
                             </li>
                         </ul>
                     </div>

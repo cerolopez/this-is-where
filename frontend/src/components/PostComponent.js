@@ -73,7 +73,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                 <div className="col-md-6">
                     <div className="card" id="postID">
                         <div className="card-body">
-                            <h4>
+                            <h2>
                                 <Link
                                     onClick={() => {
                                         setIsFavoritedByUser(
@@ -108,15 +108,15 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                                 >
                                     {post.location}
                                 </Link>
-                            </h4>
+                            </h2>
                             <div className="row justify-content-start">
                                 <div className="col-md-3">
-                                    <span className="badge bg-secondary">
+                                    <span className="label info">
                                         {post.city}
                                     </span>
                                 </div>
-                                <div className="col-md-3">
-                                    <span className="badge bg-secondary">
+                                <div className="col-md-4">
+                                    <span className="label info">
                                         {post.type}
                                     </span>
                                 </div>
@@ -124,10 +124,10 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                             <br />
                             <div className="row">
                                 <div className="col-md-12">
-                                    <h5 id="post-subtitle">
+                                    <h4 id="post-subtitle">
                                         Posted on {dateFormat.toDateString()} by{" "}
                                         <strong>{post.username}</strong>
-                                    </h5>
+                                    </h4>
                                 </div>
                             </div>
                         </div>

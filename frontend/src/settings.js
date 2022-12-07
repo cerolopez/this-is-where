@@ -90,6 +90,7 @@ const Settings = () => {
                         <Alert alert_type={alertType} display={alertVisibility}>
                             {alertMsg}
                         </Alert>
+                        <h2>Edit Account</h2>
                         <form
                             id="submitUsernameForm"
                             name="submitUsernameForm"
@@ -121,11 +122,10 @@ const Settings = () => {
                         </form>
                         <br /> <br /> <br /> <hr />
                         <div className="card userSetting">
-                            <div className="card-header">Remove account</div>
                             <div className="card-body">
-                                <h5 className="card-title">
+                                <h2 className="card-title">
                                     Do you want to delete your account?
-                                </h5>
+                                </h2>
                                 <p className="card-text">
                                     Please click the button below only if you are absolutely sure -
                                     this will permanently delete your account

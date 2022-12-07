@@ -4,7 +4,7 @@
 }
 
 #post-title:hover {
-    color: blue;
+    color: #D98E04;
 }
 
 svg#favorite-icon:hover {
@@ -13,4 +13,17 @@ svg#favorite-icon:hover {
 
 #postID {
     background-color: white;
+}
+
+.label {
+    color: #140000;
+    padding: 8px;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: normal;
+    border-radius: 5px;
+}
+
+.info {
+    background-color: #BFCFD9;
 }

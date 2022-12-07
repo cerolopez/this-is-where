@@ -91,7 +91,7 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
                 <div className="col-md-8">
                     <div className="card" id="postID">
                         <div className="card-body">
-                            <h4>
+                            <h2>
                                 <Link
                                     onClick={() => {
                                         setIsFavoritedByUser(
@@ -117,7 +117,7 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
                                 </Link>
                                 &nbsp;&nbsp;
                                 {post.location}
-                            </h4>
+                            </h2>
                             {/* <h4 className="card-title">{post.location}</h4> */}
                             <div className="row justify-content-start">
                                 <div className="col-md-2">

@@ -18,7 +18,7 @@ function PostFilters({
             <div className="row d-flex justify-content-center">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
-                    <h5>Filter by</h5>
+                    <h2>Filter by</h2>
                 </div>
                 <div className="col-md-3"></div>
             </div>
@@ -26,10 +26,10 @@ function PostFilters({
                 <div className="col-md-3">
                 </div>
                 <div className="col-md-2">
-                    <p id="filter-label">City</p>
+                    <h3>City</h3>
                 </div>
                 <div className="col-md-2">
-                    <p id="filter-label">Type</p>
+                    <h3>Type</h3>
                 </div>
                 <div className="col-md-2 text-end">
                 </div>
