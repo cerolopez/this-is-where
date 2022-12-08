@@ -243,7 +243,6 @@ router.get("/unfavoritePost", async (req, res) => {
 router.get("/flagPost", async (req, res) => {
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
-  //TODO - change to postsDB.flagPost
   const dbResponse = await usersDB.flagPost(postId, userId);
   if (dbResponse.err) {
     return res.json({
@@ -258,7 +257,6 @@ router.get("/flagPost", async (req, res) => {
 router.get("/unflagPost", async (req, res) => {
   const postId = req.query.id;
   const userId = req.session.passport.user.id;
-  //TODO - change to postsDB.unflagPost
   const dbResponse = await usersDB.unflagPost(postId, userId);
   if (dbResponse.err) {
     return res.json({
