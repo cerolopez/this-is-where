@@ -21,7 +21,7 @@ function EditPost({ post, reloadData }) {
     }
 
     if (newMsg === "") {
-      newEdits = { postId: post._id, location: post.location, body: post.body };
+      newEdits = { postId: post._id, location: newLocation, body: post.body };
     }
 
     const res = await fetch("/editPost", {
