@@ -110,12 +110,11 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                                 </Link>
                             </h2>
                             <div className="row justify-content-start">
-                                <div className="col-md-3">
+                                <div className="col-md-12">
                                     <span className="label info">
                                         {post.city}
                                     </span>
-                                </div>
-                                <div className="col-md-4">
+                                    &nbsp;&nbsp;&nbsp;
                                     <span className="label info">
                                         {post.type}
                                     </span>
