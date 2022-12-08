@@ -27,7 +27,7 @@ function PageSidebar() {
                     <div className="row d-flex justify-content-center">
                         <div className="col-md-12 text-center">
                             <form action="/userLogout" method="post">
-                                <input className="btn btn-dark" type="submit" value="Log Out" readOnly></input>
+                                <input className="btn btn-dark logOutButton" type="submit" value="Log Out" readOnly></input>
                             </form>
                         </div>
                     </div>

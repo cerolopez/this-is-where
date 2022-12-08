@@ -1,8 +1,16 @@
 .signUpButton {
-  background-color: #D98E04;
+  background-color: #415A77;
 
 }
 
 .signUpButton:hover {
-  background-color: #A64F03;
+  background-color: #1B263B;
+}
+
+.signUpHeader {
+  background-image: url("../../city_resized.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 340px;
+
 }

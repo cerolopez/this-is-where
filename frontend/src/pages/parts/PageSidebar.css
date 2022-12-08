@@ -7,3 +7,20 @@ h5 {
 .offcanvas {
     background: #C1C8D6;
   }
+
+.logOutButton {
+  background-color: #415A77;
+
+}
+
+.logOutButton:hover {
+  background-color: #1B263B;
+}
+
+.nav-link {
+  color: #140000;
+}
+
+.nav-link:hover {
+  color: #E0E1DD;
+}

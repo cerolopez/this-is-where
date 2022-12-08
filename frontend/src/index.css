@@ -60,3 +60,7 @@ h4#post-subtitle {
   font-family: "Montserrat", sans-serif;
   font-weight: lighter;
 }
+
+.frontPage {
+  font-size: 1.35rem;
+}

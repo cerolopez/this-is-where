@@ -1,6 +1,7 @@
 import React from "react";
 import PageFooter from "./pages/parts/PageFooter.js";
 import { Link } from "react-router-dom";
+import "./Signup.css";
 
 const LandingPage = () => {
     return (
@@ -45,7 +46,7 @@ const LandingPage = () => {
                 <div className="row d-flex justify-content-center header-row">
                     <div className="col-md-3"></div>
                     <div className="col-md-6">
-                        <p>
+                        <p className="frontPage">
                             This Is Where is an app where people can share a
                             sentiment that is connected to a place in time in
                             the SF Bay Area. You can choose between a variety of
@@ -54,7 +55,7 @@ const LandingPage = () => {
                         </p>
                         <Link
                             to="/signup"
-                            className="btn btn-dark"
+                            className="btn btn-dark signUpButton"
                             role="button"
                         >
                             Sign Up
