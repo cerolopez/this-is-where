@@ -36,7 +36,7 @@ function DeletePost({ postID }) {
       <div
         className="modal fade"
         id="deleteModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="deleteModalLabel"
         aria-hidden="true"
       >

@@ -57,7 +57,7 @@ function EditPost({ post, reloadData }) {
       <div
         className="modal fade"
         id="editModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="editModalLabel"
         aria-hidden="true"
       >

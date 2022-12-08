@@ -8,6 +8,7 @@ function ViewPost() {
     const [modDisplay, setModDisplay] = useState("none");
     const [fullDisplay, setFullDisplay] = useState("none");
     const [loadDisplay, setloadDisplay] = useState("block");
+    const [reportDisplay, setReportDisplay] = useState("block");
 
     async function reloadData() {
         let resData;
@@ -39,8 +40,10 @@ function ViewPost() {
 
         if (resData.username === data.at(0).username) {
             setModDisplay("block");
+            setReportDisplay("none");
         } else {
             setModDisplay("none");
+            setReportDisplay("block");
         }
 
         setFullDisplay("block");
@@ -74,6 +77,7 @@ function ViewPost() {
                             post={post}
                             modDisplay={modDisplay}
                             fullDisplay={fullDisplay}
+                            reportDisplay={reportDisplay}
                             reloadData={reloadData}
                         />
                     </div>

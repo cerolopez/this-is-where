@@ -6,7 +6,7 @@ import DeletePost from "./DeletePost.js";
 import EditPost from "./EditPost.js";
 import { Link } from "react-router-dom";
 
-function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
+function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloadData }) {
     const [isLikedByUser, setIsLikedByUser] = useState(false);
     const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
     const [alertVisibility, setAlertVisibility] = useState("none");
@@ -118,7 +118,6 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
                                 &nbsp;&nbsp;
                                 {post.location}
                             </h2>
-                            {/* <h4 className="card-title">{post.location}</h4> */}
                             <div className="row justify-content-start">
                                 <div className="col-md-12">
                                     <span className="label info">
@@ -151,46 +150,67 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-2">
-                    <div style={{ display: `${modDisplay}` }}>
+
+                <div className="col-md-2"></div>
+            </div>
+
+            <div className="row d-flex justify-content-center" id="like">
+                <div className="col-md-2"></div>
+
+                {/* like button */}
+                    <div className="col-md-5">
+                        <Link
+                            onClick={() => {
+                                setIsLikedByUser(!isLikedByUser);
+                                sendLikeToDB();
+                                    }}
+                            >
+                            <svg
+                                id="heart-icon"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill={
+                                    isLikedByUser
+                                        ? "#BD2020"
+                                        : "black"
+                                    }
+                                className="bi bi-heart"
+                                viewBox="0 0 16 16"
+                            >
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                            </svg>
+                        </Link>
+                        &nbsp;
+                        <span style={{ verticalAlign: "middle" }}>{post.likeCount}</span>
+                    </div>
+
+                    {/* report post button */}
+                    <div className="col-md-3" style={{ display: `${reportDisplay}` }}>
+                        <div style={{ float: "right" }}>
+                            <ReportPost
+                            postId={id}
+                            setAlertVisibility={setAlertVisibility}
+                            >
+                                {" "}
+                            </ReportPost>
+                        </div>
+                    </div>
+
+                    {/* edit and delete buttons */}
+                    <div className="col-md-3" style={{ display: `${modDisplay}` }}>
+                    <span style={{ float: "right" }}>
+                        <div>
                         <EditPost
                             post={post}
                             reloadData={reloadData}
                         ></EditPost>
-                    </div>
-                    <br />
-                    <div style={{ display: `${modDisplay}` }}>
+                        &nbsp;&nbsp;
                         <DeletePost postID={id}></DeletePost>
-                    </div>
-                </div>
-                <div className="row d-flex justify-content-center" id="like">
-                    <div className="col-md-2"></div>
-                    <div className="col-md-4">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setIsLikedByUser(!isLikedByUser);
-                                sendLikeToDB();
-                            }}
-                            className={
-                                isLikedByUser
-                                    ? "btn btn-outline-danger"
-                                    : "btn btn-outline-secondary"
-                            }
-                        >
-                            Like {post.likeCount}
-                        </button>
-                    </div>
-                    <div className="col-md-4">
-                        <ReportPost
-                            postId={id}
-                            setAlertVisibility={setAlertVisibility}
-                        >
-                            {" "}
-                        </ReportPost>
+                        </div>
+                    </span>
                     </div>
                     <div className="col-md-2"></div>
-                </div>
             </div>
         </div>
     );

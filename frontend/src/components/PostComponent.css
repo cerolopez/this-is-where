@@ -27,3 +27,7 @@ svg#favorite-icon:hover {
 .info {
     background-color: #BFCFD9;
 }
+
+#postRow .col {
+    border: 1px solid #c9c9c9;
+  }
