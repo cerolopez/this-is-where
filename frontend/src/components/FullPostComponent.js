@@ -120,12 +120,11 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reloadData }) {
                             </h2>
                             {/* <h4 className="card-title">{post.location}</h4> */}
                             <div className="row justify-content-start">
-                                <div className="col-md-2">
+                                <div className="col-md-12">
                                     <span className="label info">
                                         {post.city}
                                     </span>
-                                </div>
-                                <div className="col-md-4">
+                                    &nbsp;&nbsp;&nbsp;
                                     <span className="label info">
                                         {post.type}
                                     </span>
