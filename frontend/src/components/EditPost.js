@@ -2,11 +2,28 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 function EditPost({ post, reloadData }) {
-  const [newLocation, setNewLocation] = useState(post.location);
-  const [newMsg, setNewMsg] = useState(post.body);
+  const [newLocation, setNewLocation] = useState("");
+  const [newMsg, setNewMsg] = useState("");
+
+  const onLocationChange = (evt) => {
+    setNewLocation(evt.target.value);
+  }
+
+  const onMsgChange = (evt) => {
+    setNewMsg(evt.target.value);
+  }
 
   async function onSubmit() {
-    const newEdits = { postId: post._id, location: newLocation, body: newMsg };
+    let newEdits = { postId: post._id, location: newLocation, body: newMsg };
+
+    if (newLocation === "") {
+      newEdits = { postId: post._id, location: post.location, body: newMsg };
+    }
+
+    if (newMsg === "") {
+      newEdits = { postId: post._id, location: post.location, body: post.body };
+    }
+
     const res = await fetch("/editPost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -64,11 +81,13 @@ function EditPost({ post, reloadData }) {
                     Location:
                   </label>
                   <input
-                    onChange={(evt) => setNewLocation(evt.target.value)}
+                    onChange={onLocationChange}
                     type="text"
                     className="form-control"
                     id="location-name"
+                    value={newLocation}
                     placeholder={post.location}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -76,10 +95,12 @@ function EditPost({ post, reloadData }) {
                     Message:
                   </label>
                   <textarea
-                    onChange={(evt) => setNewMsg(evt.target.value)}
+                    onChange={onMsgChange}
                     className="form-control"
                     id="message-text"
+                    value={newMsg}
                     placeholder={post.body}
+                    required
                   ></textarea>
                 </div>
               </form>
