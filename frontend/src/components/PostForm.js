@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 function PostForm() {
+    const [postDisplay, setPostDisplay] = useState("none");
+    const [successDisplay, setSuccessDisplay] = useState("none");
     const [location, setLocation] = useState("");
     const [city, setCity] = useState("");
     const [type, setType] = useState("");
@@ -9,6 +11,7 @@ function PostForm() {
 
     async function onSubmit(evt) {
         evt.preventDefault();
+        setPostDisplay("block");
 
         const newPostObj = {
             type,
@@ -28,8 +31,11 @@ function PostForm() {
 
         const data = await res.json();
         console.log("post created: ", data);
+
+        setPostDisplay("none");
+        setSuccessDisplay("block");
         setTimeout(() => {
-            window.location.replace("dashboard");
+            window.location.replace(`/view-post?id=${data.postId}`);
         }, 2000);
     }
 
@@ -50,6 +56,7 @@ function PostForm() {
                                 value={type}
                                 onChange={(evt) => setType(evt.target.value)}
                                 placeholder="Choose post type"
+                                required
                             >
                                 <option defaultValue>
                                     --Please choose an option--
@@ -181,6 +188,15 @@ function PostForm() {
                             </div>
                             <div className="col-md-5"></div>
                         </div>
+                        <br />
+                        <div className="row justify-content-center">
+                            <div className="col-md-12 text-center">
+                                <p style={{ display: `${postDisplay}` }}>Loading...</p>
+                                <p style={{ display: `${successDisplay}` }}>Success!</p>
+                            </div>
+                        </div>
+                        <div></div>
+                        <br />
                     </form>
                 </div>
             </div>
