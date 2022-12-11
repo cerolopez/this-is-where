@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PageFooter from "./pages/parts/PageFooter.js";
 import LoginField from "./components/LoginField.js";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import "./styles/Login.css";
 
 const LogIn = () => {
     const navigate = useNavigate();
