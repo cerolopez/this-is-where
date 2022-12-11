@@ -5,11 +5,14 @@ import PageFooter from "./pages/parts/PageFooter.js";
 import Alert from "./components/Alert.js";
 import { useNavigate } from "react-router-dom";
 import UserSetting from "./components/UserSetting";
-import "./Settings.css";
-import "./Login.css";
+
+import "./styles/Login.css";
 
 //TODO - separate account settings and profile settings into two different components?
 //TODO - make sure user can't edit username to one that already exists
+
+import "./styles/Settings.css";
+
 
 const Settings = () => {
     const [authenticated, setAuthenticated] = useState(false);

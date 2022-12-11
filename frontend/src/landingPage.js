@@ -1,7 +1,7 @@
 import React from "react";
 import PageFooter from "./pages/parts/PageFooter.js";
 import { Link } from "react-router-dom";
-import "./Signup.css";
+import "./styles/Signup.css";
 
 const LandingPage = () => {
     return (

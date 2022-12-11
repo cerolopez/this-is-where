@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./PostComponent.css";
 
-function PostComponent({ post, likeCount, fullDisplay, reloadData, usersLikes, usersFavorites }) {
+function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
     let dateFormat;
     const timestamp = post.date;
     dateFormat = new Date(timestamp);
@@ -155,9 +155,9 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData, usersLikes, u
 
 PostComponent.propTypes = {
     post: PropTypes.object.isRequired,
-    likeCount: PropTypes.number.isRequired,
     fullDisplay: PropTypes.string.isRequired,
-    reloadData: PropTypes.func.isRequired,
+    usersLikes: PropTypes.array.isRequired,
+    usersFavorites: PropTypes.array.isRequired
 };
 
 export default PostComponent;

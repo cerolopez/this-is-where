@@ -19,8 +19,27 @@ footer,
   font-family: "Montserrat", sans-serif;
 }
 
+h6 {
+  font-size: 16px;
+  color: #54647f;
+}
+
+h4#post-subtitle {
+  font-size: 10px;
+  color: #54647f;
+  font-weight: lighter;
+}
+
 #post {
   padding-top: 25px;
+}
+
+.createPost {
+  color: black;
+}
+
+svg#create-icon:hover {
+  fill: #415A77;
 }
 
 .header-row {
@@ -28,12 +47,9 @@ footer,
   padding-bottom: 25px;
 }
 
-.createPost {
-  color: black;
-}
-
-.createPost:hover {
-  color: #fee4b2;
+.content-row {
+  margin-left: 300px;
+  margin-right: 300px;
 }
 
 .main-hero {
@@ -59,18 +75,6 @@ footer,
   font-size: 85px;
   text-shadow: 2px 2px 8px #000000;
   text-align: center;
-}
-
-h6 {
-  font-size: 16px;
-  color: #54647f;
-}
-
-h4#post-subtitle {
-  font-size: 10px;
-  color: #54647f;
-  font-family: "Montserrat", sans-serif;
-  font-weight: lighter;
 }
 
 .frontPage {
