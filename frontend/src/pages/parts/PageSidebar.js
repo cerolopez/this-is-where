@@ -21,7 +21,8 @@ function PageSidebar() {
                                 <a className="nav-link" href="/dashboard"><h2>Home</h2></a>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/settings"><h2>Settings</h2></Link>
+                                {/*<Link className="nav-link" to="/settings"><h2>Settings</h2></Link>*/}
+                            <a className="nav-link" href="/settings"><h2>Settings</h2></a>
                             </li>
                         </ul>
                     </div>

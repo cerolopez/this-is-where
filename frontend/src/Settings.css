@@ -50,3 +50,8 @@ hr {
     background: #333;
     background-image: linear-gradient(to right, #415A77, #1B263B, #415A77);
 }
+
+/*where did the orange come from? =D*/
+h1, h2, p { 
+    color: black;
+}
