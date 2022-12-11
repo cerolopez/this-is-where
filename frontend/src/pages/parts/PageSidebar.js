@@ -35,11 +35,13 @@ function PageSidebar() {
                                 <a className="nav-link" href="/dashboard"><h2>Home</h2></a>
                             </li>
                             <li className="nav-item">
+                                {/*<Link className="nav-link" to="/settings"><h2>Settings</h2></Link>*/}
+                            <a className="nav-link" href="/settings"><h2>Settings</h2></a>
                                 <a href="/profile" id="nav-link"><h2>Profile</h2></a>
                             </li>
-                            <li className="nav-item">
+{/*                            <li className="nav-item">
                                 <Link className="nav-link" to="/settings"><h2>Settings</h2></Link>
-                            </li>
+                            </li>*/}
                         </ul>
                     </div>
                     <div className="row d-flex justify-content-center">
