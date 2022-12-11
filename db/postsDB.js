@@ -189,6 +189,64 @@ function postsDB() {
         }
     };
 
+    // executes on a user's profile
+    postsDB.getFavoritePosts = async function (favoritePostIds = []) {
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
+        let client;
+
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const postsCollection = client
+                .db(DB_NAME)
+                .collection(POSTS_COLLECTION);
+
+            let tempArray = [];
+
+            for (let i = 0; i < favoritePostIds.length; i++) {
+                tempArray.push(ObjectId(favoritePostIds[i]));
+            }
+
+            const res = await postsCollection
+                .find({
+                    _id: { $in: tempArray},
+                })
+                .toArray();
+            return res;
+        } finally {
+            client.close();
+        }
+    };
+
+    // executes on a user's profile
+    postsDB.getLikedPosts = async function (likedPostIds = []) {
+        const uri = process.env.DB_URI || "mongodb://localhost:27017";
+        let client;
+
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const postsCollection = client
+                .db(DB_NAME)
+                .collection(POSTS_COLLECTION);
+
+            let tempArray = [];
+
+            for (let i = 0; i < likedPostIds.length; i++) {
+                tempArray.push(ObjectId(likedPostIds[i]));
+            }
+
+            const res = await postsCollection
+                .find({
+                    _id: { $in: tempArray},
+                })
+                .toArray();
+            return res;
+        } finally {
+            client.close();
+        }
+    };
+
     postsDB.editPost = async function (postID, postLocation, postBody) {
         const uri = process.env.DB_URI || "mongodb://localhost:27017";
         let client;
@@ -324,6 +382,25 @@ function postsDB() {
             await client.close();
         }
     };
+
+    postsDB.getUserPosts = async function (username) {
+        const uri = process.env.DB_URI || 'mongodb://localhost:27017';
+        let client;
+    
+        try {
+            client = new MongoClient(uri);
+            await client.connect();
+            const userCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
+            const res = await userCollection.find({
+                username: `${username}`
+            }).toArray();
+    
+            console.log("users posts: ", res);
+            return res;
+        } finally {
+            client.close();
+        }
+    }
 
 
 
