@@ -3,7 +3,7 @@ import PageTemplate from "./pages/PageTemplate.js";
 import Alert from "./components/Alert.js";
 import { useNavigate } from "react-router-dom";
 import UserSetting from "./components/UserSetting";
-import "./Settings.css";
+import "./styles/Settings.css";
 
 const Settings = () => {
     const [authenticated, setAuthenticated] = useState(false);
