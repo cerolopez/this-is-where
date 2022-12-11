@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { useNavigate, Link } from "react-router-dom";
-import "./index.css";
+import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import PageTemplate from "./pages/PageTemplate.js";
@@ -87,6 +87,7 @@ const Home = () => {
               <div className="col-md-2 test-col d-flex justify-content-evenly">
                 <Link to="/create-post">
                   <svg
+                    id="create-icon"
                     xmlns="http://www.w3.org/2000/svg"
                     width="35"
                     height="35"
