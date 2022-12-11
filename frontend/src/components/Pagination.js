@@ -41,9 +41,6 @@ function Pagination(props) {
         getInitialLength();
     }, [props.selectedCity, props.selectedType]);
 
-
-
-
     useEffect(() => {
         let active = true;
         if (active) {
@@ -135,13 +132,12 @@ function Pagination(props) {
                 </div>
             </div>
             <PostsFeed
-                page={page}
-                pageSize={pageSize}
-                selectedCity={props.selectedCity}
-                selectedType={props.selectedType}
+                // page={page}
+                // pageSize={pageSize}
+                // selectedCity={props.selectedCity}
+                // selectedType={props.selectedType}
                 fullDisplay={fullDisplay}
                 loadDisplay={loadDisplay}
-
                 posts={posts}
                 likes={usersLikes}
                 faves={usersFavorites}
