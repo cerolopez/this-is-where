@@ -3,63 +3,25 @@ import PostComponent from "./PostComponent.js";
 import PropTypes from "prop-types";
 
 function PostsFeedComponent(props) {
-    const [posts, setPosts] = useState([{ post: "" }]);
-    const [fullDisplay, setFullDisplay] = useState("none");
-    const [loadDisplay, setLoadDisplay] = useState("block");
 
-    async function reloadData() {
-        let postInfo;
-
-        const res = await fetch(
-            `/getPosts?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`
-        );
-        postInfo = await res.json();
-
-        // const lengthRes = await fetch(`/getFilteredPostsLength?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
-        // const filteredLength = await lengthRes.json();
-
-        setPosts(postInfo);
-        setFullDisplay("block");
-        setLoadDisplay("none");
-        // props.getFilteredLength(filteredLength);
-    }
-
-    useEffect(() => {
-        async function reloadData() {
-            let postInfo;
-
-            const res = await fetch(
-                `/getPosts?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`
-            );
-            postInfo = await res.json();
-            const lengthRes = await fetch(
-                `/getFilteredPostsLength?page=${props.page}&pageSize=${props.pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`
-            );
-            const filteredLength = await lengthRes.json();
-
-            setPosts(postInfo);
-            setFullDisplay("block");
-            setLoadDisplay("none");
-            props.getFilteredLength(filteredLength);
-        }
-        reloadData();
-    }, [props]);
 
     return (
         <>
             <div className="row d-flex justify-content-center" id="post">
                 <div className="col-md-1">
-                    <p style={{ display: `${loadDisplay}` }}>Loading...</p>
+                    <p style={{ display: `${props.loadDisplay}` }}>Loading...</p>
                 </div>
             </div>
             <div className="PostsFeed">
-                {posts.map((p, i) => (
+                {props.posts.map((p, i) => (
                     <PostComponent
                         key={`object_${i}`}
                         post={p}
-                        likeCount={p.likeCount || 0}
-                        fullDisplay={fullDisplay}
-                        reloadData={reloadData}
+                        likeCount={p.likeCount}
+                        fullDisplay={props.fullDisplay}
+                        // reloadData={props.reloadData}
+                        usersLikes={props.likes}
+                        usersFavorites={props.faves}
                     ></PostComponent>
                 ))}
             </div>

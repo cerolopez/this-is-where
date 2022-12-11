@@ -6,75 +6,105 @@ import "./Pagination.css";
 function Pagination(props) {
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
-    const [globalPostsLength, setGlobalPostsLength] = useState(100);
+    const [posts, setPosts] = useState([]);
+    const [usersLikes, setUsersLikes] = useState([]);
+    const [usersFavorites, setUsersFavorites] = useState([]);
+    const [postsLoaded, setPostsLoaded] = useState(false);
+    const [likesLoaded, setLikesLoaded] = useState(false);
+
+
     const [filteredPostsLength, setFilteredPostsLength] = useState(100);
+
     const [displayMsg, setDisplayMsg] = useState("");
-    const [numOfPagesRequired, setNumOfPagesRequired] = useState(1);
-    // const [pageNumbersArr, setPageNumbersArr] = useState([]);
+
     const [fullDisplay, setFullDisplay] = useState("none");
+    const [loadDisplay, setLoadDisplay] = useState("block");
 
     useEffect(() => {
-        async function getLength() {
-            const res = await fetch("/getPostsLength");
+        async function getInitialLength() {
+            const res = await fetch(`/getFilteredPostsLength?page=0&pageSize=5&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
             const length = await res.json();
-            setGlobalPostsLength(length);
-            setFullDisplay("block");
-            // let arr;
-            setNumOfPagesRequired(Math.ceil(length / pageSize));
-            if (length === filteredPostsLength) {
-                setNumOfPagesRequired(Math.ceil(length / pageSize));
-            } else {
-                setNumOfPagesRequired(
-                    Math.ceil(filteredPostsLength / pageSize)
-                );
-                setPage(0); //if filtering has happened, restart at first page
+            setFilteredPostsLength(length);
+            setPage(0);
+            let msg;
+            if (length > 0 && length < 5) {
+                msg = `Showing 1-${length} out of ${length} posts`;
             }
-            // arr = new Array(numOfPagesRequired);
-            // for (let i = 0; i < arr.length; i++) {
-            //     arr[i] = i;
-            // }
-            // setPageNumbersArr(arr);
+            else if (length === 0) {
+                msg = "No posts to display.";
+            } else {
+                msg = `Showing 1-5 out of ${length} posts`;
+            }
+            setDisplayMsg(msg);
         }
-        getLength();
-    }, [pageSize, numOfPagesRequired, filteredPostsLength]);
+
+        getInitialLength();
+    }, [props.selectedCity, props.selectedType]);
+
+
+
 
     useEffect(() => {
-        function lastPostShown() {
-            return parseInt(pageSize) * parseInt(page) + parseInt(pageSize);
-        }
-        function updateShowing() {
-            const last = lastPostShown();
-            let msg;
-            if (globalPostsLength === filteredPostsLength) {
-                if (last <= filteredPostsLength) {
-                    msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${
-                        parseInt(pageSize) * parseInt(page) + parseInt(pageSize)
-                    } out of ${filteredPostsLength} posts`;
-                } else {
-                    msg = `Showing ${
-                        last - pageSize + 1
-                    }-${filteredPostsLength} out of ${filteredPostsLength} posts`;
-                }
-            } else {
-                if (last <= filteredPostsLength) {
-                    msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${
-                        parseInt(pageSize) * parseInt(page) + parseInt(pageSize)
-                    } out of ${filteredPostsLength} posts`;
-                } else {
-                    msg = `Showing ${
-                        last - pageSize + 1
-                    }-${filteredPostsLength} out of ${filteredPostsLength} posts`;
-                }
-            }
-            return msg;
-        }
-        const message = updateShowing();
-        setDisplayMsg(message);
-    }, [globalPostsLength, page, pageSize, filteredPostsLength]);
+        let active = true;
+        if (active) {
+            async function reloadData() {
+                let postInfo;
 
-    function getFilteredLength(length) {
-        setFilteredPostsLength(length);
-    }
+                const res = await fetch(
+                    `/getPosts?page=${page}&pageSize=${pageSize}&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`
+                );
+
+                postInfo = await res.json();
+                setPosts(postInfo);
+                setFullDisplay("block");
+                setLoadDisplay("none");
+                setPostsLoaded(true);
+            }
+            function lastPostShown() {
+                return parseInt(pageSize) * parseInt(page) + parseInt(pageSize);
+            }
+            function updateShowing() {
+                const last = lastPostShown();
+                let msg;
+
+                if (last <= filteredPostsLength) {
+                    msg = `Showing ${parseInt(pageSize) * parseInt(page) + 1}-${
+                        parseInt(pageSize) * parseInt(page) + parseInt(pageSize)
+                    } out of ${filteredPostsLength} posts`;
+                } else {
+                    msg = `Showing ${
+                        last - pageSize + 1
+                    }-${filteredPostsLength} out of ${filteredPostsLength} posts`;
+                }
+
+                return msg;
+            }
+            async function getLikesAndFavorites() {
+                const likes = await fetch("/getLikes");
+                const likesJson = await likes.json();
+
+                const likesArray = likesJson.at(0).liked_posts;
+                setUsersLikes(likesArray);
+                const favorites = await fetch("/getFavorites");
+                const favoritesJson = await favorites.json();
+                const favoritesArray = favoritesJson.at(0).favorited_posts;
+                setUsersFavorites(favoritesArray);
+                setLikesLoaded(true);
+            }
+            getLikesAndFavorites();
+            reloadData();
+            const message = updateShowing();
+            setDisplayMsg(message);
+        }
+        return () => { //cleanup
+            active = false;
+        };
+    }, [props, page, pageSize, filteredPostsLength]);
+
+
+
+    if (likesLoaded && postsLoaded) { //if (fullDisplay === "block")
+
 
     return (
         <>
@@ -109,7 +139,12 @@ function Pagination(props) {
                 pageSize={pageSize}
                 selectedCity={props.selectedCity}
                 selectedType={props.selectedType}
-                getFilteredLength={getFilteredLength}
+                fullDisplay={fullDisplay}
+                loadDisplay={loadDisplay}
+
+                posts={posts}
+                likes={usersLikes}
+                faves={usersFavorites}
             ></PostsFeed>
             <br />
             <br />
@@ -122,30 +157,24 @@ function Pagination(props) {
                                 <li className="page-item" key="previous">
                                     <button
                                         className="page-link"
-                                        onClick={() =>
-                                            setPage(Math.max(page - 1, 0))
-                                        }
+                                        onClick={() => {
+                                            setPage(Math.max(page - 1, 0));
+                                            setPostsLoaded(false);
+                                            setLikesLoaded(false);
+                                        }}
                                     >
                                         Previous
                                     </button>
                                 </li>
-                                {/*                    {pageNumbersArr.map((p) => (
-                        <li className="page-item" key={`page_${p}`}>
-                            <button className={page===p ? "page-link active" : "page-link"}  onClick={() => setPage(parseInt(p))}>{p+1}</button>
-                        </li>
-                    ))}*/}
 
                                 <li className="page-item" key="next">
                                     <button
                                         className="page-link"
-                                        onClick={() =>
-                                            setPage(
-                                                Math.min(
-                                                    page + 1,
-                                                    globalPostsLength
-                                                )
-                                            )
-                                        }
+                                        onClick={() => {
+                                            setPage(Math.min(page + 1, filteredPostsLength));
+                                            setPostsLoaded(false);
+                                            setLikesLoaded(false);
+                                        }}
                                     >
                                         Next
                                     </button>
@@ -163,6 +192,7 @@ function Pagination(props) {
             </span>
         </>
     );
+    }
 }
 
 Pagination.propTypes = {

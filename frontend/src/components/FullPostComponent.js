@@ -5,49 +5,27 @@ import Alert from "./Alert.js";
 import DeletePost from "./DeletePost.js";
 import EditPost from "./EditPost.js";
 import { Link } from "react-router-dom";
+import "./FullPostComponent.css";
 
-function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloadData }) {
-    const [isLikedByUser, setIsLikedByUser] = useState(false);
-    const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
-    const [alertVisibility, setAlertVisibility] = useState("none");
-
-    const fullDate = new Date(post.date);
-    const dateString = fullDate.toDateString();
-    const subtitle = `Posted on ${dateString} by `;
-
+function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloadData, likes, favorites }) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
 
-    useEffect(() => {
-        async function reloadComponent() {
-            let isLiked;
-            let faveInfo;
 
-            try {
-                const res = await fetch(`/checkIfLiked?id=${id}`);
-                isLiked = await res.json();
-            } catch (e) {
-                console.log("error downloading data: ", e);
-                return false;
-            }
+    const isLiked = likes.includes(id);
+    console.log("isLiked: ", isLiked);
+    const [isLikedByUser, setIsLikedByUser] = useState(likes.includes(id));
+    console.log("isLikedByUser state: ", isLikedByUser);
 
-            setIsLikedByUser(isLiked);
 
-            try {
-                const res = await fetch(`/checkIfFavorited?id=${id}`);
-                faveInfo = await res.json();
-                console.log("isFavorited: ", faveInfo.isFavorited);
-            } catch (e) {
-                console("error downloading data: ", e);
-                return false;
-            }
+    const [isFavoritedByUser, setIsFavoritedByUser] = useState(favorites.includes(id));
+    const [alertVisibility, setAlertVisibility] = useState("none");
+    const [currentLikes, setCurrentLikes] = useState(post.likeCount);
 
-            setIsFavoritedByUser(faveInfo.isFavorited);
-        }
-
-        reloadComponent();
-    }, [id]);
+    const fullDate = new Date(post.date);
+    const dateString = fullDate.toDateString();
+    const subtitle = `Posted on ${dateString} by `;
 
     async function sendFavoriteToDB() {
         if (!isFavoritedByUser) {
@@ -61,8 +39,6 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
             const unfavSuccess = await unfavRes.json();
             console.log("post unfavorited: ", unfavSuccess);
         }
-
-        reloadData();
     }
 
     async function sendLikeToDB() {
@@ -77,8 +53,6 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
             const unlikeSuccess = await unlikeRes.json();
             console.log("post unliked: ", unlikeSuccess);
         }
-
-        reloadData();
     }
 
     return (
@@ -159,12 +133,7 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
 
                 {/* like button */}
                     <div className="col-md-5">
-                        <Link
-                            onClick={() => {
-                                setIsLikedByUser(!isLikedByUser);
-                                sendLikeToDB();
-                                    }}
-                            >
+
                             <svg
                                 id="heart-icon"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -177,12 +146,22 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                                     }
                                 className="bi bi-heart"
                                 viewBox="0 0 16 16"
+                                onClick={() => {
+                                    if (isLikedByUser) {
+                                        setCurrentLikes(c => c - 1);
+                                    } else {
+                                        setCurrentLikes(c => c + 1);
+                                    }
+                                    setIsLikedByUser(!isLikedByUser);
+                                    sendLikeToDB();
+                    }}
                             >
                                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                             </svg>
-                        </Link>
+                            {/*</button>*/}
+                        {/*</Link>*/}
                         &nbsp;
-                        <span style={{ verticalAlign: "middle" }}>{post.likeCount}</span>
+                        <span style={{ verticalAlign: "middle" }}>{currentLikes}</span>
                     </div>
 
                     {/* report post button */}

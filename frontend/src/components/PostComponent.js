@@ -3,40 +3,18 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./PostComponent.css";
 
-function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
+function PostComponent({ post, likeCount, fullDisplay, reloadData, usersLikes, usersFavorites }) {
     let dateFormat;
     const timestamp = post.date;
     dateFormat = new Date(timestamp);
-    const [isLikedByUser, setIsLikedByUser] = useState(false);
-    const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
-
-    useEffect(() => {
-        async function reloadComponent() {
-            let isLiked;
-            let faveInfo;
-
-            try {
-                const res = await fetch(`/checkIfLiked?id=${post._id}`);
-                isLiked = await res.json();
-            } catch (e) {
-                console.log("error downloading data: ", e);
-                return false;
-            }
-
-            setIsLikedByUser(isLiked);
-
-            try {
-                const res = await fetch(`/checkIfFavorited?id=${post._id}`);
-                faveInfo = await res.json();
-            } catch (e) {
-                console.log("error downloading data: ", e);
-                return false;
-            }
-
-            setIsFavoritedByUser(faveInfo.isFavorited);
-        }
-        reloadComponent();
-    }, [post._id]);
+    // const [isLikedByUser, setIsLikedByUser] = useState(false);
+    // const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
+    const isLiked = usersLikes.includes(post._id);
+    const isFavorited = usersFavorites.includes(post._id);
+    const [isLikedByUser, setIsLikedByUser] = useState(isLiked);
+    const [isFavoritedByUser, setIsFavoritedByUser] = useState(isFavorited);
+    const likes = post.likeCount;
+    const [currentLikes, setCurrentLikes] = useState(likes);
 
     async function sendFavoriteToDB() {
         if (!isFavoritedByUser) {
@@ -48,8 +26,6 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
             const unfavSuccess = await unfavRes.json();
             console.log("post unfavorited: ", unfavSuccess);
         }
-
-        reloadData();
     }
 
     async function sendLikeToDB() {
@@ -62,8 +38,6 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
             const unlikeSuccess = await unlikeRes.json();
             console.log("post unliked: ", unlikeSuccess);
         }
-
-        reloadData();
     }
 
     return (
@@ -99,7 +73,8 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                                     </svg>
                                 </Link>
                                 &nbsp;&nbsp;
-                                <Link
+                                <a href={`/view-post?id=${post._id}`}>{post.location}</a>
+{/*                                <Link
                                     id="post-title"
                                     to={{
                                         pathname: "/view-post",
@@ -107,7 +82,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                                     }}
                                 >
                                     {post.location}
-                                </Link>
+                                </Link>*/}
                             </h2>
                             <div className="row justify-content-start">
                                 <div className="col-md-12">
@@ -140,6 +115,11 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
 
                     <Link
                         onClick={() => {
+                            if (isLikedByUser) {
+                                setCurrentLikes(c => c - 1);
+                            } else {
+                                setCurrentLikes(c => c + 1);
+                            }
                             setIsLikedByUser(
                                 !isLikedByUser
                                 );
@@ -164,7 +144,7 @@ function PostComponent({ post, likeCount, fullDisplay, reloadData }) {
                         </svg>
                     </Link>
                         &nbsp;
-                        <span style={{ verticalAlign: "middle" }}>{likeCount}</span>
+                        <span style={{ verticalAlign: "middle" }}>{currentLikes}</span>
 
                 </div>
                 <div className="col-md-3"></div>
