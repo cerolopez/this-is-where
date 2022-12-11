@@ -181,6 +181,62 @@ router.get("/getUsername", (req, res) => {
   }
 });
 
+router.get("/getUserInfo", async (req, res) => {
+  const dbResponse = await usersDB.getUserByUsername(
+    req.session.passport.user.username
+  );
+  if (dbResponse.err) {
+    return res.json({
+      success: false,
+      msg: dbResponse.msg,
+      err: dbResponse.err,
+    });
+  }
+  if (!dbResponse.success) {
+    res.json({
+      success: false,
+      msg: "Could not retrieve user info",
+      email: null,
+    });
+  } else {
+    const userBio = dbResponse.user.bio;
+    const dateJoined = dbResponse.user.date_joined;
+    const userLocation = dbResponse.user.location;
+
+    res.json({
+      success: true,
+      msg: "Successfully retrieved user info",
+      userBio: userBio,
+      dateJoined: dateJoined,
+      userLocation: userLocation
+    });
+  }
+});
+
+router.get("/getFavoritePosts", async (req, res) => {
+  const userData = await usersDB.getUserByUsername(
+    req.session.passport.user.username
+  );
+
+  const favoritePostIds = userData.user.favorited_posts;
+
+  const favoritePosts = await postsDB.getFavoritePosts(favoritePostIds);
+  res.json(favoritePosts);
+
+});
+
+router.get("/getLikedPosts", async (req, res) => {
+  const userData = await usersDB.getUserByUsername(
+    req.session.passport.user.username
+  );
+
+  const likedPostIds = userData.user.liked_posts;
+
+  const likedPosts = await postsDB.getLikedPosts(likedPostIds);
+  res.json(likedPosts);
+
+});
+
 router.get("/getEmail", async (req, res) => {
   const dbResponse = await usersDB.getUserByUsername(
     req.session.passport.user.username
@@ -504,5 +560,12 @@ router.get("/resetLikes", async (req, res) => {
 
 
 });
+
+router.get("/getUserPosts", async (req, res) => {
+  const username = req.session.passport.user.username;
+
+  const data = await postsDB.getUserPosts(username);
+  res.json(data);
+})
 
 export default router;
