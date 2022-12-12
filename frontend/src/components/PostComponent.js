@@ -55,9 +55,11 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
                                         );
                                         sendFavoriteToDB();
                                     }}
+                                    aria-label="favorite post"
                                 >
                                     <svg
                                         id="favorite-icon"
+                                        aria-label="favorite post"
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="25"
                                         height="25"
