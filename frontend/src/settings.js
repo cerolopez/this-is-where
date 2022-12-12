@@ -35,6 +35,7 @@ const Settings = () => {
     const [alertMsg, setAlertMsg] = useState("");
     const [alertVisibility, setAlertVisibility] = useState("none");
     const [alertType, setAlertType] = useState("");
+    const [loadedUserInfo, setLoadedUserInfo] = useState(false);
 
 
     const [profileAlertMsg, setProfileAlertMsg] = useState("");
@@ -56,6 +57,7 @@ const Settings = () => {
             const currentEmail = emailResJson.email;
             setNewUsername(currentUsername);
             setNewEmail(currentEmail);
+            setLoadedUserInfo(true);
         }
         setCurrentUserInfo();
     }, [authenticated]);
@@ -89,6 +91,8 @@ const Settings = () => {
             // }, 1500);
         }
     }
+    if (authenticated && loadedUserInfo) { //if it ends up being too slow, don't wait for user info to load before rendering
+
 
     return (
         <>
@@ -121,8 +125,8 @@ const Settings = () => {
                         </Alert>
                         <h2>Edit Account</h2>
                         <form
-                            id="submitUsernameForm"
-                            name="submitUsernameForm"
+                            id="submitEditAccountForm"
+                            name="submitEditAccountForm"
                             onSubmit={onSubmit}
                         >
                             <UserSetting
@@ -143,7 +147,7 @@ const Settings = () => {
                             ></UserSetting>
                             <button
                                 type="submit"
-                                id="submitUsernameButton"
+                                id="submitEditAccountButton"
                                 className="btn btn-dark action-btn"
                             >
                                 Submit
@@ -200,22 +204,31 @@ const Settings = () => {
                             {profileAlertMsg}
                         </Alert>
                         <h2>Edit Profile</h2>
-                                                <form
-                            id="submitFirstNameForm"
-                            name="submitFirstNameForm"
+                        <form
+                            id="submitEditProfileForm"
+                            name="submitEditProfileForm"
                             onSubmit={onSubmit}
                         >
                             <UserSetting
                                 _type="text"
-                                _setting="username"
+                                _setting="first name"
                                 _value={newUsername}
                                 _setState={(evt) =>
                                     setNewUsername(evt.target.value)
                                 }
                             ></UserSetting>
-                                                        <button
+                            <UserSetting
+                                _type="text"
+                                _setting="last name"
+                                _value={newEmail}
+                                _setState={(evt) =>
+                                    setNewEmail(evt.target.value)
+                                }
+                            ></UserSetting>
+                            <textarea className="form-control"></textarea>
+                            <button
                                 type="submit"
-                                id="submitFirstNameButton"
+                                id="submitEditProfileButton"
                                 className="btn btn-dark submitButton"
                             >
                                 Submit
@@ -240,6 +253,7 @@ const Settings = () => {
 
        
     );
+    }
 };
 
 export default Settings;
