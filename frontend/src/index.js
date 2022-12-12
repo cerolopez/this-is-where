@@ -85,7 +85,7 @@ const Home = () => {
                 <h1>Browse Posts</h1>
               </div>
               <div className="col-md-2 test-col d-flex justify-content-evenly">
-                <Link to="/create-post">
+                <Link to="/create-post" aria-label="Create new post">
                   <svg
                     id="create-icon"
                     xmlns="http://www.w3.org/2000/svg"
