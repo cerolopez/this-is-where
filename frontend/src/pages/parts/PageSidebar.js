@@ -32,14 +32,14 @@ function PageSidebar() {
                         <ul className="navbar-nav flex-grow-1 pe-3">
                             <li className="nav-item">
                                 {/*<Link className="nav-link" to="/dashboard"><h2>Home</h2></Link>*/}
-                                <a className="nav-link" href="/dashboard"><h2>Home</h2></a>
+                                <a className="nav-link" href="/dashboard" aria-label="Go to your dashboard"><h2>Home</h2></a>
                             </li>
                             <li className="nav-item">
 
-                                <a className="nav-link" href="/profile"><h2>Profile</h2></a>
+                                <a className="nav-link" href="/profile" aria-label="Go to your profile"><h2>Profile</h2></a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/settings"><h2>Settings</h2></a>
+                                <a className="nav-link" href="/settings" aria-label="Go to account settings"><h2>Settings</h2></a>
                             </li>
                         </ul>
                     </div>
