@@ -11,7 +11,7 @@ background-color: #E0E1DD;
 color: #140000;
 }
 
-#deleteButton {
+.deleteButton {
 /*    background-color: #8A0202;
     color: white;*/
 /*        border-color: #0D1B2A;
@@ -24,7 +24,7 @@ color: #140000;
 
 
 }
-#deleteButton:hover {
+.deleteButton:hover {
     border-width: 2px;
     background-color: #0D1B2A;
     border-color: #BD2020;

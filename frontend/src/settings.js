@@ -162,8 +162,7 @@ const Settings = () => {
                                 </p>
                                 <form action="/deleteAccount" method="post">
                                     <button
-                                        className="btn btn-outline-dark"
-                                        id="deleteButton"
+                                        className="btn btn-outline-dark deleteButton"
                                     >
                                         Delete Account
                                     </button>
