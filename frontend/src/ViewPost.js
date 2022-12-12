@@ -131,7 +131,6 @@ if (loadedLikes && loadedPost) {
                     <div className="col-md-2"></div>
                     <div className="col-md-8">
                         <h1>View Post</h1>
-                        <Link to="/dashboard">Dashboard</Link>
                     </div>
                     <div className="col-md-3"></div>
                 </div>
