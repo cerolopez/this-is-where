@@ -24,13 +24,13 @@ h6 {
   color: #54647f;
 }
 
-h4#post-subtitle {
+h4.post-subtitle {
   font-size: 10px;
   color: #54647f;
   font-weight: lighter;
 }
 
-#post {
+.post {
   padding-top: 25px;
 }
 

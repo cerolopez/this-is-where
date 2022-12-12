@@ -7,11 +7,11 @@
     color: #D98E04;
 }
 
-svg#favorite-icon:hover {
+svg.favorite-icon:hover {
     fill: #F6BE00;
 }
 
-#postID {
+.postID {
     background-color: white;
 }
 
