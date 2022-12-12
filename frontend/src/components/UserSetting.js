@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const UserSetting = ({ _setting, _setState, _value, _type }) => {
     return (
         <div className="input-group flex-nowrap">
-            <span className="input-group-text userSetting settingLabel" id="addon-wrapping">
+            <span className="input-group-text userSetting settingLabel">
                 Change {_setting}
             </span>
             <input
