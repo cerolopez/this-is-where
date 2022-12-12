@@ -201,8 +201,8 @@ const Settings = () => {
                         </Alert>
                         <h2>Edit Profile</h2>
                                                 <form
-                            id="submitUsernameForm"
-                            name="submitUsernameForm"
+                            id="submitFirstNameForm"
+                            name="submitFirstNameForm"
                             onSubmit={onSubmit}
                         >
                             <UserSetting
@@ -215,7 +215,7 @@ const Settings = () => {
                             ></UserSetting>
                                                         <button
                                 type="submit"
-                                id="submitUsernameButton"
+                                id="submitFirstNameButton"
                                 className="btn btn-dark submitButton"
                             >
                                 Submit
