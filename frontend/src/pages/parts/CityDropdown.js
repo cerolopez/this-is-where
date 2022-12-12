@@ -8,6 +8,7 @@ function CityDropdown({selectedCity, setSelectedCity, cityOptions}) {
         <form>
             <select
                 className="form-select-sm"
+                aria-label="Select city to filter by"
                 value={selectedCity}
                 onChange={e => setSelectedCity(e.target.value)}>
                     {cityOptions.map((value) => (

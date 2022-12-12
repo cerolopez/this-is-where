@@ -8,6 +8,7 @@ function TypeDropdown({selectedType, setSelectedType, typeOptions}) {
         <form>
             <select
                 className="form-select-sm"
+                aria-label="Select post type to filter by"
                 value={selectedType}
                 onChange={e => setSelectedType(e.target.value)}>
                     {typeOptions.map((value) => (
