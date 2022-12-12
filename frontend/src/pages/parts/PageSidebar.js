@@ -19,7 +19,7 @@ function PageSidebar() {
     }, []);
 
     return (
-        <nav className="navbar bg-transparent fixed-top">
+        <nav aria-label="navbar" className="navbar bg-transparent fixed-top">
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-label="toggle navbar" aria-controls="offcanvasDarkNavbar">
                     <span className="navbar-toggler-icon"></span>
