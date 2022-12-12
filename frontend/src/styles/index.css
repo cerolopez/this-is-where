@@ -80,3 +80,11 @@ svg#create-icon:hover {
 .frontPage {
   font-size: 1.35rem;
 }
+
+.action-btn {
+  background-color: #415A77;
+}
+
+.action:hover {
+  background-color: #1B263B;
+}

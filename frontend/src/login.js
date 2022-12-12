@@ -56,7 +56,7 @@ const LogIn = () => {
                                     </LoginField>
                                     <button
                                         type="submit"
-                                        className="btn btn-dark logInButton"
+                                        className="btn btn-dark action-btn"
                                     >
                                         Submit
                                     </button>

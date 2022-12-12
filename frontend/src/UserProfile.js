@@ -87,7 +87,7 @@ function UserProfile() {
                         <p>{(userBio === "") ? <i>No bio to display.</i> : userBio}<br />{(userLocation === "") ? <i>No location to display.</i> : userLocation}</p>
                         <Link
                             to="/settings"
-                            className="btn btn-dark signUpButton"
+                            className="btn btn-dark action-btn"
                             role="button"
                         >
                             Edit Profile

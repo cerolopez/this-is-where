@@ -55,7 +55,7 @@ const LandingPage = () => {
                         </p>
                         <Link
                             to="/signup"
-                            className="btn btn-dark signUpButton"
+                            className="btn btn-dark action-btn"
                             role="button"
                         >
                             Sign Up

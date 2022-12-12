@@ -182,7 +182,7 @@ function PostForm() {
                         <div className="row justify-content-center">
                             <div className="col-md-5"></div>
                             <div className="col-md-2">
-                                <button type="submit" className="btn btn-dark">
+                                <button type="submit" className="btn btn-dark action-btn">
                                     Submit
                                 </button>
                             </div>
