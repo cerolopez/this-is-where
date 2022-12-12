@@ -41,7 +41,7 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
     }
 
     return (
-        <div className="container" style={{ display: `${fullDisplay}` }}>
+        <div className="container postFeed" style={{ display: `${fullDisplay}` }}>
             <div className="row d-flex justify-content-center" id="post">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
@@ -73,16 +73,7 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
                                     </svg>
                                 </Link>
                                 &nbsp;&nbsp;
-                                <a href={`/view-post?id=${post._id}`}>{post.location}</a>
-{/*                                <Link
-                                    id="post-title"
-                                    to={{
-                                        pathname: "/view-post",
-                                        search: `?id=${post._id}`,
-                                    }}
-                                >
-                                    {post.location}
-                                </Link>*/}
+                                <a aria-label="View full post" href={`/view-post?id=${post._id}`}>{post.location}</a>
                             </h2>
                             <div className="row justify-content-start">
                                 <div className="col-md-12">
