@@ -6,7 +6,6 @@ function PostForm() {
     const [location, setLocation] = useState("");
     const [city, setCity] = useState("");
     const [type, setType] = useState("");
-    const [date, setDate] = useState("");
     const [msg, setMsg] = useState("");
 
     async function onSubmit(evt) {
@@ -162,21 +161,6 @@ function PostForm() {
                                 onChange={(evt) => setMsg(evt.target.value)}
                                 placeholder="Type message"
                             ></textarea>
-                        </div>
-                        <br />
-                        <div className="form-group" id="date">
-                            <label className="form-label" htmlFor="date-select">
-                                Date
-                            </label>
-                            <input
-                                className="form-control"
-                                id="date-select"
-                                name="date"
-                                type="date"
-                                placeholder="Choose date"
-                                value={date}
-                                onChange={(evt) => setDate(evt.target.value)}
-                            ></input>
                         </div>
                         <br />
                         <div className="row justify-content-center">
