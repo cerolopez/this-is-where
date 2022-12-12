@@ -92,7 +92,7 @@ function UserPosts() {
     if (likesLoaded && postsLoaded) {
         return (
             <>
-                <div className="row d-flex justify-content-center" id="post">
+                <div className="row d-flex justify-content-center post">
                     <div className="col-md-1">
                         <p style={{ display: `${loadDisplay}` }}>Loading...</p>
                     </div>
