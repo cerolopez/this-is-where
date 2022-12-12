@@ -116,6 +116,7 @@ function Pagination(props) {
                             <select
                                 name={"PageSize"}
                                 id="pageSizeOptions"
+                                aria-label="Select page size"
                                 onChange={(event) => {
                                     setPageSize(event.target.value);
                                     setPage(0);
