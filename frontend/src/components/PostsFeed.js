@@ -1,7 +1,7 @@
 import React from "react";
 import PostComponent from "./PostComponent.js";
 import PropTypes from "prop-types";
-import "../styles/CreatePost.css";
+// import "../styles/CreatePost.css";
 
 function PostsFeedComponent(props) {
 
