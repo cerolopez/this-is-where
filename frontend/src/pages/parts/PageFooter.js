@@ -5,7 +5,7 @@ function PageFooter() {
 
     return (
         <div className="footer">
-            <footer className="bg-light text-center">
+            <footer className="text-center">
             <div className="row">
                 <div className="col-md-12 d-flex justify-content-center">
                     <p>2022 This Is Where &copy;</p>
