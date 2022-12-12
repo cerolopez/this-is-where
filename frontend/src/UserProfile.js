@@ -140,24 +140,21 @@ function UserProfile() {
                     </div>
                         <div className="tab-content" id="nav-tabContent">
                             <div 
-                                className="tab-pane fade show active" 
-                                id="nav-posts" 
+                                className="tab-pane fade show active nav-posts" 
                                 role="tabpanel" 
                                 aria-labelledby="nav-posts-tab" 
                                 tabIndex="0">
                                     <UserPosts />
                             </div>
                             <div 
-                                className="tab-pane fade" 
-                                id="nav-likes" 
+                                className="tab-pane fade nav-likes" 
                                 role="tabpanel" 
                                 aria-labelledby="nav-likes-tab" 
                                 tabIndex="0">
                                     <LikedPosts />
                             </div>
                             <div 
-                                className="tab-pane fade" 
-                                id="nav-favorites" 
+                                className="tab-pane fade nav-favorites" 
                                 role="tabpanel" 
                                 aria-labelledby="nav-favorites-tab" 
                                 tabIndex="0">
