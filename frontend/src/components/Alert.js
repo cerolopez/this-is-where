@@ -19,7 +19,7 @@ function Alert({ alert_type, children, display }) {
 
 Alert.propTypes = {
   alert_type: PropTypes.string.isRequired, //Should be one of the Bootstrap 5.2 alert types - success, danger, warning, etc.
-  children: PropTypes.string.isRequired, //The message to be displayed in the alert
+  children: PropTypes.array.isRequired, //The message to be displayed in the alert
   display: PropTypes.string.isRequired, //Should be "none" (hidden) or "block" (visible)
 };
 
