@@ -144,7 +144,7 @@ const Settings = () => {
                             <button
                                 type="submit"
                                 id="submitUsernameButton"
-                                className="btn btn-dark submitButton"
+                                className="btn btn-dark action-btn"
                             >
                                 Submit
                             </button>
@@ -162,7 +162,7 @@ const Settings = () => {
                                 </p>
                                 <form action="/deleteAccount" method="post">
                                     <button
-                                        className="btn btn-outline-dark deleteButton"
+                                        className="btn btn-outline-dark action-btn deleteButton"
                                     >
                                         Delete Account
                                     </button>

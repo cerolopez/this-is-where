@@ -11,22 +11,8 @@ background-color: #E0E1DD;
 color: #140000;
 }
 
-.deleteButton {
-/*    background-color: #8A0202;
-    color: white;*/
-/*        border-color: #0D1B2A;
-    background-color: #BD2020;
-    color: #140000;*/
-    
-/*    border-width: 2px;*/
-    background-color: #415A77;
-    color: white;
-
-
-}
 .deleteButton:hover {
     border-width: 2px;
-    background-color: #0D1B2A;
     border-color: #BD2020;
     color: white;
 }
