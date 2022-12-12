@@ -29,6 +29,7 @@ function ReportPost({ postId, setAlertVisibility }) {
         className="btn btn-outline-danger btn-sm"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
+        aria-label="report post"
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
