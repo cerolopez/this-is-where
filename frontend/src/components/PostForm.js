@@ -165,12 +165,12 @@ function PostForm() {
                         </div>
                         <br />
                         <div className="form-group" id="date">
-                            <label className="form-label" htmlFor="type-select">
+                            <label className="form-label" htmlFor="date-select">
                                 Date
                             </label>
                             <input
                                 className="form-control"
-                                id="type-select"
+                                id="date-select"
                                 name="date"
                                 type="date"
                                 placeholder="Choose date"
