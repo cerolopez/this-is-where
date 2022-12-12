@@ -82,7 +82,7 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                                         aria-label="favorite-icon"
                                         fill={
                                             isFavoritedByUser
-                                                ? "yellow"
+                                                ? "#F6BE00"
                                                 : "black"
                                         }
                                         className="bi bi-star"
