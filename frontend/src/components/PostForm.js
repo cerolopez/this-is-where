@@ -57,7 +57,7 @@ function PostForm() {
                                 placeholder="Choose post type"
                                 required
                             >
-                                <option defaultValue>
+                                <option value="" selected disabled>
                                     --Please choose an option--
                                 </option>
                                 <option value="Memory" id="memory">
@@ -85,8 +85,9 @@ function PostForm() {
                                 value={city}
                                 onChange={(evt) => setCity(evt.target.value)}
                                 placeholder="Choose city"
+                                required
                             >
-                                <option defaultValue>
+                                <option value="" selected disabled>
                                     --Please choose an option--
                                 </option>
                                 <option value="Alameda">Alameda</option>
@@ -129,7 +130,7 @@ function PostForm() {
                         <br />
                         <div className="form-group">
                             <label className="form-label" htmlFor="location">
-                                Title
+                                Location
                             </label>
                             <input
                                 className="form-control"
@@ -160,6 +161,7 @@ function PostForm() {
                                 value={msg}
                                 onChange={(evt) => setMsg(evt.target.value)}
                                 placeholder="Type message"
+                                required
                             ></textarea>
                         </div>
                         <br />
