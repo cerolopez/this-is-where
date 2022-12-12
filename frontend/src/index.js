@@ -84,7 +84,7 @@ const Home = () => {
               <div className="col-md-6">
                 <div className="row test-row">
                   <div className="col-md-10 test-col">
-                    <h1>Browse Posts</h1>
+                    <h1>Dashboard</h1>
                   </div>
                   <div className="col-md-2 test-col d-flex justify-content-evenly">
                     <Link to="/create-post" aria-label="Create new post">
