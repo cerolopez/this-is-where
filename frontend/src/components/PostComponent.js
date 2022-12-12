@@ -74,7 +74,7 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
                                     </svg>
                                 </Link>
                                 &nbsp;&nbsp;
-                                <a aria-label="View full post" href={`/view-post?id=${post._id}`}>{post.location || "post location"}</a>
+                                <a aria-label={post.location} href={`/view-post?id=${post._id}`}>{post.location || "post location"}</a>
                             </h2>
                             <div className="row justify-content-start">
                                 <div className="col-md-12">
@@ -90,10 +90,10 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
                             <br />
                             <div className="row">
                                 <div className="col-md-12">
-                                    <h4 className="post-subtitle">
+                                    <h3 className="post-subtitle">
                                         Posted on {dateFormat.toDateString()} by{" "}
                                         <strong>{post.username}</strong>
-                                    </h4>
+                                    </h3>
                                 </div>
                             </div>
                         </div>

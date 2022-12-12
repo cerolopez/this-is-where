@@ -57,13 +57,13 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
 
     return (
         <div className="container" style={{ display: `${fullDisplay}` }}>
-            <div className="row d-flex justify-content-center" id="post">
+            <div className="row d-flex justify-content-center post">
                 <Alert alert_type="success" display={alertVisibility}>
                     Your report has been sent.{" "}
                 </Alert>
                 <div className="col-md-2"></div>
                 <div className="col-md-8">
-                    <div className="card" id="postID">
+                    <div className="card postID">
                         <div className="card-body">
                             <h2>
                                 <Link
@@ -73,11 +73,13 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                                         );
                                         sendFavoriteToDB();
                                     }}
+                                    aria-label="favorite post"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="25"
                                         height="25"
+                                        aria-label="favorite-icon"
                                         fill={
                                             isFavoritedByUser
                                                 ? "yellow"
@@ -112,13 +114,13 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                             <br />
                             <div className="row">
                                 <div className="col-md-12">
-                                    <h4
-                                        id="post-subtitle"
+                                    <h3
+                                        className="post-subtitle"
                                         style={{ display: `${fullDisplay}` }}
                                     >
                                         {subtitle}
                                         <strong>{post.username}</strong>
-                                    </h4>
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -128,14 +130,13 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                 <div className="col-md-2"></div>
             </div>
 
-            <div className="row d-flex justify-content-center" id="like">
+            <div className="row d-flex justify-content-center like">
                 <div className="col-md-2"></div>
 
                 {/* like button */}
                     <div className="col-md-5">
 
                             <svg
-                                id="heart-icon"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
@@ -144,7 +145,7 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                                         ? "#BD2020"
                                         : "black"
                                     }
-                                className="bi bi-heart"
+                                className="bi bi-heart heart-icon"
                                 viewBox="0 0 16 16"
                                 onClick={() => {
                                     if (isLikedByUser) {
@@ -158,8 +159,6 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                             >
                                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                             </svg>
-                            {/*</button>*/}
-                        {/*</Link>*/}
                         &nbsp;
                         <span style={{ verticalAlign: "middle" }}>{currentLikes}</span>
                     </div>
