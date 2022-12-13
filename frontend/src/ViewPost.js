@@ -9,6 +9,7 @@ function ViewPost() {
     const [fullDisplay, setFullDisplay] = useState("none");
     const [loadDisplay, setloadDisplay] = useState("block");
     const [reportDisplay, setReportDisplay] = useState("block");
+    const [editDisplay, setEditDisplay] = useState("none");
     const [usersLikes, setUsersLikes] = useState([]);
     const [usersFavorites, setUsersFavorites] = useState([]);
     const [loadedLikes, setLoadedLikes] = useState(false);
@@ -52,11 +53,8 @@ function ViewPost() {
 
         setFullDisplay("block");
         setloadDisplay("none");
+        setEditDisplay("none");
     }
-
-    // useEffect(() => {
-    //     reloadData();
-    // }, []);
 
     useEffect(() => {
         let active = true;
@@ -147,6 +145,8 @@ if (loadedLikes && loadedPost) {
                             modDisplay={modDisplay}
                             fullDisplay={fullDisplay}
                             reportDisplay={reportDisplay}
+                            editDisplay={editDisplay}
+                            setEditDisplay={setEditDisplay}
                             likes={usersLikes}
                             favorites={usersFavorites}
                             likeCount={post.likeCount}
