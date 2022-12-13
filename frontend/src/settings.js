@@ -190,7 +190,7 @@ const Settings = () => {
                     <div className="col-md-3"></div>
                 </div>
                 <div className="row d-flex">
-                    {/*<div className="col-md-3"></div>*/}
+                    <div className="col-md-3"></div>
                     <div className="col-md-6">
                         <Alert alert_type={alertType} display={alertVisibility}>
                             {alertMsg}
@@ -246,7 +246,7 @@ const Settings = () => {
                             </div>
                         </div>
                     </div>
-                    {/*<div className="col-md-3"></div>*/}
+                    <div className="col-md-3"></div>
                 </div>
             </div>
             {/*<PageTemplate></PageTemplate>*/}
@@ -270,7 +270,7 @@ const Settings = () => {
                     <div className="col-md-3"></div>
                 </div>
                  <div className="row d-flex">
-                    {/*<div className="col-md-3"></div>*/}
+                    <div className="col-md-3"></div>
                     <div className="col-md-6">
                         <Alert alert_type={profileAlertType} display={profileAlertVisibility}>
                             {profileAlertMsg}
