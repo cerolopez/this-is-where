@@ -81,8 +81,9 @@ function ReportPost({ postId, setAlertVisibility }) {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-outline-dark"
                 data-bs-dismiss="modal"
+                aria-label="Cancel report"
               >
                 Cancel
               </button>
