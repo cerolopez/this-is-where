@@ -1,16 +1,19 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-function DeletePost({ postID }) {
-  const navigate = useNavigate();
+function DeletePost({ postID, setDeleteDisplay, setDeleteMsg }) {
 
   async function onSubmit() {
+    setDeleteDisplay("block");
     const res = await fetch(`/deletePost?id=${postID}`);
+    setDeleteMsg("Success! Redirecting to dashboard...");
+
     const data = await res.json();
     console.log("post deleted: ", data);
 
-    navigate("/dashboard", { replace: true });
+    setTimeout(() => {
+      window.location.replace("/dashboard");
+  }, 2000);
   }
 
   return (
@@ -67,7 +70,7 @@ function DeletePost({ postID }) {
               <button
                 type="submit"
                 onClick={onSubmit}
-                className="btn btn-danger"
+                className="btn action-btn"
                 data-bs-dismiss="modal"
               >
                 Delete
@@ -82,6 +85,7 @@ function DeletePost({ postID }) {
 
 DeletePost.propTypes = {
   postId: PropTypes.string,
+  setDeleteDisplay: PropTypes.func.isRequired
 };
 
 export default DeletePost;
