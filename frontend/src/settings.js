@@ -310,7 +310,7 @@ const Settings = () => {
                             <br />
                             <div className="form-check form-switch">
 
-                              <input className="form-check-input" checked={profileHidden ? true : false} type="checkbox" role="switch" id="toggleProfileVisibility" onClick={() => {
+                              <input className="form-check-input" checked={profileHidden ? true : false} type="checkbox" role="switch" id="toggleProfileVisibility" onChange={() => {
                                 setProfileHidden(!profileHidden);
                                 updateProfileVisibility();
                             }}/>
