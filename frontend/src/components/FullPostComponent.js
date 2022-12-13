@@ -7,11 +7,19 @@ import EditPost from "./EditPost.js";
 import { Link } from "react-router-dom";
 import "./FullPostComponent.css";
 
-function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloadData, likes, favorites }) {
+function FullPostComponent({ 
+        post, 
+        modDisplay, 
+        fullDisplay, 
+        reportDisplay, 
+        editDisplay,
+        setEditDisplay,
+        reloadData, 
+        likes, 
+        favorites }) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
-
 
     const isLiked = likes.includes(id);
     console.log("isLiked: ", isLiked);
@@ -21,6 +29,9 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
 
     const [isFavoritedByUser, setIsFavoritedByUser] = useState(favorites.includes(id));
     const [alertVisibility, setAlertVisibility] = useState("none");
+    const [deleteDisplay, setDeleteDisplay] = useState("none");
+    const [deleteMsg, setDeleteMsg] = useState("Deleting post...");
+
     const [currentLikes, setCurrentLikes] = useState(post.likeCount);
 
     const fullDate = new Date(post.date);
@@ -48,7 +59,6 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
             const likeSuccess = await likeRes.json();
             console.log("post liked: ", likeSuccess);
         } else {
-            console.log("I'm unliking a post");
             const unlikeRes = await fetch(`/unlikePost?id=${id}`);
             const unlikeSuccess = await unlikeRes.json();
             console.log("post unliked: ", unlikeSuccess);
@@ -58,11 +68,17 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
     return (
         <div className="container" style={{ display: `${fullDisplay}` }}>
             <div className="row d-flex justify-content-center post">
-                <Alert alert_type="success" display={alertVisibility}>
-                    Your report has been sent.{" "}
-                </Alert>
                 <div className="col-md-2"></div>
                 <div className="col-md-8">
+                    <Alert alert_type="success" display={alertVisibility}>
+                        Your report has been sent.{" "}
+                    </Alert>
+                    <Alert alert_type="success" display={deleteDisplay}>
+                        {deleteMsg}{" "}
+                    </Alert>
+                    <Alert alert_type="success" display={editDisplay}>
+                        Edits received. Reloading content...{" "}
+                    </Alert>
                     <div className="card postID">
                         <div className="card-body">
                             <h2>
@@ -184,9 +200,14 @@ function FullPostComponent({ post, modDisplay, fullDisplay, reportDisplay, reloa
                         <EditPost
                             post={post}
                             reloadData={reloadData}
+                            setEditDisplay={setEditDisplay}
                         ></EditPost>
                         &nbsp;&nbsp;
-                        <DeletePost postID={id}></DeletePost>
+                        <DeletePost 
+                            postID={id}
+                            setDeleteDisplay={setDeleteDisplay}
+                            setDeleteMsg={setDeleteMsg}
+                        ></DeletePost>
                         </div>
                     </span>
                     </div>

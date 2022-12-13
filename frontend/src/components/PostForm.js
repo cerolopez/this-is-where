@@ -57,7 +57,7 @@ function PostForm() {
                                 placeholder="Choose post type"
                                 required
                             >
-                                <option value="" selected disabled>
+                                <option value="" disabled>
                                     --Please choose an option--
                                 </option>
                                 <option value="Memory" id="memory">
@@ -87,7 +87,7 @@ function PostForm() {
                                 placeholder="Choose city"
                                 required
                             >
-                                <option value="" selected disabled>
+                                <option value="" disabled>
                                     --Please choose an option--
                                 </option>
                                 <option value="Alameda">Alameda</option>

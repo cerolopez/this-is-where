@@ -90,6 +90,7 @@ a:hover {
   color: white;
 }
 
-.action:hover {
+.action-btn:hover {
   background-color: #1B263B;
+  color: white;
 }
