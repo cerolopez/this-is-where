@@ -19,6 +19,10 @@ footer,
   font-family: "Montserrat", sans-serif;
 }
 
+h1 span {
+  font-family: "Lora", serif;
+}
+
 h4 {
   font-size: 16px;
   color: #54647f;
