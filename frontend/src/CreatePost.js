@@ -6,15 +6,19 @@ function CreatePost() {
     return (
         <div>
             <div className="container">
-                <div className="row d-flex header-row content-row">
-                    <div className="col-md-12 text-center">
+                <div className="row d-flex header-row">
+                    <div className="col-md-3"></div>
+                    <div className="col-md-6 text-center">
                         <h1>Create Post</h1>
                     </div>
+                    <div className="col-md-3"></div>
                 </div>
-                <div className="row d-flex content-row">
-                    <div className="col-md-12">
+                <div className="row d-flex">
+                    <div className="col-md-3"></div>
+                    <div className="col-md-6">
                         <PostForm></PostForm>
                     </div>
+                    <div className="col-md-3"></div>
                 </div>
             </div>
             <PageTemplate></PageTemplate>
