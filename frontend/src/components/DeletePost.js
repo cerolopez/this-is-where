@@ -20,6 +20,7 @@ function DeletePost({ postID }) {
         className="btn btn-outline-dark btn-sm"
         data-bs-toggle="modal"
         data-bs-target="#deleteModal"
+        aria-label="Delete post"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
