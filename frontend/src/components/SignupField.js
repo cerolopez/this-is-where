@@ -11,6 +11,7 @@ const SignupField = ({ _for, _label, _type, _name, _setState, _value }) => {
                 type={_type}
                 name={_name}
                 value={_value}
+                aria-label={_label}
                 className="form-control"
                 id={"input" + _label}
                 onChange={_setState}

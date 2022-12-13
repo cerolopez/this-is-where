@@ -100,7 +100,7 @@ function Pagination(props) {
 
 
 
-    if (likesLoaded && postsLoaded) { //if (fullDisplay === "block")
+    if (likesLoaded && postsLoaded) {
 
 
     return (
@@ -189,6 +189,18 @@ function Pagination(props) {
             </span>
         </>
     );
+    } else {
+        return (            <PostsFeed
+                // page={page}
+                // pageSize={pageSize}
+                // selectedCity={props.selectedCity}
+                // selectedType={props.selectedType}
+                fullDisplay={fullDisplay}
+                loadDisplay={loadDisplay}
+                posts={posts}
+                likes={usersLikes}
+                faves={usersFavorites}
+            ></PostsFeed>);
     }
 }
 

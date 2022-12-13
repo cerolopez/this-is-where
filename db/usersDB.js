@@ -116,6 +116,52 @@ function UsersDB() {
   };
 
 
+
+  usersDB.getUserProfileInfo = async function(userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users).find({
+        _id: userIdObj,
+      }).project({first_name:1, last_name:1, username:1, email:1, profile_is_hidden:1, location:1, bio: 1}).toArray();
+      if (dbResponse) {
+        console.log("from route - dbResponse: ", dbResponse);
+        return {
+          success: true,
+          msg: "Successfully retrieved User info from database.",
+          userInfo: dbResponse,
+        };
+      } else {
+        return {
+          success: false,
+          msg: "Could not retrieve User info from database.",
+          userInfo: null,
+        };
+      }
+
+    } catch (e) {
+        console.error(e);
+        return {
+          success: false,
+          msg: "Error retrieving User from database.",
+          err: e,
+        };
+
+    } finally {
+      await client.close();
+    }
+
+
+  };
+
+
+
+
+
   usersDB.getUserByUsername = async function (userName) {
     const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
@@ -518,7 +564,8 @@ function UsersDB() {
     }
   };
 
-  usersDB.changeProfileVisibility = async function (userId) {
+
+  usersDB.updateProfileInfo = async function (userId, newFirstName, newLastName, newUsername, newLocation, newBio) {
     const uri = process.env.DB_URI || "mongodb://localhost:27017";
     const client = new mongodb.MongoClient(uri);
     const userIdObj = new mongodb.ObjectId(userId);
@@ -526,20 +573,57 @@ function UsersDB() {
     try {
       await client.connect();
       const ThisIsWhereDb = await client.db(DB_NAME);
+      const dbResponse = await ThisIsWhereDb.collection(Users).updateOne(
+        { _id: userIdObj },
+        { $set: { first_name: newFirstName, last_name: newLastName, username: newUsername, location: newLocation, bio: newBio } }
+      );
+      if (dbResponse.acknowledged) {
+        return { success: true, msg: "Successfully updated profile info." };
+      } else {
+        return { success: false, msg: "Could not update profile info." };
+      }
+    } catch (e) {
+      console.error(e);
+      return { success: false, msg: "Error updating profile info.", err: e };
+    } finally {
+      await client.close();
+    }
+  };
+
+
+
+
+
+
+
+  usersDB.changeProfileVisibility = async function (userId) {
+    const uri = process.env.DB_URI || "mongodb://localhost:27017";
+    const client = new mongodb.MongoClient(uri);
+    const userIdObj = new mongodb.ObjectId(userId);
+
+    try {
+      let dbResponse;
+      await client.connect();
+      const ThisIsWhereDb = await client.db(DB_NAME);
       const user = await ThisIsWhereDb.collection(Users).findOne({
         _id: userIdObj,
       });
+      console.log("user: ", user);
+      console.log("user.profile_is_hidden: ", user.profile_is_hidden);
       if (user.profile_is_hidden) {
-        const dbResponse = await ThisIsWhereDb.collection(Users).updateOne(
+        dbResponse = await ThisIsWhereDb.collection(Users).updateOne(
           { _id: userIdObj },
           { $set: { profile_is_hidden: false } }
         );
+        console.log("profile is hidden dbResponse: ", dbResponse);
       } else {
-        const dbResponse = await ThisIsWhereDb.collection(Users).updateOne(
+        dbResponse = await ThisIsWhereDb.collection(Users).updateOne(
           { _id: userIdObj },
           { $set: { profile_is_hidden: true } }
         );
+        console.log("profile not hidden dbResponse: ", dbResponse);
       }
+      console.log("outside of if/else dbResponse: ", dbResponse);
       if (dbResponse.acknowledged) {
         return {
           success: true,
@@ -806,6 +890,8 @@ function UsersDB() {
     }
 
   };
+
+
 
   return usersDB;
 }

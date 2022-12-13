@@ -5,13 +5,13 @@ const UserSetting = ({ _setting, _setState, _value, _type }) => {
     return (
         <div className="input-group flex-nowrap">
             <span className="input-group-text userSetting settingLabel">
-                Change {_setting}
+                Edit your {_setting}:
             </span>
             <input
                 type={_type}
                 className="form-control userSetting"
                 aria-label={`New ${_setting}`}
-                aria-describedby="addon-wrapping"
+                // aria-describedby="addon-wrapping"
                 onChange={_setState}
                 value={_value}
                 required

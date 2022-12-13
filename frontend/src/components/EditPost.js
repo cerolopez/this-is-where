@@ -43,6 +43,7 @@ function EditPost({ post, reloadData, setEditDisplay }) {
         className="btn btn-outline-dark btn-sm"
         data-bs-toggle="modal"
         data-bs-target="#editModal"
+        aria-label="Edit post"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
