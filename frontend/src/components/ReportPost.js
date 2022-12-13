@@ -89,8 +89,9 @@ function ReportPost({ postId, setAlertVisibility }) {
               <button
                 type="submit"
                 onClick={onSubmit}
-                className="btn btn-primary"
+                className="btn btn-primary action-btn"
                 data-bs-dismiss="modal"
+                aria-label="Submit report"
               >
                 Submit report
               </button>
