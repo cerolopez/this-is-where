@@ -1,7 +1,11 @@
-/*.bi-heart:hover {
-  cursor: pointer;
-}*/
-
-.bi:hover {
+.bi-heart:hover {
   cursor: pointer;
 }
+
+.bi-star:hover {
+  cursor: pointer;
+}
+
+/*.bi:hover {
+  cursor: pointer;
+}*/
