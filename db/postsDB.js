@@ -211,6 +211,7 @@ function postsDB() {
                 .find({
                     _id: { $in: tempArray},
                 })
+                .hint({ $natural: -1 })
                 .toArray();
             return res;
         } finally {
@@ -240,6 +241,7 @@ function postsDB() {
                 .find({
                     _id: { $in: tempArray},
                 })
+                .hint({ $natural: -1 })
                 .toArray();
             return res;
         } finally {
@@ -393,7 +395,7 @@ function postsDB() {
             const userCollection = client.db(DB_NAME).collection(POSTS_COLLECTION);
             const res = await userCollection.find({
                 username: `${username}`
-            }).toArray();
+            }).hint({ $natural: -1 }).toArray();
     
             console.log("users posts: ", res);
             return res;

@@ -42,6 +42,10 @@ svg#create-icon:hover {
   fill: #415A77;
 }
 
+a:hover {
+  color: #415A77;
+}
+
 .header-row {
   padding-top: 100px;
   padding-bottom: 25px;
