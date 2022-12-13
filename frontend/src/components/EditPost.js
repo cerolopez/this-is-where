@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function EditPost({ post, reloadData }) {
+function EditPost({ post, reloadData, setEditDisplay }) {
   const [newLocation, setNewLocation] = useState("");
   const [newMsg, setNewMsg] = useState("");
 
@@ -24,6 +24,7 @@ function EditPost({ post, reloadData }) {
       newEdits = { postId: post._id, location: newLocation, body: post.body };
     }
 
+    setEditDisplay("block");
     const res = await fetch("/editPost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -116,7 +117,7 @@ function EditPost({ post, reloadData }) {
               <button
                 type="submit"
                 onClick={onSubmit}
-                className="btn btn-primary"
+                className="btn action-btn"
                 data-bs-dismiss="modal"
               >
                 Submit Change
@@ -132,6 +133,7 @@ function EditPost({ post, reloadData }) {
 EditPost.propTypes = {
   post: PropTypes.object.isRequired,
   reloadData: PropTypes.func.isRequired,
+  setEditDisplay: PropTypes.func.isRequired,
 };
 
 export default EditPost;
