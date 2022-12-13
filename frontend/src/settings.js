@@ -339,13 +339,19 @@ const Settings = () => {
 
 </>
 
-
-
-
-
-
-       
+ 
     );
+    } else {
+        return (
+            <>
+            <div className="row header-row loginHeader"><PageSidebar></PageSidebar></div>
+            <div className="row d-flex justify-content-center">
+                <div className="col-md-1">
+                    <p>Loading...</p>
+                </div>
+            </div>
+            </>
+            );
     }
 };
 
