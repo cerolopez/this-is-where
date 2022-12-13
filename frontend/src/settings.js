@@ -10,6 +10,7 @@ import "./styles/Login.css";
 
 //TODO - separate account settings and profile settings into two different components?
 //TODO - make sure user can't edit username to one that already exists
+//TODO - have Alert's close button navigate back to settings, so that page will reload and another Alert will be possible
 
 import "./styles/Settings.css";
 
@@ -28,16 +29,24 @@ const Settings = () => {
             }
         }
         getAuth();
-    });
+    }, [navigate]);
 
     const [newUsername, setNewUsername] = useState("");
     const [newEmail, setNewEmail] = useState("");
+    const [newFirstName, setNewFirstName] = useState("");
+    const [newLastName, setNewLastName] = useState("");
+    const [newLocation, setNewLocation] = useState("");
+    const [newBio, setNewBio] = useState("");
+    const [profileHidden, setProfileHidden] = useState(false); //Change false to user's actual profile visibility once loaded
+    const [loadedUserInfo, setLoadedUserInfo] = useState(false);
+
+    //alert for account settings
     const [alertMsg, setAlertMsg] = useState("");
     const [alertVisibility, setAlertVisibility] = useState("none");
     const [alertType, setAlertType] = useState("");
-    const [loadedUserInfo, setLoadedUserInfo] = useState(false);
 
 
+    //alert for profile settings
     const [profileAlertMsg, setProfileAlertMsg] = useState("");
     const [profileAlertVisibility, setProfileAlertVisibility] = useState("none");
     const [profileAlertType, setProfileAlertType] = useState("");
@@ -49,20 +58,34 @@ const Settings = () => {
             if (!authenticated) {
                 return;
             }
-            const usernameRes = await fetch("/getUsername");
-            const usernameResJson = await usernameRes.json();
-            const emailRes = await fetch("/getEmail");
-            const emailResJson = await emailRes.json();
-            const currentUsername = usernameResJson.username;
-            const currentEmail = emailResJson.email;
-            setNewUsername(currentUsername);
-            setNewEmail(currentEmail);
+            // const usernameRes = await fetch("/getUsername");
+            // const usernameResJson = await usernameRes.json();
+            // const emailRes = await fetch("/getEmail");
+            // const emailResJson = await emailRes.json();
+            // const currentUsername = usernameResJson.username;
+            // const currentEmail = emailResJson.email;
+            const userInfoRes = await fetch("/getUserProfileInfo");
+            const userInfoJson = await userInfoRes.json();
+            const userInfo = userInfoJson.userInfo.at(0);
+            console.log("userInfo: ", userInfo);
+            // setNewUsername(currentUsername);
+            // setNewEmail(currentEmail);
+            setNewUsername(userInfo.username);
+            setNewEmail(userInfo.email);
+            setNewFirstName(userInfo.first_name);
+            setNewLastName(userInfo.last_name);
+            setNewLocation(userInfo.location);
+            setProfileHidden(userInfo.profile_is_hidden);
+            setNewBio(userInfo.bio);
             setLoadedUserInfo(true);
         }
         setCurrentUserInfo();
     }, [authenticated]);
 
-    async function onSubmit(evt) {
+
+
+
+    async function onEditAccountSubmit(evt) {
         evt.preventDefault();
         const usernameRes = await fetch("/updateUsername", {
             method: "POST",
@@ -91,6 +114,55 @@ const Settings = () => {
             // }, 1500);
         }
     }
+
+
+
+
+    async function onEditProfileSubmit(evt) {
+        evt.preventDefault();
+        const updateRes = await fetch("/updateProfileInfo", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ first_name: newFirstName, last_name: newLastName, username: newUsername, location: newLocation, bio: newBio }),
+        });
+        const updateJson = await updateRes.json();
+
+        if (!updateJson.success) {
+            setProfileAlertMsg(
+                "There was an issue and your profile information could not be updated at this time."
+            );
+            setProfileAlertType("danger");
+            setProfileAlertVisibility("block");
+        } else {
+            setProfileAlertMsg("Successfully changed your profile information.");
+            setProfileAlertType("success");
+            setProfileAlertVisibility("block");
+            // setTimeout(() => {
+            //     navigate("/settings", { replace: true });
+            // }, 1500);
+        }
+    }
+
+    async function updateProfileVisibility() {
+        const res = await fetch("/changeProfilePrivacy");
+        const resJson = await res.json();
+        if (!resJson.success) {
+            setProfileAlertMsg("There was an issue and your profile privacy could not be updated at this time.");
+        
+            setProfileAlertType("danger");
+            setProfileAlertVisibility("block");
+        } else {
+            setProfileAlertMsg("Successfully changed your profile visibility.");
+            setProfileAlertType("success");
+            setProfileAlertVisibility("block");
+        }
+
+    }
+
+
+
+
+
     if (authenticated && loadedUserInfo) { //if it ends up being too slow, don't wait for user info to load before rendering
 
 
@@ -127,7 +199,7 @@ const Settings = () => {
                         <form
                             id="submitEditAccountForm"
                             name="submitEditAccountForm"
-                            onSubmit={onSubmit}
+                            onSubmit={onEditAccountSubmit}
                         >
                             <UserSetting
                                 _type="text"
@@ -207,25 +279,46 @@ const Settings = () => {
                         <form
                             id="submitEditProfileForm"
                             name="submitEditProfileForm"
-                            onSubmit={onSubmit}
+                            onSubmit={onEditProfileSubmit}
                         >
                             <UserSetting
                                 _type="text"
                                 _setting="first name"
-                                _value={newUsername}
+                                _value={newFirstName}
                                 _setState={(evt) =>
-                                    setNewUsername(evt.target.value)
+                                    setNewFirstName(evt.target.value)
                                 }
                             ></UserSetting>
                             <UserSetting
                                 _type="text"
                                 _setting="last name"
-                                _value={newEmail}
+                                _value={newLastName}
                                 _setState={(evt) =>
-                                    setNewEmail(evt.target.value)
+                                    setNewLastName(evt.target.value)
                                 }
                             ></UserSetting>
-                            <textarea className="form-control"></textarea>
+                            <UserSetting
+                                _type="text"
+                                _setting="location"
+                                _value={newLocation}
+                                _setState={(evt) =>
+                                    setNewLocation(evt.target.value)
+                                }
+                            ></UserSetting>
+                            <br />
+                            <span> Change profile visibility: </span>
+                            <br />
+                            <div className="form-check form-switch">
+
+                              <input className="form-check-input" checked={profileHidden ? true : false} type="checkbox" role="switch" id="toggleProfileVisibility" onClick={() => {
+                                setProfileHidden(!profileHidden);
+                                updateProfileVisibility();
+                            }}/>
+                              <label className="form-check-label" htmlFor="toggleProfileVisibility">{profileHidden ? "Private" : "Public"}</label>
+                            </div>
+                            <label htmlFor="bio-text" className="col-form-label">Edit your biography: </label>
+                            <textarea id="bio-text" className="form-control" value={newBio} onChange={(evt) => setNewBio(evt.target.value)}></textarea>
+                            <br />   
                             <button
                                 type="submit"
                                 id="submitEditProfileButton"

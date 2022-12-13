@@ -21,6 +21,7 @@ router.get("/changeProfilePrivacy", async (req, res) => {
     });
   }
   let dbResponse = await usersDB.changeProfileVisibility(userId);
+  console.log("from changeProfilePrivacy - dbResponse: ", dbResponse);
   if (!dbResponse) {
     return res.json({
       success: false,
@@ -34,7 +35,7 @@ router.get("/changeProfilePrivacy", async (req, res) => {
     err: dbResponse.err,
   });
 });
-
+//probably won't be used - potential delete
 router.post("/updateUserBio", async (req, res) => {
   const bio = req.body.bio;
   const userId = req.session.passport.user.id;
@@ -180,7 +181,7 @@ router.get("/getUsername", (req, res) => {
     });
   }
 });
-
+//is this being used?
 router.get("/getUserInfo", async (req, res) => {
   const dbResponse = await usersDB.getUserByUsername(
     req.session.passport.user.username
@@ -425,6 +426,21 @@ router.get("/getFilteredPostsLength", async (req, res) => {
   res.json(filteredLength);
 });
 
+router.post("/updateProfileInfo", async (req, res) => {
+  const userId = req.session.passport.user.id;
+  const newFirstName = req.body.first_name;
+  const newLastName = req.body.last_name;
+  const newUsername = req.body.username;
+  const newLocation = req.body.location;
+  const newBio = req.body.bio;
+  const dbResponse = await usersDB.updateProfileInfo(userId, newFirstName, newLastName, newUsername, newLocation, newBio);
+  if (dbResponse.err) {
+    return res.json({success: false, msg: dbResponse.msg, err: dbResponse.err});
+  }
+  res.json(dbResponse);
+
+});
+
 //Below routes by CL
 
 router.post("/newPost", async (req, res) => {
@@ -566,6 +582,33 @@ router.get("/getUserPosts", async (req, res) => {
 
   const data = await postsDB.getUserPosts(username);
   res.json(data);
-})
+});
+
+router.get("/getUserProfileInfo", async (req, res) => {
+  const userId = req.session.passport.user;
+  const dbResponse = await usersDB.getUserProfileInfo(userId);
+  if (dbResponse.err) {
+    return res.json({
+      success: false,
+      msg: dbResponse.msg,
+      err: dbResponse.err,
+    });
+  }
+  if (!dbResponse.success) {
+    res.json({
+      success: false,
+      msg: "Could not retrieve user info",
+      userInfo: null,
+    });
+  } else {
+    console.log("from route: userInfo: ", dbResponse.userInfo);
+    res.json({
+      success: true,
+      msg: "Successfully retrieved user info",
+      userInfo: dbResponse.userInfo
+    });
+  }
+
+});
 
 export default router;
