@@ -110,7 +110,7 @@ function EditPost({ post, reloadData, setEditDisplay }) {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-outline-dark"
                 data-bs-dismiss="modal"
               >
                 Cancel
