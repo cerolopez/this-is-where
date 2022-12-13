@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PostsFeed from "./PostsFeed.js";
 import PropTypes from "prop-types";
-import "./Pagination.css";
+import "../styles/Pagination.css";
 
 function Pagination(props) {
     const [page, setPage] = useState(0);
@@ -12,7 +12,6 @@ function Pagination(props) {
     const [postsLoaded, setPostsLoaded] = useState(false);
     const [likesLoaded, setLikesLoaded] = useState(false);
 
-
     const [filteredPostsLength, setFilteredPostsLength] = useState(100);
 
     const [displayMsg, setDisplayMsg] = useState("");
@@ -22,15 +21,16 @@ function Pagination(props) {
 
     useEffect(() => {
         async function getInitialLength() {
-            const res = await fetch(`/getFilteredPostsLength?page=0&pageSize=5&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`);
+            const res = await fetch(
+                `/getFilteredPostsLength?page=0&pageSize=5&selectedCity=${props.selectedCity}&selectedType=${props.selectedType}`
+            );
             const length = await res.json();
             setFilteredPostsLength(length);
             setPage(0);
             let msg;
             if (length > 0 && length < 5) {
                 msg = `Showing 1-${length} out of ${length} posts`;
-            }
-            else if (length === 0) {
+            } else if (length === 0) {
                 msg = "No posts to display.";
             } else {
                 msg = `Showing 1-5 out of ${length} posts`;
@@ -75,10 +75,9 @@ function Pagination(props) {
                         msg = "No posts to show.";
                     } else {
                         msg = `Showing ${
-                        last - pageSize + 1
+                            last - pageSize + 1
                         }-${filteredPostsLength} out of ${filteredPostsLength} posts`;
                     }
-
                 }
 
                 return msg;
@@ -100,115 +99,110 @@ function Pagination(props) {
             const message = updateShowing();
             setDisplayMsg(message);
         }
-        return () => { //cleanup
+        return () => {
+            //cleanup
             active = false;
         };
     }, [props, page, pageSize, filteredPostsLength]);
 
-
-
     if (likesLoaded && postsLoaded) {
-
-
-    return (
-        <>
-            <br />
-            <br />
-            <div className="row d-flex justify-content-center">
-                <div className="col-md-12 text-center">
-                    <div>
-                        <span style={{ display: `${fullDisplay}` }}>
-                            {" "}
-                            Show{" "}
-                            <select
-                                name={"PageSize"}
-                                id="pageSizeOptions"
-                                aria-label="Select page size"
-                                onChange={(event) => {
-                                    setPageSize(event.target.value);
-                                    setPage(0);
-                                }}
-                            >
-                                <option defaultValue={5}>5</option>
-                                <option value={10}>10</option>
-                                <option value={25}>25</option>
-                                <option value={50}>50</option>
-                            </select>{" "}
-                            results per page{" "}
-                        </span>
+        return (
+            <>
+                <br />
+                <br />
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-12 text-center">
+                        <div>
+                            <span style={{ display: `${fullDisplay}` }}>
+                                {" "}
+                                Show{" "}
+                                <select
+                                    name={"PageSize"}
+                                    id="pageSizeOptions"
+                                    aria-label="Select page size"
+                                    onChange={(event) => {
+                                        setPageSize(event.target.value);
+                                        setPage(0);
+                                    }}
+                                >
+                                    <option defaultValue={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={25}>25</option>
+                                    <option value={50}>50</option>
+                                </select>{" "}
+                                results per page{" "}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <PostsFeed
+                    fullDisplay={fullDisplay}
+                    loadDisplay={loadDisplay}
+                    posts={posts}
+                    likes={usersLikes}
+                    faves={usersFavorites}
+                ></PostsFeed>
+                <br />
+                <br />
+                <span style={{ display: `${fullDisplay}` }}>
+                    <div className="row d-flex justify-content-center">
+                        <div className="col-md-3"></div>
+                        <div className="col-md-6">
+                            <nav aria-label="Page navigation">
+                                <ul className="pagination justify-content-center">
+                                    <li className="page-item" key="previous">
+                                        <button
+                                            className="page-link"
+                                            onClick={() => {
+                                                setPage(Math.max(page - 1, 0));
+                                                setPostsLoaded(false);
+                                                setLikesLoaded(false);
+                                            }}
+                                        >
+                                            Previous
+                                        </button>
+                                    </li>
+
+                                    <li className="page-item" key="next">
+                                        <button
+                                            className="page-link"
+                                            onClick={() => {
+                                                setPage(
+                                                    Math.min(
+                                                        page + 1,
+                                                        filteredPostsLength
+                                                    )
+                                                );
+                                                setPostsLoaded(false);
+                                                setLikesLoaded(false);
+                                            }}
+                                        >
+                                            Next
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div className="col-md-3"></div>
+                    </div>
+                    <div className="row d-flex justify-content-center">
+                        <div className="col-md-3"></div>
+                        <div className="col-md-6 text-center">{displayMsg}</div>
+                        <div className="col-md-3"></div>
+                    </div>
+                </span>
+            </>
+        );
+    } else {
+        return (
             <PostsFeed
-                // page={page}
-                // pageSize={pageSize}
-                // selectedCity={props.selectedCity}
-                // selectedType={props.selectedType}
-                fullDisplay={fullDisplay}
-                loadDisplay={loadDisplay}
-                posts={posts}
-                likes={usersLikes}
-                faves={usersFavorites}
-            ></PostsFeed>
-            <br />
-            <br />
-            <span style={{ display: `${fullDisplay}` }}>
-                <div className="row d-flex justify-content-center">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-6">
-                        <nav aria-label="Page navigation">
-                            <ul className="pagination justify-content-center">
-                                <li className="page-item" key="previous">
-                                    <button
-                                        className="page-link"
-                                        onClick={() => {
-                                            setPage(Math.max(page - 1, 0));
-                                            setPostsLoaded(false);
-                                            setLikesLoaded(false);
-                                        }}
-                                    >
-                                        Previous
-                                    </button>
-                                </li>
-
-                                <li className="page-item" key="next">
-                                    <button
-                                        className="page-link"
-                                        onClick={() => {
-                                            setPage(Math.min(page + 1, filteredPostsLength));
-                                            setPostsLoaded(false);
-                                            setLikesLoaded(false);
-                                        }}
-                                    >
-                                        Next
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div className="col-md-3"></div>
-                </div>
-                <div className="row d-flex justify-content-center">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-6 text-center">{displayMsg}</div>
-                    <div className="col-md-3"></div>
-                </div>
-            </span>
-        </>
-    );
-    }
-    else {
-        return (            <PostsFeed
-                // page={page}
-                // pageSize={pageSize}
-                // selectedCity={props.selectedCity}
-                // selectedType={props.selectedType}
                 fullDisplay={"none"}
                 loadDisplay={"block"}
                 posts={posts}
                 likes={usersLikes}
                 faves={usersFavorites}
-            ></PostsFeed>);
+            ></PostsFeed>
+        );
     }
 }
 

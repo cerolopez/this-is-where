@@ -120,46 +120,47 @@ function ViewPost() {
         };
     }, []);
 
-
-if (loadedLikes && loadedPost) {
-    return (
-        <div>
-            <div className="container">
-                <div className="row d-flex header-row">
-                    <div className="col-md-2"></div>
-                    <div className="col-md-8">
-                        <h1>View Post</h1>
+    if (loadedLikes && loadedPost) {
+        return (
+            <div>
+                <div className="container">
+                    <div className="row d-flex header-row">
+                        <div className="col-md-2"></div>
+                        <div className="col-md-8">
+                            <h1>View Post</h1>
+                        </div>
+                        <div className="col-md-3"></div>
                     </div>
-                    <div className="col-md-3"></div>
-                </div>
-                <div className="row d-flex justify-content-center">
-                    <div className="col-md-1">
-                        <p style={{ display: `${loadDisplay}` }}>Loading...</p>
+                    <div className="row d-flex justify-content-center">
+                        <div className="col-md-1">
+                            <p style={{ display: `${loadDisplay}` }}>
+                                Loading...
+                            </p>
+                        </div>
+                    </div>
+                    <div className="row d-flex">
+                        <div className="col-md-3"></div>
+                        <div className="col-md-12">
+                            <FullPostComponent
+                                post={post}
+                                modDisplay={modDisplay}
+                                fullDisplay={fullDisplay}
+                                reportDisplay={reportDisplay}
+                                editDisplay={editDisplay}
+                                setEditDisplay={setEditDisplay}
+                                likes={usersLikes}
+                                favorites={usersFavorites}
+                                likeCount={post.likeCount}
+                                reloadData={reloadData}
+                            />
+                        </div>
+                        <div className="col-md-2"></div>
                     </div>
                 </div>
-                <div className="row d-flex">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-12">
-                        <FullPostComponent
-                            post={post}
-                            modDisplay={modDisplay}
-                            fullDisplay={fullDisplay}
-                            reportDisplay={reportDisplay}
-                            editDisplay={editDisplay}
-                            setEditDisplay={setEditDisplay}
-                            likes={usersLikes}
-                            favorites={usersFavorites}
-                            likeCount={post.likeCount}
-                            reloadData={reloadData}
-                        />
-                    </div>
-                    <div className="col-md-2"></div>
-                </div>
+                <PageTemplate></PageTemplate>
             </div>
-            <PageTemplate></PageTemplate>
-        </div>
-    );
-}
+        );
+    }
 }
 
 export default ViewPost;

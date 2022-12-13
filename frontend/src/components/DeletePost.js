@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function DeletePost({ postID, setDeleteDisplay, setDeleteMsg }) {
-
   async function onSubmit() {
     setDeleteDisplay("block");
     const res = await fetch(`/deletePost?id=${postID}`);
@@ -13,7 +12,7 @@ function DeletePost({ postID, setDeleteDisplay, setDeleteMsg }) {
 
     setTimeout(() => {
       window.location.replace("/dashboard");
-  }, 2000);
+    }, 2000);
   }
 
   return (
@@ -65,6 +64,7 @@ function DeletePost({ postID, setDeleteDisplay, setDeleteMsg }) {
                 type="button"
                 className="btn btn-outline-dark"
                 data-bs-dismiss="modal"
+                aria-label="Cancel delete post"
               >
                 Cancel
               </button>
@@ -73,6 +73,7 @@ function DeletePost({ postID, setDeleteDisplay, setDeleteMsg }) {
                 onClick={onSubmit}
                 className="btn action-btn"
                 data-bs-dismiss="modal"
+                aria-label="Submit delete post"
               >
                 Delete
               </button>
@@ -86,7 +87,8 @@ function DeletePost({ postID, setDeleteDisplay, setDeleteMsg }) {
 
 DeletePost.propTypes = {
   postId: PropTypes.string,
-  setDeleteDisplay: PropTypes.func.isRequired
+  setDeleteDisplay: PropTypes.func.isRequired,
+  setDeleteMsg: PropTypes.func.isRequired,
 };
 
 export default DeletePost;

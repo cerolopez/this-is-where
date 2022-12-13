@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
 import "./PageSidebar.css";
 
 function PageSidebar() {
@@ -31,7 +30,6 @@ function PageSidebar() {
                     <div className="offcanvas-body">
                         <ul className="navbar-nav flex-grow-1 pe-3">
                             <li className="nav-item">
-                                {/*<Link className="nav-link" to="/dashboard"><h2>Home</h2></Link>*/}
                                 <a className="nav-link" href="/dashboard" aria-label="Go to your dashboard"><h2>Home</h2></a>
                             </li>
                             <li className="nav-item">

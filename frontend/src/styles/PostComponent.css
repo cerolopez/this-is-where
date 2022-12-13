@@ -4,11 +4,11 @@
 }
 
 #post-title:hover {
-    color: #D98E04;
+    color: #d98e04;
 }
 
 svg.favorite-icon:hover {
-    fill: #F6BE00;
+    fill: #f6be00;
 }
 
 .postID {
@@ -25,14 +25,14 @@ svg.favorite-icon:hover {
 }
 
 .info {
-    background-color: #BFCFD9;
+    background-color: #bfcfd9;
 }
 
 #postRow .col {
     border: 1px solid #c9c9c9;
-  }
+}
 
 a {
     text-decoration: none;
-    color: #0D1B2A;
+    color: #0d1b2a;
 }

@@ -1,20 +1,19 @@
 h5 {
-    font-family: 'Raleway', serif;
-    font-weight: bold;
-    color: black;
+  font-family: "Raleway", serif;
+  font-weight: bold;
+  color: black;
 }
 
 .offcanvas {
-    background: #C1C8D6;
-  }
+  background: #c1c8d6;
+}
 
 .logOutButton {
-  background-color: #415A77;
-
+  background-color: #415a77;
 }
 
 .logOutButton:hover {
-  background-color: #1B263B;
+  background-color: #1b263b;
 }
 
 .nav-link {
@@ -22,5 +21,5 @@ h5 {
 }
 
 .nav-link:hover {
-  color: #E0E1DD;
+  color: #e0e1dd;
 }

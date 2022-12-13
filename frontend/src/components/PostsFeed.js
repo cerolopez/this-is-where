@@ -1,15 +1,15 @@
 import React from "react";
 import PostComponent from "./PostComponent.js";
 import PropTypes from "prop-types";
-// import "../styles/CreatePost.css";
 
 function PostsFeedComponent(props) {
-
     return (
         <>
             <div className="row d-flex justify-content-center post">
                 <div className="col-md-1">
-                    <p style={{ display: `${props.loadDisplay}` }}>Loading...</p>
+                    <p style={{ display: `${props.loadDisplay}` }}>
+                        Loading...
+                    </p>
                 </div>
             </div>
             <div className="PostsFeed">
@@ -32,8 +32,7 @@ PostsFeedComponent.propTypes = {
     loadDisplay: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     likes: PropTypes.array.isRequired,
-    faves: PropTypes.array.isRequired
-
+    faves: PropTypes.array.isRequired,
 };
 
 export default PostsFeedComponent;

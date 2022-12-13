@@ -1,11 +1,11 @@
 footer {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    bottom: 0;
-    width: 100%;
-    background-color: #F4F4F1;
-  }
-  
-  .footer {
-    padding-top: 200px;
-  }
+  padding-top: 50px;
+  padding-bottom: 50px;
+  bottom: 0;
+  width: 100%;
+  background-color: #f4f4f1;
+}
+
+.footer {
+  padding-top: 200px;
+}

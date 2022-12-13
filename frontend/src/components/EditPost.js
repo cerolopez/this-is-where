@@ -7,11 +7,11 @@ function EditPost({ post, reloadData, setEditDisplay }) {
 
   const onLocationChange = (evt) => {
     setNewLocation(evt.target.value);
-  }
+  };
 
   const onMsgChange = (evt) => {
     setNewMsg(evt.target.value);
-  }
+  };
 
   async function onSubmit() {
     let newEdits = { postId: post._id, location: newLocation, body: newMsg };

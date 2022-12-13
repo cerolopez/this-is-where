@@ -168,7 +168,10 @@ function PostForm() {
                         <div className="row justify-content-center">
                             <div className="col-md-5"></div>
                             <div className="col-md-2">
-                                <button type="submit" className="btn btn-dark action-btn">
+                                <button
+                                    type="submit"
+                                    className="btn btn-dark action-btn"
+                                >
                                     Submit
                                 </button>
                             </div>
@@ -177,8 +180,12 @@ function PostForm() {
                         <br />
                         <div className="row justify-content-center">
                             <div className="col-md-12 text-center">
-                                <p style={{ display: `${postDisplay}` }}>Loading...</p>
-                                <p style={{ display: `${successDisplay}` }}>Success!</p>
+                                <p style={{ display: `${postDisplay}` }}>
+                                    Loading...
+                                </p>
+                                <p style={{ display: `${successDisplay}` }}>
+                                    Success!
+                                </p>
                             </div>
                         </div>
                         <div></div>

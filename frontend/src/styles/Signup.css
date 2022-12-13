@@ -1,10 +1,9 @@
 .signUpButton {
-  background-color: #415A77;
-
+  background-color: #415a77;
 }
 
 .signUpButton:hover {
-  background-color: #1B263B;
+  background-color: #1b263b;
 }
 
 .signUpHeader {
@@ -12,5 +11,4 @@
   background-size: cover;
   background-repeat: no-repeat;
   height: 340px;
-
 }

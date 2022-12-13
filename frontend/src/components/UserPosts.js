@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PostComponent from "./PostComponent.js";
 
 function UserPosts() {
-
     const [fullDisplay, setFullDisplay] = useState("none");
     const [userPosts, setUserPosts] = useState([{ post: "" }]);
     const [loadDisplay, setloadDisplay] = useState("block");
@@ -10,39 +9,6 @@ function UserPosts() {
     const [usersFavorites, setUsersFavorites] = useState([]);
     const [likesLoaded, setLikesLoaded] = useState(false);
     const [postsLoaded, setPostsLoaded] = useState(false);
-
-    // async function reloadData() {
-    //     let data;
-
-    //     try {
-    //         const res = await fetch("/getUserPosts", {
-    //             method: "GET",
-    //         });
-    //         data = await res.json();
-    //     } catch (e) {
-    //         console.log("error downloading data: ", e);
-    //         return false;
-    //     }
-
-    //     console.log("data: ", data);
-    //     setUserPosts(data);
-    //     setPostsLoaded(true);
-    //     setloadDisplay("none");
-    //     setFullDisplay("block");
-    // }
-
-    // async function getLikesAndFavorites() {
-    //     const likes = await fetch("/getLikes");
-    //     const likesJson = await likes.json();
-
-    //     const likesArray = likesJson.at(0).liked_posts;
-    //     setUsersLikes(likesArray);
-    //     const favorites = await fetch("/getFavorites");
-    //     const favoritesJson = await favorites.json();
-    //     const favoritesArray = favoritesJson.at(0).favorited_posts;
-    //     setUsersFavorites(favoritesArray);
-    //     setLikesLoaded(true);
-    // }
 
     useEffect(() => {
         let active = true;
@@ -84,7 +50,8 @@ function UserPosts() {
             reloadData();
             getLikesAndFavorites();
         }
-        return () => { //cleanup
+        return () => {
+            //cleanup
             active = false;
         };
     }, []);

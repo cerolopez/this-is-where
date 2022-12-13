@@ -1,7 +1,6 @@
 import React from "react";
 import PageTemplate from "./pages/PageTemplate.js";
 import PostForm from "./components/PostForm.js";
-import "./styles/CreatePost.css";
 
 function CreatePost() {
     return (

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import "./PostComponent.css";
+import "../styles/PostComponent.css";
 
 function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
     let dateFormat;
@@ -40,7 +40,10 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
     }
 
     return (
-        <div className="container postFeed" style={{ display: `${fullDisplay}` }}>
+        <div
+            className="container postFeed"
+            style={{ display: `${fullDisplay}` }}
+        >
             <div className="row d-flex justify-content-center post">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
@@ -73,7 +76,12 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
                                     </svg>
                                 </Link>
                                 &nbsp;&nbsp;
-                                <a aria-label={post.location} href={`/view-post?id=${post._id}`}>{post.location || "post location"}</a>
+                                <a
+                                    aria-label={post.location}
+                                    href={`/view-post?id=${post._id}`}
+                                >
+                                    {post.location || "post location"}
+                                </a>
                             </h2>
                             <div className="row justify-content-start">
                                 <div className="col-md-12">
@@ -103,41 +111,34 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
             <div className="row d-flex justify-content-center like">
                 <div className="col-md-3"></div>
                 <div className="col-md-6">
-
                     <Link
                         onClick={() => {
                             if (isLikedByUser) {
-                                setCurrentLikes(c => c - 1);
+                                setCurrentLikes((c) => c - 1);
                             } else {
-                                setCurrentLikes(c => c + 1);
+                                setCurrentLikes((c) => c + 1);
                             }
-                            setIsLikedByUser(
-                                !isLikedByUser
-                                );
-                                sendLikeToDB();
-                                }}
+                            setIsLikedByUser(!isLikedByUser);
+                            sendLikeToDB();
+                        }}
                         aria-label="like post"
                     >
-
                         <svg
                             aria-label="heart icon"
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
                             height="16"
-                            fill={
-                                isLikedByUser
-                                    ? "#BD2020"
-                                    : "black"
-                                }
+                            fill={isLikedByUser ? "#BD2020" : "black"}
                             className="bi bi-heart heart-icon"
                             viewBox="0 0 16 16"
                         >
-                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
                         </svg>
                     </Link>
-                        &nbsp;
-                        <span style={{ verticalAlign: "middle" }}>{currentLikes}</span>
-
+                    &nbsp;
+                    <span style={{ verticalAlign: "middle" }}>
+                        {currentLikes}
+                    </span>
                 </div>
                 <div className="col-md-3"></div>
             </div>
@@ -149,7 +150,7 @@ PostComponent.propTypes = {
     post: PropTypes.object.isRequired,
     fullDisplay: PropTypes.string.isRequired,
     usersLikes: PropTypes.array.isRequired,
-    usersFavorites: PropTypes.array.isRequired
+    usersFavorites: PropTypes.array.isRequired,
 };
 
 export default PostComponent;

@@ -11,7 +11,6 @@ const UserSetting = ({ _setting, _setState, _value, _type }) => {
                 type={_type}
                 className="form-control userSetting"
                 aria-label={`New ${_setting}`}
-                // aria-describedby="addon-wrapping"
                 onChange={_setState}
                 value={_value}
                 required

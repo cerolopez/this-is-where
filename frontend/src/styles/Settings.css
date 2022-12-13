@@ -5,39 +5,37 @@
 }
 
 .settingLabel {
-/*    background-color: #BFCFD9;*/
-background-color: #E0E1DD;
-/*background-color: #415A77;*/
-color: #140000;
+    background-color: #e0e1dd;
+    color: #140000;
 }
 
 .deleteButton:hover {
     border-width: 2px;
-    border-color: #BD2020;
+    border-color: #bd2020;
     color: white;
 }
 
 .card-header {
-    background-color: #BFCFD9;
+    background-color: #bfcfd9;
 }
-
 
 .submitButton {
-    background-color: #415A77;
+    background-color: #415a77;
 }
 
-.submitButton:hover{
-    background-color: #1B263B; 
+.submitButton:hover {
+    background-color: #1b263b;
 }
 
 hr {
     border: 0px;
     height: 2px;
     background: #333;
-    background-image: linear-gradient(to right, #415A77, #1B263B, #415A77);
+    background-image: linear-gradient(to right, #415a77, #1b263b, #415a77);
 }
 
-/*where did the orange come from? =D*/
-h1, h2, p { 
+h1,
+h2,
+p {
     color: black;
 }

@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function CityDropdown({selectedCity, setSelectedCity, cityOptions}) {
-
+function CityDropdown({ selectedCity, setSelectedCity, cityOptions }) {
     return (
         <>
-        <form>
-            <select
-                className="form-select-sm"
-                aria-label="Select city to filter by"
-                value={selectedCity}
-                onChange={e => setSelectedCity(e.target.value)}>
+            <form>
+                <select
+                    className="form-select-sm"
+                    aria-label="Select city to filter by"
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                >
                     {cityOptions.map((value) => (
                         <option value={value} key={value}>
                             {value}
                         </option>
                     ))}
-            </select>
-        </form>
+                </select>
+            </form>
         </>
     );
 }
@@ -25,7 +25,7 @@ function CityDropdown({selectedCity, setSelectedCity, cityOptions}) {
 CityDropdown.propTypes = {
     selectedCity: PropTypes.string.isRequired,
     setSelectedCity: PropTypes.func.isRequired,
-    cityOptions: PropTypes.arrayOf(PropTypes.string).isRequired
-}
+    cityOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default CityDropdown;

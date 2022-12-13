@@ -43,11 +43,11 @@ h3.post-subtitle {
 }
 
 svg#create-icon:hover {
-  fill: #415A77;
+  fill: #415a77;
 }
 
 a:hover {
-  color: #415A77;
+  color: #415a77;
 }
 
 .header-row {
@@ -90,11 +90,11 @@ a:hover {
 }
 
 .action-btn {
-  background-color: #415A77;
+  background-color: #415a77;
   color: white;
 }
 
 .action-btn:hover {
-  background-color: #1B263B;
+  background-color: #1b263b;
   color: white;
 }

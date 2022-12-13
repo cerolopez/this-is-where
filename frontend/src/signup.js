@@ -45,7 +45,9 @@ const SignUp = () => {
     }
 
     return (
-        <div> <div className="row header-row signUpHeader"></div>
+        <div>
+            {" "}
+            <div className="row header-row signUpHeader"></div>
             <div className="container text-center">
                 <div className="row d-flex justify-content-center header-row">
                     <div className="col-md-3"></div>
