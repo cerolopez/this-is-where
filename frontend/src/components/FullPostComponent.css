@@ -1,3 +1,7 @@
-.bi-heart:hover {
+/*.bi-heart:hover {
+  cursor: pointer;
+}*/
+
+.bi:hover {
   cursor: pointer;
 }

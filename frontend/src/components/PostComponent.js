@@ -7,8 +7,7 @@ function PostComponent({ post, fullDisplay, usersLikes, usersFavorites }) {
     let dateFormat;
     const timestamp = post.date;
     dateFormat = new Date(timestamp);
-    // const [isLikedByUser, setIsLikedByUser] = useState(false);
-    // const [isFavoritedByUser, setIsFavoritedByUser] = useState(false);
+    console.log("The post: ", post);
     const isLiked = usersLikes.includes(post._id);
     const isFavorited = usersFavorites.includes(post._id);
     const [isLikedByUser, setIsLikedByUser] = useState(isLiked);

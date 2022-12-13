@@ -37,6 +37,8 @@ function Pagination(props) {
             }
             setDisplayMsg(msg);
         }
+        setPostsLoaded(false);
+        setLikesLoaded(false);
 
         getInitialLength();
     }, [props.selectedCity, props.selectedType]);
@@ -69,9 +71,14 @@ function Pagination(props) {
                         parseInt(pageSize) * parseInt(page) + parseInt(pageSize)
                     } out of ${filteredPostsLength} posts`;
                 } else {
-                    msg = `Showing ${
+                    if (filteredPostsLength === 0) {
+                        msg = "No posts to show.";
+                    } else {
+                        msg = `Showing ${
                         last - pageSize + 1
-                    }-${filteredPostsLength} out of ${filteredPostsLength} posts`;
+                        }-${filteredPostsLength} out of ${filteredPostsLength} posts`;
+                    }
+
                 }
 
                 return msg;
@@ -189,14 +196,15 @@ function Pagination(props) {
             </span>
         </>
     );
-    } else {
+    }
+    else {
         return (            <PostsFeed
                 // page={page}
                 // pageSize={pageSize}
                 // selectedCity={props.selectedCity}
                 // selectedType={props.selectedType}
-                fullDisplay={fullDisplay}
-                loadDisplay={loadDisplay}
+                fullDisplay={"none"}
+                loadDisplay={"block"}
                 posts={posts}
                 likes={usersLikes}
                 faves={usersFavorites}
