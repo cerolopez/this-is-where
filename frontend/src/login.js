@@ -31,7 +31,7 @@ const LogIn = () => {
                     </div>
                     <div className="col-md-4"></div>
                 </div>
-                <div className="row d-flex justify-content-center">
+                <div className="row d-flex">
                     <div className="col-md-4"></div>
                     <div className="col-md-4">
                         <div className="card">

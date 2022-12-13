@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const LoginField = ({ _for, _label, _type, _name }) => {
     return (
-        <div className="mb-3">
+        <div className="mb-3 text-start">
             <label htmlFor={"input" + _for} className="form-label">
                 {_label}
             </label>
