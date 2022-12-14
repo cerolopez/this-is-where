@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "./pages/PageTemplate.js";
 import FullPostComponent from "./components/FullPostComponent.js";
-import { Link } from "react-router-dom";
 
 function ViewPost() {
     const [post, setPost] = useState({});

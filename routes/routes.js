@@ -6,7 +6,7 @@ import {
   createUser,
   usernameIsAvailable,
   emailCanBeUsed,
-} from "../create_user.js";
+} from "../util/create_user.js";
 let router = express.Router();
 
 const dbError = new Error("No response from database.");

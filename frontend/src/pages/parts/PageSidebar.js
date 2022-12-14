@@ -1,21 +1,6 @@
-import React, {useState, useEffect} from "react";
 import "./PageSidebar.css";
 
 function PageSidebar() {
-    const [userId, setUserId] = useState("");
-
-    useEffect(() => {
-        async function reloadData() {
-            let data;
-
-            // fetch user's posts
-            const res = await fetch("/getUserId");
-            data = await res.json();
-
-            setUserId(data.user_id);
-        }
-        reloadData();
-    }, []);
 
     return (
         <nav aria-label="navbar" className="navbar bg-transparent fixed-top">

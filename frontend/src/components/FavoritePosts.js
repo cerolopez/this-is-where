@@ -11,38 +11,6 @@ function FavoritePosts() {
     const [likesLoaded, setLikesLoaded] = useState(false);
     const [postsLoaded, setPostsLoaded] = useState(false);
 
-    // async function reloadData() {
-    //     let data;
-
-    //     try {
-    //         const res = await fetch("/getFavoritePosts", {
-    //             method: "GET",
-    //         });
-    //         data = await res.json();
-    //     } catch (e) {
-    //         console.log("error downloading data: ", e);
-    //         return false;
-    //     }
-
-    //     setFavoritePosts(data);
-    //     setPostsLoaded(true);
-    //     setloadDisplay("none");
-    //     setFullDisplay("block");
-    // }
-
-//     async function getLikesAndFavorites() {
-//         const likes = await fetch("/getLikes");
-//         const likesJson = await likes.json();
-
-//         const likesArray = likesJson.at(0).liked_posts;
-//         setUsersLikes(likesArray);
-//         const favorites = await fetch("/getFavorites");
-//         const favoritesJson = await favorites.json();
-//         const favoritesArray = favoritesJson.at(0).favorited_posts;
-//         setUsersFavorites(favoritesArray);
-//         setLikesLoaded(true);
-// }
-
     useEffect(() => {
         let active = true;
         if (active) {
