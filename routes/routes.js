@@ -11,7 +11,7 @@ let router = express.Router();
 
 const dbError = new Error("No response from database.");
 
-router.get("/changeProfilePrivacy", async (req, res) => {
+router.get("/changeProfilePrivacy", async (req, res) => { //async await
   const userId = req.session.passport.user.id;
   if (!userId) {
     return res.json({
