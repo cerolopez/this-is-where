@@ -3,7 +3,11 @@ import { MongoClient, ObjectId } from "mongodb";
 function postsDB() {
     const postsDB = {};
     const DB_NAME = "ThisIsWhereDatabase";
-    const POSTS_COLLECTION = "Posts";
+    const POSTS_COLLECTION = "Posts
+    
+    //Love that you guys separated the DB, code is so organized and consistent, great job! The only comment I have with DB is maybe you can add more documentation/annotation of what each function does,
+    //so that is is super clear for all developers. Also I think it's a better idea fo put the const uri = process.env.DB_URI || "mongodb://localhost:27017"; at the top of the page
+    //so you can just use client = new MongoClient(uri); throughout the functions, instead of having const uri in every postsDB function.
 
     postsDB.createPost = async function (postInfo = {}, user) {
         const uri = process.env.DB_URI || "mongodb://localhost:27017";
