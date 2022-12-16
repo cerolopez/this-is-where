@@ -1,4 +1,4 @@
-# This Is Where
+# This Is Where //files structure
 
 - [Link to our class website](https://johnguerra.co/classes/webDevelopment_fall_2022/)
 - [Link to Project 4 materials](https://docs.google.com/document/d/1Xf2m_7a6otoQtTyHB55aan1tPqXYV-AQ1EBWjcoyVng/edit?usp=sharing)
