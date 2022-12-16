@@ -6,6 +6,11 @@ function UsersDB() {
   const Posts = "Posts";
   const DB_NAME = "ThisIsWhereDatabase";
 
+  
+  /Great job with the DB again! Same comment as the one I left in the other DB. I can really see you guys put in so much effort into this, big thumbs up!
+//I also noticed that you guys have returned objects with properties of "success", "msg", and "err" in the db error object but because you're re-coding 
+//the same thing in the backend routes in if(!dbResponse), so perhaps you can leave out the error object in the db since they're not really being used.
+  
   /**
    * Adds a User object to the Users collection in the database.
    * @param {object} userObj - expects an object with all User fields/values except _id.
