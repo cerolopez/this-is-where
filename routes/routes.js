@@ -9,6 +9,11 @@ import {
 } from "../util/create_user.js";
 let router = express.Router();
 
+//I thought it was great that you guys separate the DB and I feel it would be great too if you guys organized the routers in separate folders instead of having all 
+//of them in one.
+//I also noticed that you guys have returned objects with properties of "success", "msg", and "err" in the db error object but because you're re-coding 
+//the same thing here in if(!dbResponse), so perhaps you can leave out the error object in the db since they're not really being used.
+
 const dbError = new Error("No response from database.");
 
 router.get("/changeProfilePrivacy", async (req, res) => {
