@@ -10,6 +10,11 @@ function LikedPosts() {
     const [likesLoaded, setLikesLoaded] = useState(false);
     const [postsLoaded, setPostsLoaded] = useState(false);
 
+    
+ //Superb job on the frontend too guys!! All that hard work really came through
+ //However, as a user I wasn't quite sure if the star was the favorited or the liked
+ 
+    
     useEffect(() => {
         let active = true;
         if (active) {
