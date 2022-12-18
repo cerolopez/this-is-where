@@ -6,7 +6,7 @@
 ## Releases
 * [60% release](https://github.com/cerolopez/this-is-where/releases/tag/60%25)
 * [80% release](https://github.com/cerolopez/this-is-where/releases/tag/80pct_milestone5)
-* [100% release](https://github.com/cerolopez/this-is-where/releases/tag/p3deadline)
+* [100% release](https://github.com/cerolopez/this-is-where/releases/tag/p3deadline)//organized
 
 ## Authors
 Cecilia Lopez and Armen Sarkisian
